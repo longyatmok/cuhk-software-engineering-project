@@ -1,0 +1,18 @@
+{
+  "name": "CSCI3100-Group6",
+  "version": "0.0.1",
+  "author": "",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.6",
+    "twig": "*",
+    "browserify": "*",
+    "jsmin" : "*"
+    
+  }
+
+}

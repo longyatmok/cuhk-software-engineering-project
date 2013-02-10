@@ -79,6 +79,7 @@ Game.prototype.boilerplate = function() {
         activeScene.add( xmesh );
       });
     */   
+	
 	controls = new THREE.TrackballControls(this.scenes.active.cameras.main);
 	controls.rotateSpeed = 4.0;
 	controls.zoomSpeed = 3.6;
@@ -128,6 +129,7 @@ Game.prototype.pause = function() {
 
 Game.prototype.stop = function() {
 	this.pause();
+	this.initialized = false;
 	//TODO free resource
 	return this;
 };
@@ -140,6 +142,8 @@ Game.prototype.render = function() {
 	this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
 	this.renderer.render(this.scenes.active.scene,
 			this.scenes.active.cameras.main);
+	
+	//override this method to add other camera
 
 };
 

@@ -20,7 +20,7 @@ GameObjectManager.prototype.add = function(name, asset) {
 };
 GameObjectManager.prototype.get = function(name) {
 
-	return this.asset[game.gameobjects.names.indexOf(name)];
+	return this.asset[this.names.indexOf(name)];
 };
 
 GameObjectManager.prototype.render = function() {

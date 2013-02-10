@@ -1,5 +1,10 @@
 CSCI3100 Project
 
+Update Node.js Dependences :
+npm install
+Run Server :
+node app
 Build Client Javascript :
-
-browserify ./public/js/main.js -o ./public/js/bundle.js
+node build 
+Build Client Javascript (DEV):
+node build -dev

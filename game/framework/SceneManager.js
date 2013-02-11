@@ -34,7 +34,9 @@ SceneManager.prototype.render = function(){
 
 SceneManager.prototype.boilerplate = function() {
 	var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 10000);
+	//var camera = new THREE.CombinedCamera( window.innerWidth / 2, window.innerHeight / 2, 35, 1, 1000,  0.1, 10000 );
+	//xcamera = camera;
+	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 	camera.position.x = 0;
 	camera.position.y = 6;
 	camera.position.z = 10;

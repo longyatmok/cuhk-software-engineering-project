@@ -12,9 +12,9 @@ var GameObjectManager = function(opts) {
 };
 
 GameObjectManager.prototype.add = function(name, asset) {
-	if (!asset instanceof GameObject) {
+	/*if (!asset instanceof GameObject) {
 		throw Error('Error on adding an invalid GameObject');
-	}
+	}*/
 	this.asset.push(asset);
 	this.names.push(name);
 };
@@ -23,9 +23,9 @@ GameObjectManager.prototype.get = function(name) {
 	return this.asset[this.names.indexOf(name)];
 };
 
-GameObjectManager.prototype.render = function() {
+GameObjectManager.prototype.render = function(dt) {
 	this.asset.forEach(function(object) {
-		object.update();
+	    	if(object.update != null) object.update(dt);
 	});
 	return this;
 };
@@ -44,6 +44,7 @@ BoilerplateCube = function() {
 	});
 	BoilerplateCube.super_.call(this, this.geometry, this.material);
 };
+
 util.inherits(BoilerplateCube, GameObject);
 
 BoilerplateCube.prototype.update = function() {

@@ -12,31 +12,41 @@ THREEx.WindowResize = require('./vendor/THREEx/WindowResize');
 TWEEN = require('./vendor/Tween');
 var Ammo = require('./vendor/ammo');
 var MqoLoader = require('./vendor/loaders/MqoLoader');
-
+var PositionController = require('../framework/controllers/PositionController');
+var AdvancedController = require('../framework/controllers/AdvancedController');
 var scene;
+
+
 var Core = function(opts) {
     Core.super_.call(this, opts);
 };
 util.inherits(Core, Game);
 
 // methods start here
-Core.prototype.initialize = function() {
-     Core.super_.prototype.initialize.call(this);
-    scene = this.scenes.active.scene;
+Core.prototype.initialize = function(callback) {
+    var self = this;
+    Core.super_.prototype.initialize.call(this);
+    scene = this.scenes.active.scene; // TODO
 
-    this.scenes.active.cameras.main.position.set(0, 500, 600);
+    this.scenes.active.cameras.main.position.set(0, 500, 750);
+    // this.scenes.active.cameras.main.useQuaternion = true;
+
+    // this.gameobjects.add("game.controls",controls);
+
     // Ammo world
     collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
     dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration);
     overlappingPairCache = new Ammo.btDbvtBroadphase();
     solver = new Ammo.btSequentialImpulseConstraintSolver();
-    scene.world = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+    scene.world = new Ammo.btDiscreteDynamicsWorld(dispatcher,
+	    overlappingPairCache, solver, collisionConfiguration);
     scene.world.setGravity(new Ammo.btVector3(0, -40, 0));
 
     // Ground
-    ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), new THREE.MeshLambertMaterial({
-	color : 0xDDDDDD
-    }));
+    ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500),
+	    new THREE.MeshLambertMaterial({
+		color : 0xDDDDDD
+	    }));
     ground.receiveShadow = true;
     ground.rotation.x = -Math.PI / 2;
     scene.add(ground);
@@ -50,20 +60,35 @@ Core.prototype.initialize = function() {
     groundMass = 0;
     localInertia = new Ammo.btVector3(0, 0, 0);
     motionState = new Ammo.btDefaultMotionState(groundTransform);
-    rbInfo = new Ammo.btRigidBodyConstructionInfo(groundMass, motionState, groundShape, localInertia);
+    rbInfo = new Ammo.btRigidBodyConstructionInfo(groundMass, motionState,
+	    groundShape, localInertia);
     groundAmmo = new Ammo.btRigidBody(rbInfo);
     scene.world.addRigidBody(groundAmmo);
-    
-      MqoLoader.load('gameobjects/0-RAISER/0-RAISER.mqo', function(mqo) { 
-	  var xmesh =   MqoLoader.toTHREEJS(mqo, { MaterialConstructor : THREE.MeshPhongMaterial
-      }); console.log("adding 0-RAISER"); scene.add(xmesh);
-      
-      xmesh.position = new THREE.Vector3(20,40,20);
-      });
-     
 
+    MqoLoader.load('gameobjects/0-RAISER/0-RAISER.mqo', function(mqo) {
+	var mesh = MqoLoader.toTHREEJS(mqo, {
+	    MaterialConstructor : THREE.MeshPhongMaterial
+	});
+	console.log("adding 0-RAISER");
+	xmesh = mesh;
+	scene.add(mesh);
+
+	mesh.position = new THREE.Vector3(0, 50, 250);
+
+	self.gameobjects.add('game.player', mesh);
+	scene.remove(self.scenes.active.cameras.main);
+	var controls = new AdvancedController(mesh,self.scenes.active.cameras.main, {
+	    'domElement' : document
+	});
+	self.gameobjects.add('game.player.controller', controls);
+
+	//mesh.add();
+	self.scenes.active.cameras.main.position.set(1.2,4.5, 28);
+    });
+
+    callback();
     // TWEEN.start();
-     return this;
+    return this;
 };
 
 var now, lastbox = 0, boxes = [];
@@ -88,11 +113,13 @@ var createBox = function() {
     position_z = Math.random() * 50 - 5;
 
     // Create 3D box model
-    box = new THREE.Mesh(new THREE.CubeGeometry(3, 3, 3), new THREE.MeshLambertMaterial({
-	opacity : 0,
-	transparent : true
-    }));
-    box.material.color.setRGB(Math.random() * 100 / 100, Math.random() * 100 / 100, Math.random() * 100 / 100);
+    box = new THREE.Mesh(new THREE.CubeGeometry(3, 3, 3),
+	    new THREE.MeshLambertMaterial({
+		opacity : 0,
+		transparent : true
+	    }));
+    box.material.color.setRGB(Math.random() * 100 / 100,
+	    Math.random() * 100 / 100, Math.random() * 100 / 100);
     box.castShadow = true;
     box.receiveShadow = true;
     box.useQuaternion = true;
@@ -114,7 +141,8 @@ var createBox = function() {
     boxShape.calculateLocalInertia(mass, localInertia);
 
     motionState = new Ammo.btDefaultMotionState(startTransform);
-    rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, boxShape, localInertia);
+    rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, boxShape,
+	    localInertia);
     boxAmmo = new Ammo.btRigidBody(rbInfo);
     scene.world.addRigidBody(boxAmmo);
 

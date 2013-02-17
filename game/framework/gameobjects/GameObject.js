@@ -1,4 +1,4 @@
-var THREE = require('../client/vendor/Three');
+var THREE = require('../../vendor/Three');
 var util = require('util');
 
 var GameObject = function(geometry , material){
@@ -10,8 +10,10 @@ util.inherits(GameObject , THREE.Mesh);
 GameObject.prototype.update = function(){
 	return false;
 };
+
+GameObject.prototype.dispose = function(){
+	return false;
+};
 //TODO
-
-
 
 module.exports = GameObject;

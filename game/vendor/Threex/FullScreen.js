@@ -90,7 +90,9 @@ THREEx.FullScreen.bindKey	= function(opts){
 			THREEx.FullScreen.cancel();
 		}else{
 			THREEx.FullScreen.request(element);
-		}		
+			
+		}
+		if(opts.callback) callback();
 	}
 
 	// callback to handle keypress

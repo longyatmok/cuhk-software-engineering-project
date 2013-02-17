@@ -1,14 +1,13 @@
 /**
  * Simple Controller
  */
-var THREE = require('../client/vendor/Three');
-var util = require('util');
-var Game = require('../Game');
+var THREE = require('../../vendor/Three');
+var util = require('../Util');
 
 var PositionController = function(gameobject, opts) {
     this.object = gameobject;
 
-    this.opts = Game.extend({
+    this.opts = util.extend({
 	'domElement' : document,
 	'keys' : {
 	    forward : 87, // w
@@ -45,8 +44,7 @@ var PositionController = function(gameobject, opts) {
 	return function() {
 	    fn.apply(scope, arguments);
 	};
-    }
-    ;
+    };
     this.opts.domElement.addEventListener('keydown',
 	    bind(this, this.onKeyDown), false);
     this.opts.domElement.addEventListener('keyup', bind(this, this.onKeyUp),

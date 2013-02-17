@@ -1,7 +1,7 @@
 /**
  * Asset Manager
  */
-var THREE = require('../client/vendor/Three');
+var THREE = require('../vendor/Three');
 var util = require('util');
 
 var am = module.exports = function(opts) {

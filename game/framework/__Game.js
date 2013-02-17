@@ -1,10 +1,10 @@
 //abstract game class
-var jQuery = require('../client/vendor/jQuery');
-var THREE = require('../client/vendor/Three');
+var jQuery = require('../vendor/jQuery');
+var THREE = require('../vendor/Three');
 var THREEx = THREEx || {};
-THREEx.FullScreen = require('../client/vendor/THREEx/FullScreen');
-THREE.TrackballControls = require('../client/vendor/THREE/TrackballControls');
-THREEx.WindowResize = require('../client/vendor/THREEx/WindowResize');
+THREEx.FullScreen = require('../vendor/THREEx/FullScreen');
+THREE.TrackballControls = require('../vendor/THREE/TrackballControls');
+THREEx.WindowResize = require('../vendor/THREEx/WindowResize');
 var SceneManager = require('./SceneManager');
 var AssetManager = require('./AssetManager');
 var GameObjectManager = require('./GameObjectManager');

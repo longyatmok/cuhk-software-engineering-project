@@ -146,7 +146,7 @@ Core.prototype.initialize = function(callback) {
 	self.gameobjects.add('game.player.controller', controls);
 
 	// mesh.add();
-	self.scenes.active.cameras.main.position.set(0, 30, 70);
+	self.scenes.active.cameras.main.position.set(0, 3.35, 7.8);
     });
 
     callback();

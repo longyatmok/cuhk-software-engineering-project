@@ -11,8 +11,7 @@
     "express": "3.0.6",
     "twig": "*",
     "browserify": "*",
-    "jsmin" : "*",
-    "three-math" : "*"
+    "jsmin" : "*"
     
   }
 

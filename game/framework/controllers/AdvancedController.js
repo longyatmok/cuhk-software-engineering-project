@@ -17,8 +17,10 @@ var AdvancedController = function(gameobject, camera, opts) {
 	    ltrigger : 81,
 	    rtrigger : 69,
 	    reverse : 90,
-	    up : 32,
-	    down : 86,
+	    /*up : 32,
+	    down : 86,*/
+up2 : 32,
+down2 : 86,
 	    upsidedown : 88
 	/* z */
 	},
@@ -85,6 +87,11 @@ AdvancedController.prototype.update = function(delta) {
 	this.temp.upsidedown = false;
     }
 
+	if(this.keyStatus.up2){
+		this.movement.y++;
+	}else if(this.keyStatus.down2){
+		this.movement.y--;
+	}
     if (this.keyStatus.left || this.keyStatus.right || this.keyStatus.up
 	    || this.keyStatus.down) {
 	if (this.keyStatus.left) {
@@ -95,6 +102,8 @@ AdvancedController.prototype.update = function(delta) {
 	    var rotation_matrix = new THREE.Matrix4()
 		    .makeRotationY(((this.opts.maxSpeed * 0.3 + this.speed * 4) / this.opts.maxSpeed)
 			    * -Math.PI / 3 * delta);
+			
+	//deprecating
 	} else if (this.keyStatus.up) {
 	    var rotation_matrix = new THREE.Matrix4()
 		    .makeRotationX(((this.opts.maxSpeed * 0.5 + this.speed * 2) / this.opts.maxSpeed)

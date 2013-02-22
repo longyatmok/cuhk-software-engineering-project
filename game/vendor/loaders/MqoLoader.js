@@ -1,4 +1,5 @@
 var THREE = require('../Three');
+var Physijs = require('../Physi');
 var MqoLoader = {};
 
 MqoLoader.load = function(url, callback) {
@@ -315,7 +316,7 @@ MqoMaterial.prototype.parse = function(text) {
 	}
 }
 
-MqoLoader.toTHREEJS = function(mqo, options) {
+MqoLoader.toTHREEJS = function(mqo, options , className) {
 	if (!options) {
 		options = {};
 	}
@@ -328,6 +329,7 @@ MqoLoader.toTHREEJS = function(mqo, options) {
 
 	// 親オブジェクトを格納する
 	var parentObjects = [];
+	if(!className) className = THREE.Mesh;
 	parentObjects[0] = new THREE.Object3D
 
 	for ( var i = 0, len = mqo.meshes.length; i < len; ++i) {
@@ -358,7 +360,7 @@ MqoLoader.toTHREEJS = function(mqo, options) {
 			geometry.computeVertexNormals()
 
 			material = new THREE.MeshFaceMaterial(geometry.materials);
-			object = new THREE.Mesh(geometry, material);
+			object = new className(geometry, material);
 		}
 
 		// 親オブジェクトにオブジェクトを登録する

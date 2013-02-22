@@ -88,7 +88,8 @@ AdvancedController.prototype.update = function(delta) {
     }
 
 	if(this.keyStatus.up2){
-		this.movement.y++;
+		this.object.applyCentralImpulse(new THREE.Vector3(0, this.object.mass * 2 * delta,0));
+		
 	}else if(this.keyStatus.down2){
 		this.movement.y--;
 	}
@@ -148,7 +149,7 @@ AdvancedController.prototype.update = function(delta) {
      * this.speedRatio = this.speed / this.maxSpeed; this.movement.z -=
      * this.speed * delta;
      */
-    this.speed = Math.max(this.keyStatus.backward ? -15.0 : 0.0, Math.min(this.speed, this.opts.maxSpeed));
+    this.speed = Math.max(this.keyStatus.backward ? -10 : 0.0, Math.min(this.speed, this.opts.maxSpeed));
 
     /*
      * this.object.rotation.z = Math.max(-Math.PI / 3, Math.min(
@@ -158,11 +159,14 @@ AdvancedController.prototype.update = function(delta) {
      */
 
     this.movement.z -= this.speed * delta - Math.abs(this.movement.x);
-
+	this.object.applyCentralImpulse(new THREE.Vector3(0, this.object.mass * this.opts.acceleration * delta,0));
+	
+/*	
     this.dummy.translateX(this.movement.x);
     this.dummy.translateY(this.movement.y);
-    this.dummy.translateZ(this.movement.z);
-    this.object.position = this.dummy.position;
+    this.dummy.translateZ(this.movement.z);*/
+     this.dummy.position = this.object.position;
+//	 = this.dummy.position;
     // this.dummy.position = this.object.position;
 
     // throw Error('Override this method to update your object');

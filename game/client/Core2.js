@@ -71,12 +71,18 @@ Core.prototype.initialize = function(callback) {
     this.scenes.setActive("main");
 
     // Ground
-    ground_material = Physijs.createMaterial(new THREE.MeshLambertMaterial({
+    ground_material = Physijs.createMaterial(new THREE.MeshLambertMaterial(
+	{ map:
+	 THREE.ImageUtils.loadTexture( 'gameobjects/ground/texture.jpg' )
+	, ambient: 0xFFFFFF}
+	/*{
 	color : 0xDDDDDD
-    }), .8, // high friction
+    }*/), .8, // high friction
     .3 // low restitution
     );
 
+ground_material.map.wrapS = ground_material.map.wrapT = THREE.RepeatWrapping;
+		ground_material.map.repeat.set( 5, 5 );
     ground = new Physijs.BoxMesh(new THREE.CubeGeometry(10000, 1, 10000),
 	    ground_material, 0 // mass
     );
@@ -104,38 +110,19 @@ Core.prototype.initialize = function(callback) {
 
     // this.gameobjects.add("game.controls",controls);
 
-    // Ammo world
-    /*
-     * collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
-     * dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration);
-     * overlappingPairCache = new Ammo.btDbvtBroadphase(); solver = new
-     * Ammo.btSequentialImpulseConstraintSolver(); scene.world = new
-     * Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver,
-     * collisionConfiguration); scene.world.setGravity(new Ammo.btVector3(0,
-     * -40, 0)); // Ground ground = new THREE.Mesh(new THREE.PlaneGeometry(500,
-     * 500), new THREE.MeshLambertMaterial({ color : 0xDDDDDD }));
-     * ground.receiveShadow = true; ground.rotation.x = -Math.PI / 2;
-     * scene.add(ground); // Ground physics groundShape = new
-     * Ammo.btBoxShape(new Ammo.btVector3(500, 1, 500)); groundTransform = new
-     * Ammo.btTransform(); groundTransform.setIdentity();
-     * groundTransform.setOrigin(new Ammo.btVector3(0, -1, 0));
-     * 
-     * groundMass = 0; localInertia = new Ammo.btVector3(0, 0, 0); motionState =
-     * new Ammo.btDefaultMotionState(groundTransform); rbInfo = new
-     * Ammo.btRigidBodyConstructionInfo(groundMass, motionState, groundShape,
-     * localInertia); groundAmmo = new Ammo.btRigidBody(rbInfo);
-     * scene.world.addRigidBody(groundAmmo);
-     */
     MqoLoader.load('gameobjects/0-RAISER/0-RAISER.mqo', function(mqo) {
 	var mesh = MqoLoader.toTHREEJS(mqo, {
 	    MaterialConstructor : THREE.MeshPhongMaterial
 	});
 	// mesh.scale = new THREE.Vector3(5,5,5);
 	console.log("adding 0-RAISER");
+	mesh.position = new THREE.Vector3(0, 50, 100);
+/*	mesh = mesh.children[0];
+	mesh.mass = 1000;*/
 	xmesh = mesh;
 	scene.add(mesh);
 
-	mesh.position = new THREE.Vector3(0, 50, 250);
+	
 
 	self.gameobjects.add('game.player', mesh);
 	scene.remove(self.scenes.active.cameras.main);

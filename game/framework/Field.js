@@ -42,7 +42,7 @@ Field.prototype.activate = function() {
     }
 
     this.regions.forEach(util.callback(this, function(region) {
-	region.attachTo(this.scene);
+    	region.attachTo(this.scene);
     }));
 
     return true;

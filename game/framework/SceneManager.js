@@ -2,7 +2,7 @@
  * Scene Manager
  */
 var THREE = require('../vendor/Three');
-var util = require('../Util');
+var util = require('./Util');
 
 var SceneManager = function(opts) {
     this.activeScene = "main";

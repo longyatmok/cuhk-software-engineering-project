@@ -7,25 +7,36 @@ var GameObject = require('./gameobjects/GameObject');
 
 var GameObjectManager = function(opts) {
 
-    this.asset = [];
+    this.objects = [];
     this.names = [];
+    this.count = 0;
 };
 
-GameObjectManager.prototype.add = function(name, asset) {
+GameObjectManager.prototype.push = function(objects) {
     /*
-     * if (!asset instanceof GameObject) { throw Error('Error on adding an
+     * if (!objects instanceof GameObject) { throw Error('Error on adding an
      * invalid GameObject'); }
      */
-    this.asset.push(asset);
+    this.objects.push(objects);
+    this.names.push('unnamed-' + this.count);
+    this.count++;
+};
+GameObjectManager.prototype.add = function(name, objects) {
+    /*
+     * if (!objects instanceof GameObject) { throw Error('Error on adding an
+     * invalid GameObject'); }
+     */
+    this.objects.push(objects);
     this.names.push(name);
+    this.count++;
 };
 GameObjectManager.prototype.get = function(name) {
 
-    return this.asset[this.names.indexOf(name)];
+    return this.objects[this.names.indexOf(name)];
 };
 
 GameObjectManager.prototype.render = function(dt) {
-    this.asset.forEach(function(object) {
+    this.objects.forEach(function(object) {
 	if (object.update != null)
 	    object.update(dt);
     });
@@ -33,7 +44,7 @@ GameObjectManager.prototype.render = function(dt) {
 };
 
 GameObjectManager.prototype.dispose = function(dt) {
-    this.asset.forEach(function(object) {
+    this.objects.forEach(function(object) {
 	if (object.dispose != null)
 	    object.dispose();
     });

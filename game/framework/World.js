@@ -12,7 +12,7 @@ var GameObjectManager = require('./GameObjectManager');
 var util = require('util');
 
 /**
- * Three.js World Engine
+ * Three.js World 
  * 
  * @see http://mrdoob.github.com/three.js/docs/55/
  */
@@ -76,6 +76,11 @@ var World = function(opts) {
     }
     this.initialized = false;
     this.active = false;
+    
+    this.regions = [];
+    this.activeRegion;
+    this.gameplay;
+    this.time = Date.now();
 };
 
 World.instance = null;
@@ -152,14 +157,20 @@ World.prototype.stop = function() {
 };
 
 World.prototype.render = function() {
-    this.gameobjects.render(1 / 60);
+	this.activeRegion.render( Date.now() - this.time );
+	if(this.gameplay != undefined) this.gameplay.render(Date.now() - this.time);
+	
+	this.time = Date.now();
+	this.renderer.clear();
+    this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+	this.renderer.render(this.activeRegion.scene,this.activeRegion.camera);
+  /*  this.gameobjects.render(1 / 60);
     this.scenes.render(1 / 60);
 
     this.renderer.clear();
     this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
-    this.renderer.render(this.scenes.active.scene,
-	    this.scenes.active.cameras.main);
-
+    this.renderer.render(this.scenes.active.scene,this.scenes.active.cameras.main);
+*/
     // override this method to add other camera
 
 };

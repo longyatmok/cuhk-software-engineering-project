@@ -1,13 +1,18 @@
 
-var THREE = require('../vendor/Three');
-var util = require('../Util');
-var GameObjectManager = require('./GameObjectManager');
-
+var THREE = require('../../vendor/Three');
+var util = require('../../framework/Util');
+var GameObjectManager = require('../../framework/GameObjectManager');
+var Region = require('../../framework/Region');
 var TestRegion = function() {
-    TestRegion .super_.call(this,{
+    TestRegion.super_.call(this,{
 	id : 'test-region'
     });
     
+    this.regionobjects.boilerplate();
+    this.camera.position = new THREE.Vector3(0,3,2);
+    this.camera.rotation = new THREE.Vector3(-1, 0, 1);
+    this.scene.add(this.regionobjects.get("__boilerplate_cube"));
+  
 };
 util.inherits(TestRegion, Region);
 

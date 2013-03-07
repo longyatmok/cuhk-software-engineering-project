@@ -4,7 +4,7 @@
 var $ = require('../vendor/jquery');
 THREE = require('../vendor/Three');
 
-var GameCore = require('./Core2');
+var GameCore = require('./Core');
 jQuery(function() {
     game = new GameCore({
 	"container" : $('#canvas_container')[0],

@@ -6,6 +6,9 @@ var GameObject = function(geometry , material){
 };
 util.inherits(GameObject , THREE.Mesh);
 
+GameObject.prototype.load_ = function(){
+	return false;
+};
 //loop code goes here
 GameObject.prototype.update = function(){
 	return false;

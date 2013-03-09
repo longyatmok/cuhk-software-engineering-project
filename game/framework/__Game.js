@@ -11,7 +11,8 @@ var GameObjectManager = require('./GameObjectManager');
 var util = require('util');
 
 /**
- * Three.js Game Engine
+ * @deprecated
+ * Three.js Game Engine (OLD VERSION)
  * 
  * @see http://mrdoob.github.com/three.js/docs/55/
  */

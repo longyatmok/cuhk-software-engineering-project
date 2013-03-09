@@ -1,22 +1,25 @@
 /**
- * Gameplay (Abstract Class)
+ * FreeGameplay (Abstract Class)
  */
-var THREE = require('../vendor/Three');
-var util = require('./Util');
-var GameObjectManager = require('./GameObjectManager');
-var World = require('./World');
-THREE.PointerLockControls = require('../vendor/THREE/PointerLockControls');
+var THREE = require('../../vendor/Three');
+var util = require('../Util');
+var GameObjectManager = require('../GameObjectManager');
+var World = require('../World');
+var Gameplay = require('./Gameplay');
+THREE.PointerLockControls = require('../../vendor/THREE/PointerLockControls');
 
 var controls, time = Date.now();
 
-var Gameplay = function(region, opts) {
-	opts = World.extend({
-		name : 'open-world'
+var FreeGameplay = function(region, opts) {
+	this.opts = World.extend({
+		name : 'free-world'
 	}, opts);
+	FreeGameplay.super_.call(this,region,this.opts);
+	this.initialize();
+};
+util.inherits(FreeGameplay , Gameplay);
 
-	this.region = region;
-	this.scene = this.region.scene;
-
+FreeGameplay.prototype.initialize = function(){
 	this.directions = [];
 //	this.directions.push(new THREE.Vector3(0, 1, 0)); // above
 	this.directions.push(new THREE.Vector3(0, -1, 0)); // below
@@ -142,7 +145,7 @@ var Gameplay = function(region, opts) {
 
 };
 
-Gameplay.prototype.render = function(dt) {
+FreeGameplay.prototype.render = function(dt) {
 	this.gameobjects.render(dt);
 
 
@@ -180,4 +183,4 @@ Gameplay.prototype.render = function(dt) {
 
 }
 
-module.exports = Gameplay;
+module.exports = FreeGameplay;

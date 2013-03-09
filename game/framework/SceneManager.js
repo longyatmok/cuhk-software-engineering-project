@@ -1,4 +1,5 @@
 /**
+ * @deprecated
  * Scene Manager
  */
 var THREE = require('../vendor/Three');

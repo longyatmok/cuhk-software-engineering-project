@@ -59,10 +59,7 @@ var Region = function(opts) {
 	// this.lights;
 };
 
-Region.prototype.attachTo = function(scene) {
-	// render items on scene;
-	return this;
-};
+
 
 Region.prototype.render = function(dt) {
 	this.regionobjects.render(dt);

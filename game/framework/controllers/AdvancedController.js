@@ -61,6 +61,7 @@ down2 : 86,
 };
 util.inherits(AdvancedController, AbstractController);
 AdvancedController.prototype.update = function(delta) {
+	if(!this.enable) return;
     this.movement.set(0, 0, 0);
     this.rotation = new THREE.Vector3(0, 0, 0);
 

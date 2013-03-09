@@ -1,4 +1,5 @@
 /**
+ * @deprecated
  * Field (Abstract Class)
  */
 var THREE = require('../vendor/Three');

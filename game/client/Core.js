@@ -18,7 +18,8 @@ var AdvancedController = require('../framework/controllers/AdvancedController');
 //connection
 var Connection = require('../framework/net/Connection');
 
-var Gameplay = require('../framework/Gameplay');
+var Gameplay = require('../framework/gameplay/Gameplay');
+var FreeGameplay = require('../framework/gameplay/FreeGameplay');
 //regions
 var Region = require('../framework/Region');
 var TestRegion = require('./regions/TestRegion');
@@ -45,7 +46,7 @@ Core.prototype.initialize = function(callback) {
     
     this.activeRegion = this.regions['demo-one']; //we have the terrain now
     
-    this.gameplay = new Gameplay(this.activeRegion);
+    this.gameplay = new FreeGameplay(this.activeRegion);
     
     //connection here
     this.connection = new Connection({address : 'ws://localhost:7777',KEY:'CSCI3100-GROUP6',VERSION:'0.0.0'});

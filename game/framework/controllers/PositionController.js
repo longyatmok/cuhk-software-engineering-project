@@ -6,7 +6,7 @@ var util = require('../Util');
 
 var PositionController = function(gameobject, opts) {
     this.object = gameobject;
-
+    this.enable = true;
     this.opts = util.extend({
 	'domElement' : document,
 	'keys' : {
@@ -20,7 +20,7 @@ var PositionController = function(gameobject, opts) {
 	}
     }, opts);
 
-    this.active = true;
+  //  this.active = true;
     this.keyStateMapping = {};
     this.keyStatus = {};
     for ( var state in this.opts.keys) {
@@ -52,7 +52,7 @@ var PositionController = function(gameobject, opts) {
 };
 
 PositionController.prototype.update = function() {
-
+	if(!this.enable) return;
     if (this.keyStatus.forward)
 	this.object.position.z -= 1;
     if (this.keyStatus.backward)

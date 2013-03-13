@@ -77,6 +77,7 @@ var World = function(opts) {
 	this.initialized = false;
 	this.active = false;
 
+	this.modules = [];
 	this.regions = [];
 	this.activeRegion;
 	this.gameplay;

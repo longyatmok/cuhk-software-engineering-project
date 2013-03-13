@@ -1,13 +1,14 @@
-{% extends "game/layout.twig" %} {% block title %} Game Main {% endblock
-%} {% block body %}
-		<div id="blocker">
+{% extends "game/layout.twig" %}
+ {% block title %} Game Main {% endblock %}
 
+ 
+{% block body %}
+<div id="blocker">
 			<div id="instructions">
 				<span style="font-size:40px">Click to play</span>
 				<br />
 				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
 			</div>
-
-		</div>
+</div>
 <div id="canvas_container"></div>
 {% endblock %}

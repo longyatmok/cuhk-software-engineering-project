@@ -16,8 +16,13 @@ var MqoLoader = require('../vendor/loaders/MqoLoader');
 var PositionController = require('../framework/controllers/PositionController');
 var AdvancedController = require('../framework/controllers/AdvancedController');
 //connection
-var Connection = require('../framework/net/Connection');
+var Connection = require('../framework/net/client/AbstractConnection');
 
+//modules
+var HelloWorldModule = require('../modules/helloworld/client/module');
+var AuthModule = require('../modules/auth/client/module');
+
+//gameplay
 var Gameplay = require('../framework/gameplay/Gameplay');
 var FreeGameplay = require('../framework/gameplay/FreeGameplay');
 //regions
@@ -25,6 +30,7 @@ var Region = require('../framework/Region');
 var TestRegion = require('./regions/TestRegion');
 var DemoOneRegion = require('./regions/DemoOneRegion');
 var scene;
+
 var Core = function(opts) {
     Core.super_.call(this, util.extend({
 	"rendererOpts" : {
@@ -46,20 +52,28 @@ Core.prototype.initialize = function(callback) {
     
     this.activeRegion = this.regions['demo-one']; //we have the terrain now
     
-    this.gameplay = new FreeGameplay(this.activeRegion);
+    this.gameplay = new FreeGameplay(this.activeRegion); 
     
     //connection here
     this.connection = new Connection({address : 'ws://localhost:7777',KEY:'CSCI3100-GROUP6',VERSION:'0.0.0'});
+    //define all modules here
+    
+    this.modules [ 'hello-world' ] = new HelloWorldModule( this );
+    this.modules [ 'auth'] = new AuthModule( this );
+    
+    
+    
+    
+    //end
+    this.connection.connect();
     
     callback();
     return this;
 };
 
 var now, lastbox = 0, boxes = [];
-Core.prototype.render = function() {
- 
+Core.prototype.render = function() { 
     TWEEN.update();
-
     Core.super_.prototype.render.call(this);
 };
 module.exports = Core;

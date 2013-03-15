@@ -17,6 +17,12 @@ var Gameplay = function(region, opts) {
 	this.scene = this.region.scene;
 	this.gameobjects = new GameObjectManager();
 	this.initialize();
+	this.respawn();
+};
+
+Gameplay.prototype.respawn = function(){
+	this.region.camera.position = this.region.spawnLocation.clone();
+	this.region.camera.rotation = this.region.spawnRotation.clone();
 };
 
 Gameplay.prototype.initialize = function(){

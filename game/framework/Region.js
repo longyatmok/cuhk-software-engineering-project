@@ -27,7 +27,9 @@ var Region = function(opts) {
 	}
 
 	this.scene = scene;
-
+	this.spawnLocation = new THREE.Vector3(0,0,0);
+	this.spawnRotation = new THREE.Vector3(0,0,0);
+	
 	this.camera = new THREE.PerspectiveCamera(75, World.opts.width
 			/ World.opts.height, 0.1, 1000);
 

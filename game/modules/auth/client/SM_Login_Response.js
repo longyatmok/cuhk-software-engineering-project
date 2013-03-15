@@ -6,9 +6,18 @@ var io = require('../../../vendor/socket.io-client');
 var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 
+var RoomModule = require('../../room/client/module');
 var SM_Login_Response = function(data) {
-	console.log(" SM_Login_Response" );
 	console.log(data);
+	if(data.message == 'success'){
+	//	alert('login success');
+		World.instance.overlay.changeState(RoomModule.ModeSelection);
+		//overlay => Mode Selection
+		//add username to the overlay
+	}else{
+		alert('Login Failed , reason:'+data.message);
+	}
+
 };
 
 util.inherits(SM_Login_Response, ServerMessage);

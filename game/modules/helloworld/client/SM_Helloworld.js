@@ -18,9 +18,9 @@ var SM_Helloworld = function(data) {
 	});
 	cm.emit();
 	
-	var cm2 = new CM_Login();
+/*	var cm2 = new CM_Login();
 	cm2.emit();
-	
+	*/
 };
 
 

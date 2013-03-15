@@ -12,7 +12,7 @@ var CM_Login = function( info ){
 	this.NAME = "CM_Login";
 	this.connection = AbstractConnection.instance;
 	
-	this.data = { user_id : localStorage['user_id'] , user_token : localStorage['user_token']};
+	this.data = { user_id : info.id, user_token : info.token ,info:info };
 
 };
 util.inherits(CM_Login,ClientMessage);

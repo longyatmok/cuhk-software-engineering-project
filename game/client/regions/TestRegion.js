@@ -9,8 +9,11 @@ var TestRegion = function() {
     });
     
     this.regionobjects.boilerplate();
+	this.spawnLocation = new THREE.Vector3(0,3,2);
+	this.spawnRotation = new THREE.Vector3(-1, 0, 1);
+	/*
     this.camera.position = new THREE.Vector3(0,3,2);
-    this.camera.rotation = new THREE.Vector3(-1, 0, 1);
+    this.camera.rotation = new THREE.Vector3(-1, 0, 1);*/
     this.scene.add(this.regionobjects.get("__boilerplate_cube"));
   
 };

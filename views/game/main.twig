@@ -1,14 +1,9 @@
-{% extends "game/layout.twig" %}
- {% block title %} Game Main {% endblock %}
+{% extends "game/layout.twig" %} {% block title %} Game Main {% endblock %} {% block body %}
+<div id="overlay">
+<!-- 	<div class="overlay-center">
+		<span style="font-size: 46px;">Start the game</span>
+	</div>-->
 
- 
-{% block body %}
-<div id="blocker">
-			<div id="instructions">
-				<span style="font-size:40px">Click to play</span>
-				<br />
-				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
-			</div>
 </div>
 <div id="canvas_container"></div>
 {% endblock %}

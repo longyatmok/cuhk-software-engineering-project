@@ -15,9 +15,18 @@ var FreeGameplay = function(region, opts) {
 		name : 'free-world'
 	}, opts);
 	FreeGameplay.super_.call(this,region,this.opts);
-	this.initialize();
+	//this.initialize();
 };
 util.inherits(FreeGameplay , Gameplay);
+
+FreeGameplay.prototype.respawn = function(){
+	FreeGameplay.super_.prototype.respawn.call(this);
+	this.region.camera.position = this.region.spawnLocation.clone();
+	this.region.camera.rotation = this.region.spawnRotation.clone();
+	delete this.controls;
+	controls = this.controls = new THREE.PointerLockControls(this.region.camera);
+	this.scene.add(controls.getObject());
+};
 
 FreeGameplay.prototype.initialize = function(){
 	this.directions = [];
@@ -33,9 +42,9 @@ FreeGameplay.prototype.initialize = function(){
 	 * THREE.Vector3(-1, -1, 1)); this.directionspush(new THREE.Vector3(1, -1,
 	 * -1)); this.directionspush(new THREE.Vector3(-1, -1, -1));
 	 */
-	controls = new THREE.PointerLockControls(this.region.camera);
+	//this.controls = controls = new THREE.PointerLockControls(this.region.camera);
 
-	this.scene.add(controls.getObject());
+	//this.scene.add(controls.getObject());
 	this.gameobjects = new GameObjectManager();
 
 	var havePointerLock = 'pointerLockElement' in document
@@ -53,17 +62,14 @@ FreeGameplay.prototype.initialize = function(){
 					|| document.webkitPointerLockElement === element) {
 
 				controls.enabled = true;
-
-				blocker.style.display = 'none';
+				World.instance.overlay.visible(false);
+			//blocker.style.display = 'none';
 
 			} else {
 
 				controls.enabled = false;
 
-				blocker.style.display = '-webkit-box';
-				blocker.style.display = '-moz-box';
-				blocker.style.display = 'box';
-
+				World.instance.overlay.visible(true);
 				instructions.style.display = '';
 
 			}

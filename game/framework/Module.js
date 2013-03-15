@@ -7,7 +7,7 @@ var Module = function ( data ){
 	
 	
 };
-
+Module.NAME = "";
 
 
 module.exports = Module;

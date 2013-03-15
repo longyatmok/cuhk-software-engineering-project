@@ -79,8 +79,11 @@ var World = function(opts) {
 
 	this.modules = [];
 	this.regions = [];
+	this.gameplayClasses = [];
+	
 	this.activeRegion;
 	this.gameplay;
+	
 	this.time = Date.now();
 	this.active = false;
 };
@@ -119,6 +122,12 @@ World.prototype.boilerplate = function() {
 	// controls.addEventListener('change', this.render);
 	return this;
 };
+
+World.prototype.setRegion = function( region , c ){
+	this.activeRegion = this.regions [ region ];
+	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion );
+	//this.gameplay.respawn();
+}
 
 /**
  * Initialization code goes here

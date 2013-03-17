@@ -152,8 +152,12 @@ var RoomModule = function(world) {
 		var cm = new CM_RoomList_Request('free');
 		cm.emit();
 	});
+	$('#' + RoomModule.RoomList + '_back').click(function() {
+		World.instance.overlay.changeState(RoomModule.ModeSelection);
 
-	$(['#' + RoomModule.RoomList + '_back','#' + RoomModule.Room + '_back']).click(function() {
+	});
+
+	$('#' + RoomModule.Room + '_back').click(function() {
 		World.instance.overlay.changeState(RoomModule.ModeSelection);
 
 	});

@@ -21,8 +21,9 @@ var Server = function(opts) {
 				gameplay : 'free' ,
 				players : {}
 	});
-	demoRoom.channel = io.sockets.in(demoRoom.getChannelName());
+	
 	this.roomList.free [ 0 ] = demoRoom;
+	this.roomList.free [ 0 ] .channel = io.sockets.in(demoRoom.getChannelName());
 	this.playerList = [];
 	
 	
@@ -44,8 +45,13 @@ var Server = function(opts) {
 			if(room != null){
 				room.removePlayer( socket.player );			
 				room.channel.emit('SM_Room_Status',room);
+				socket.leave( room.getChannelName());
 			}
 			socket.player.room = null;
+			
+			if(room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
+				room.status = Room.STATUS_WAITING;
+			}
 			server.playerList[ socket.player.id ] = null;
 			delete socket.player;
 			
@@ -71,10 +77,10 @@ var Server = function(opts) {
 		
 			if(socket.player.room.isAllReady()){
 				socket.player.room.status = Room.STATUS_PLAYING;
-				socket.player.room.channel.emit('SM_Game_State',{type:'start',room:socket.player.room});
+				io.sockets.in(socket.player.room.getChannelName()).emit('SM_Game_State',{type:'start',room:socket.player.room});
 			}
-			
-			socket.player.room.channel.emit('SM_Room_Status',socket.player.room);
+			// aconsole.log(io.sockets.in(socket.player.room.getChannelName()));
+			io.sockets.in(socket.player.room.getChannelName()).emit('SM_Room_Status',socket.player.room);
 		});
 		socket.on('CM_RoomList_Request',function(data){
 			console.log(data);
@@ -83,9 +89,9 @@ var Server = function(opts) {
 			var result = server.roomList.free [ 0 ].addPlayer( socket.player );
 			if(result == true){
 				socket.join( server.roomList.free [ 0 ].getChannelName());
-				server.roomList.free [ 0 ].channel.emit('SM_Room_Status',server.roomList.free [ 0 ]);
+				io.sockets.in(socket.player.room.getChannelName()).emit('SM_Room_Status',server.roomList.free [ 0 ]);
 			}else{
-				server.roomList.free [ 0 ].channel.emit('SM_Room_Status',{error:"The World you are attempting to join is full or playing."});
+				socket.emit('SM_Room_Status',{error:"The World you are attempting to join is full or playing."});
 			}
 			// socket.emit('SM_Room_Status',server.roomList.free [ 0 ]);
 			

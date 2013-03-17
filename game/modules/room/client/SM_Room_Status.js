@@ -25,8 +25,8 @@ var SM_Room_Status = function(data) {
 //	}
 
 	if(this.room.noOfPlayer() == 1 && this.room.status == Room.STATUS_PLAYING){
-		World.instance.setRegion('title','empty');
-		World.instance.overlay.changeState(RoomModule.ModeSelection);
+		World.instance.setRegion('title-screen','empty');
+		World.instance.overlay.changeState(SM_Room_Status.ModeSelection);
 		delete module.room;
 		return;
 	}
@@ -37,7 +37,7 @@ util.inherits(SM_Room_Status, ServerMessage);
 
 SM_Room_Status.NAME = "SM_Room_Status";
 SM_Room_Status.RoomModuleNAME = 'Room-Module';
-SM_Room_Statis.ModeSelection = 'Room-Module-ModeSelection';
+SM_Room_Status.ModeSelection = 'Room-Module-ModeSelection';
 SM_Room_Status.RoomListState = 'Room-Module-RoomList';
 SM_Room_Status.RoomState = 'Room-Module-Room';
 SM_Room_Status.GameState = 'Room-Module-Game';

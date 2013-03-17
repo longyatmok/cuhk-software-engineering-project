@@ -7,16 +7,46 @@ var io = require('../../../vendor/socket.io-client');
 var io = require('../../../vendor/socket.io-client');
 var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
-//client messages
+// client messages
 
-//server messages
+// server messages
 var SM_Helloworld = require('./SM_Helloworld');
 
-var HelloWorldModule = function( world ){
-	world.connection.register( SM_Helloworld );
+var HelloWorldModule = function(world) {
+	world.connection.register(SM_Helloworld);
+
+	world.overlay
+			.add(
+					'title',
+					'<div class="overlay-center"><img src="ui_im/title.png"><br/><span id="title-msg">Connecting to the game server.</span></p></div>');
+	world.overlay.changeState('title');
+
+	world.connection
+			.on(
+					world.connection.ON_ERROR,
+					function(data) {
+						world.overlay
+								.changeState(
+										'title',
+										{
+											msg : "Network error , The game client is unable to gain access to the game server at this time."
+										});
+					});
+	world.connection
+			.on(
+					world.connection.ON_DISCONNECT,
+					function(data) {
+						world.overlay
+								.changeState(
+										'title',
+										{
+											msg : "Network : the game client lost its connection to the server."
+										});
+					});
+
 	console.log("Helloworld module loaded");
 };
 
-util.inherits(HelloWorldModule , Module);
+util.inherits(HelloWorldModule, Module);
 
 module.exports = HelloWorldModule;

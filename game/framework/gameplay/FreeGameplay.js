@@ -20,8 +20,9 @@ var FreeGameplay = function(region, opts) {
 util.inherits(FreeGameplay , Gameplay);
 
 FreeGameplay.prototype.respawn = function(){
-	FreeGameplay.super_.prototype.respawn.call(this);
-	this.region.camera.position = this.region.spawnLocation.clone();
+	//FreeGameplay.super_.prototype.respawn.call(this);
+	
+	this.region.camera.position = new THREE.Vector3(0,0,0);
 	this.region.camera.rotation = this.region.spawnRotation.clone();
 	delete this.controls;
 	controls = this.controls = new THREE.PointerLockControls(this.region.camera);

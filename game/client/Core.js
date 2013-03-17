@@ -23,6 +23,7 @@ var Overlay = require('../framework/Overlay');
 var HelloWorldModule = require('../modules/helloworld/client/module');
 var AuthModule = require('../modules/auth/client/module');
 var RoomModule = require('../modules/room/client/module');
+var GameModule = require('../modules/game/client/module');
 //gameplay
 var Gameplay = require('../framework/gameplay/Gameplay');
 var FreeGameplay = require('../framework/gameplay/FreeGameplay');
@@ -39,7 +40,9 @@ var Core = function(opts) {
 	/*    clearColor : 0x000000,*/
 	 /*   clearAlpha : 1,*/
 	    antialias : true
-	}/*,
+	},
+	VERSION : '0.1.0'
+    /*,
 	"physics" : true*/
     }, opts));
 
@@ -50,11 +53,11 @@ util.inherits(Core, World);
 Core.prototype.initialize = function(callback) {
     Core.super_.prototype.initialize.call(this);
     this.overlay = new Overlay();
-	this.overlay.add('title', '<div class="overlay-center"><img src="ui_im/title.png"><br/><span>CSCI3100 GROUP 6</span></p></div>');
-	this.overlay.changeState('title');
-    this.regions['title-screen'] = new TitleScreen();
+
+    this.regions['title-screen'] = TitleScreen;
  //   this.regions['test-region'] = new TestRegion();
-    this.regions['demo-one'] = new DemoOneRegion();
+    this.regions['demo-one'] = DemoOneRegion;
+
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
    
@@ -63,12 +66,13 @@ Core.prototype.initialize = function(callback) {
   //  this.gameplay = new FreeGameplay(this.activeRegion); 
     
     //connection here
-    this.connection = new Connection({address : 'ws://'+document.domain+':7777',KEY:'CSCI3100-GROUP6',VERSION:'0.0.0'});
+    this.connection = new Connection({address : 'ws://'+document.domain+':7777'});
     //define all modules here
     
     this.modules [ 'hello-world' ] = new HelloWorldModule( this );
     this.modules [ AuthModule.NAME ] = new AuthModule( this );
-    this.modules [ RoomModule.NAME] = new RoomModule( this );
+    this.modules [ RoomModule.NAME ] = new RoomModule( this );
+    this.modules [ GameModule.NAME ] = new GameModule( this );
     //end
     this.connection.connect();
     

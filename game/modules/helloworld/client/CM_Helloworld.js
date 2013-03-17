@@ -11,8 +11,7 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
 var CM_Helloworld = function( info ){
 	this.NAME = "CM_helloworld";
 	this.connection = AbstractConnection.instance;
-	
-	this.data = { text :"hello,world" , info : info};
+	this.data = { info : info};
 
 };
 util.inherits(CM_Helloworld,ClientMessage);

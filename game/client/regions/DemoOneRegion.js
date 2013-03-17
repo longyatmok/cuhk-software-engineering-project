@@ -4,18 +4,24 @@ var GameObjectManager = require('../../framework/GameObjectManager');
 var Region = require('../../framework/Region');
 //var Android = require('../gameobjects/Android');
 THREE.PointerLockControls = require('../../vendor/THREE/PointerLockControls');
-
+srand = require('../../vendor/seedrandom');
 var geometry, material, mesh;
 var controls,time = Date.now();
 
 var ray;
 
-var DemoOneRegion = function() {
-	DemoOneRegion.super_.call(this, {
-		id : 'test-region'
-	});
-	this.objects = [];
+var DemoOneRegion = function(opts) {
+	DemoOneRegion.super_.call(this, util.extend({
+		id : 'test-region',
+		seed : 'Sun Mar 17 2013 20:01:35 GMT+0800 '
+	}, opts));
 
+	this.objects = [];
+	console.log('seed');
+	console.log(this.opts.seed);
+	srand.seedrandom( this.opts.seed);
+	this.spawnLocation = new THREE.Vector3(10,-8,420);
+//	this.spawnRotation = new THREE.Vector3(0, 0, 0);
 	/*
 	this.regionobjects.boilerplate();
 	this.camera.position = new THREE.Vector3(0,3,2);
@@ -54,19 +60,19 @@ var DemoOneRegion = function() {
 	for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
 
 		var vertex = geometry.vertices[ i ];
-		vertex.x += Math.random() * 20 - 10;
-		vertex.y += Math.random() * 2;
-		vertex.z += Math.random() * 20 - 10;
+		vertex.x += srand.random() * 20 - 10;
+		vertex.y += srand.random() * 2;
+		vertex.z += srand.random() * 20 - 10;
 
 	}
 
 	for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
 
 		var face = geometry.faces[ i ];
-		face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-		face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-		face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-		face.vertexColors[ 3 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+		face.vertexColors[ 0 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
+		face.vertexColors[ 1 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
+		face.vertexColors[ 2 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
+		face.vertexColors[ 3 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
 
 	}
 
@@ -82,10 +88,10 @@ var DemoOneRegion = function() {
 	for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
 
 		var face = geometry.faces[ i ];
-		face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-		face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-		face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-		face.vertexColors[ 3 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+		face.vertexColors[ 0 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
+		face.vertexColors[ 1 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
+		face.vertexColors[ 2 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
+		face.vertexColors[ 3 ] = new THREE.Color().setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
 
 	}
 
@@ -94,12 +100,12 @@ var DemoOneRegion = function() {
 		material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
 
 		var mesh = new THREE.Mesh( geometry, material );
-		mesh.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
-		mesh.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
-		mesh.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
+		mesh.position.x = Math.floor( srand.random() * 20 - 10 ) * 20;
+		mesh.position.y = Math.floor( srand.random() * 20 ) * 20 + 10;
+		mesh.position.z = Math.floor( srand.random() * 20 - 10 ) * 20;
 		this.scene.add( mesh );
 
-		material.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+		material.color.setHSL( srand.random() * 0.2 + 0.5, 0.75, srand.random() * 0.25 + 0.75 );
 
 		this.regionobjects.push( mesh );
 

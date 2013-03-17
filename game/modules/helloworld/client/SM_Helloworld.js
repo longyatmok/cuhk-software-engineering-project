@@ -9,18 +9,12 @@ var CM_Helloworld = require('./CM_Helloworld');
 var CM_Login = require('../../auth/client/CM_Login');
 
 var SM_Helloworld = function(data) {
-	console.log("testing");
-	console.log(data);
-	console.log("send msg to server");
+	//connection established
 	var cm = new CM_Helloworld({
-		username : "admin",
-		foo : "bar"
+		version : World.instance.opts.VERSION
 	});
 	cm.emit();
-	
-/*	var cm2 = new CM_Login();
-	cm2.emit();
-	*/
+
 };
 
 

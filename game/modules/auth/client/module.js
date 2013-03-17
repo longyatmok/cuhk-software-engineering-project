@@ -35,7 +35,7 @@ var AuthModule = function(world) {
 		var username = window.prompt("Your Username", "DEMO_USER");
 
 		var cm = new CM_Login({
-			id : 0,
+			id : "0",
 			username : username,
 			token : 'DEMO_SESSION',
 			type : 'DEMO_SESSION'
@@ -43,9 +43,14 @@ var AuthModule = function(world) {
 		cm.emit();
 	});
 
-	setTimeout(function() {
-		world.overlay.changeState(AuthModule.NAME);
-	}, 5000);
+	world.connection.on(world.connection.ON_CONNECT,function(data){
+		world.overlay.changeState('title',{msg:"Connected. Initializing the game."});
+		setTimeout(function() {
+			world.overlay.changeState(AuthModule.NAME);
+		}, 1000);
+	});
+
+	
 	console.log("auth module loaded");
 };
 util.inherits(AuthModule, Module);

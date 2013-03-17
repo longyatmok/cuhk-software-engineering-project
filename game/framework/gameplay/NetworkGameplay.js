@@ -1,5 +1,5 @@
 /**
- * Gameplay (Abstract Class)
+ * Network Gameplay
  */
 var THREE = require('../../vendor/Three');
 var util = require('../Util');

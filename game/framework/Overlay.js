@@ -6,9 +6,12 @@ var $ = require('../vendor/jQuery');
 
 var Overlay = function() {
 	this.states = [];
-	
+	this.currentState = null;
 	this.add('blank', '<div id="blank" class="overlay"></div>');
-	this.add('instruction','<div id="instructions" class="overlay-center"><span style="font-size:40px">Game Start</span></div>')
+	this
+			.add(
+					'instruction',
+					'<div id="instructions" class="overlay-center"><span style="font-size:40px">Game Start</span></div>')
 
 };
 
@@ -18,19 +21,22 @@ Overlay.prototype.add = function(state, html) {
 			Overlay.OVERLAY_SELECTOR);
 };
 
-
 Overlay.prototype.changeState = function(state, data) {
-	console.log("change state to "+state);
-	for ( var key in this.states) {
-		$(Overlay.OVERLAY_SELECTOR).find('#' + key).fadeOut(1000);
-	}
+	console.log("change state to " + state);
 	for ( var key in data) {
-		$(Overlay.OVERLAY_SELECTOR).find('#' + state + '_' + key).text(
+		$(Overlay.OVERLAY_SELECTOR).find('#' + state + '-' + key).text(
 				data[key]);
 		// console.log('key:' + key + ' value:' + data[key]);
 	}
-	
-	$(Overlay.OVERLAY_SELECTOR).find('#' + state).fadeIn(2000);
+	if (this.currentState != state) {
+		for ( var key in this.states) {
+			$(Overlay.OVERLAY_SELECTOR).find('#' + key).fadeOut(1000);
+		}
+
+		$(Overlay.OVERLAY_SELECTOR).find('#' + state).fadeIn(2000);
+	}
+
+	this.currentState = state;
 };
 
 Overlay.prototype.visible = function(bool) {

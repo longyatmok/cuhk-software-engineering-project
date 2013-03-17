@@ -11,13 +11,14 @@ var RoomModule = require('./module');
 var SM_RoomList_Response = function (data) {
     this.name = 'SM_RoomList_Response';
     this.list = data.list;
-    console.log("SM_RoomList_Response");
-    console.log(data);
+ //   World.instance.overlay.changeState(RoomModule.RoomList);
     World.instance.overlay.changeState(SM_RoomList_Response.RoomListState);
     
 };
 
 util.inherits(SM_RoomList_Response, ServerMessage);
+
 SM_RoomList_Response.NAME = "SM_RoomList_Response";
 SM_RoomList_Response.RoomListState = 'Room-Module-RoomList';
+
 module.exports = SM_RoomList_Response;

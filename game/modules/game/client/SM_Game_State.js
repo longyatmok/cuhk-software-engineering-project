@@ -7,13 +7,26 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
+var SM_Game_State = function(data) {
+	this.name = 'SM_Game_State';
+	switch (data.type) {
+	case 'start':
+		//World.instance.modules[ '']
+		break;
+	case 'end':
 
-var CM_Room_GameQuit = function (data) {
-    this.name = 'CM_Room_GameQuit';
-    this.data = data;
-    this.connection = AbstractConnection.instance;
+		break;
+	case 'sync':
+	default:
+
+		break;
+
+	break;
+}
 };
-util.inherits(CM_Room_GameQuit, ClientMessage);
 
+util.inherits(SM_Game_State, ServerMessage);
 
-module.exports = CM_Room_GameQuit;
+SM_Game_State.NAME = "SM_Game_State";
+
+module.exports = SM_Game_State;

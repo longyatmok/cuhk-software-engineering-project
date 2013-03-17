@@ -8,12 +8,13 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 
-var CM_Room_GameQuit = function (data) {
-    this.name = 'CM_Room_GameQuit';
-    this.data = data;
-    this.connection = AbstractConnection.instance;
+var CM_Game_State = function (object) {
+	this.data = {
+			position: object.position,
+			rotation: object.rotation
+	};
 };
-util.inherits(CM_Room_GameQuit, ClientMessage);
 
+util.inherits(CM_Game_State, ClientMessage);
 
-module.exports = CM_Room_GameQuit;
+module.exports = CM_Game_State;

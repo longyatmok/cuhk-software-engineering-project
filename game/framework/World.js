@@ -123,9 +123,9 @@ World.prototype.boilerplate = function() {
 	return this;
 };
 
-World.prototype.setRegion = function( region , c ){
-	this.activeRegion = this.regions [ region ];
-	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion );
+World.prototype.setRegion = function( region , c , opts){
+	this.activeRegion = new this.regions [ region ]( opts );
+	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion , opts );
 	//this.gameplay.respawn();
 }
 
@@ -175,7 +175,7 @@ World.prototype.render = function() {
 	this.time = Date.now();
 	this.renderer.clear();
 	this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
-	this.renderer.render(this.activeRegion.scene, this.activeRegion.camera);
+	this.renderer.render(this.gameplay.scene, this.gameplay.camera);
 	/*  this.gameobjects.render(1 / 60);
 	  this.scenes.render(1 / 60);
 

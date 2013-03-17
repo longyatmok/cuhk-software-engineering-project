@@ -5,15 +5,15 @@ var THREE = require('../vendor/Three');
 var util = require('./Util');
 var GameObjectManager = require('./GameObjectManager');
 var World = require('./World');
-
+var DefaultCamera = require('./cameras/DefaultCamera');
 var Region = function(opts) {
-	opts = World.extend({
+	this.opts = opts = World.extend({
 		id : '__region' + Region.counter++
 	}, opts);
 
 	this.id = opts.id;
 	// define the scene here
-	//  this.activated_ = true;
+	// this.activated_ = true;
 	// scene
 	var scene;
 	if (World.opts.physics) {
@@ -27,12 +27,15 @@ var Region = function(opts) {
 	}
 
 	this.scene = scene;
-	this.spawnLocation = new THREE.Vector3(0,0,0);
-	this.spawnRotation = new THREE.Vector3(0,0,0);
-	
-	this.camera = new THREE.PerspectiveCamera(75, World.opts.width
-			/ World.opts.height, 0.1, 1000);
+	this.spawnLocation = new THREE.Vector3(0, 0, 0);
+	this.spawnRotation = new THREE.Vector3(0, 0, 0);
 
+	/*
+	 * this.camera = new THREE.PerspectiveCamera(75, World.opts.width /
+	 * World.opts.height, 0.1, 1000);
+	 */
+	this.camera = new DefaultCamera(75, World.opts.width / World.opts.height,
+			0.1, 1000);
 	if (World.opts.resize) {
 		window.addEventListener('resize', util.callback(this, function() {
 			this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -40,28 +43,27 @@ var Region = function(opts) {
 		}), false);
 	}
 
-    // add lights
-    // Light
-    var light = new THREE.DirectionalLight(0xFFFFFF);
-    light.position.set(40, 40, 25);
-    light.target.position.copy(scene.position);
-    light.castShadow = true;
-    light.shadowCameraLeft = -25;
-    light.shadowCameraTop = -25;
-    light.shadowCameraRight = 25;
-    light.shadowCameraBottom = 25;
-    light.shadowBias = -.0001
-    scene.add(light);
-    this.camera.lookAt(scene.position);
-    
-	this.regionobjects = new GameObjectManager(); 
+	// add lights
+	// Light
+	var light = new THREE.DirectionalLight(0xFFFFFF);
+	light.position.set(40, 40, 25);
+	light.target.position.copy(scene.position);
+	light.castShadow = true;
+	light.shadowCameraLeft = -25;
+	light.shadowCameraTop = -25;
+	light.shadowCameraRight = 25;
+	light.shadowCameraBottom = 25;
+	light.shadowBias = -.0001
+	scene.add(light);
+	this.camera.lookAt(scene.position);
+
+	this.regionobjects = new GameObjectManager();
 	this.gameobjects = new GameObjectManager();
+	this.gameobjects.add('camera', this.camera);
 	// this.terrain;
 	// this.scripts;
 	// this.lights;
 };
-
-
 
 Region.prototype.render = function(dt) {
 	this.regionobjects.render(dt);

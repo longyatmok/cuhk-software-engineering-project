@@ -11,7 +11,7 @@ var Overlay = function() {
 	this
 			.add(
 					'instruction',
-					'<div id="instructions" class="overlay-center"><span style="font-size:40px">Game Start</span></div>')
+					'<div id="instructions" class="overlay-center"><span style="font-size:40px">Game Start</span></div>');
 
 };
 
@@ -22,18 +22,19 @@ Overlay.prototype.add = function(state, html) {
 };
 
 Overlay.prototype.changeState = function(state, data) {
-	console.log("change state to " + state);
+	
 	for ( var key in data) {
 		$(Overlay.OVERLAY_SELECTOR).find('#' + state + '-' + key).text(
 				data[key]);
 		// console.log('key:' + key + ' value:' + data[key]);
 	}
 	if (this.currentState != state) {
+		console.log("change state to " + state);
 		for ( var key in this.states) {
-			$(Overlay.OVERLAY_SELECTOR).find('#' + key).fadeOut(1000);
+			$(Overlay.OVERLAY_SELECTOR).find('#' + key).fadeOut(200);
 		}
 
-		$(Overlay.OVERLAY_SELECTOR).find('#' + state).fadeIn(2000);
+		$(Overlay.OVERLAY_SELECTOR).find('#' + state).fadeIn(600);
 	}
 
 	this.currentState = state;

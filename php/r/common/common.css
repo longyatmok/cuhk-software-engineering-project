@@ -1,0 +1,29 @@
+body{
+	margin:0;
+	overflow:hidden;
+}
+
+body>.container{
+	position:absolute;
+	height:100%;
+	width:100%;
+	left:100%;
+	z-index:0;
+	transition:left 1s ease-in-out;
+	-o-transition:left 1s ease-in-out;
+	-ms-transition:left 1s ease-in-out;
+	-moz-transition:left 1s ease-in-out;
+	-webkit-transition:left 1s ease-in-out;
+}
+body>.container.show{
+	left:0;
+	z-index:1;
+}
+.background{
+	background-color:rgba(100,100,100,0.5);
+	padding:10px;
+}
+.scaleBg{
+	background-size:contain;
+	background-repeat:no-repeat;
+}

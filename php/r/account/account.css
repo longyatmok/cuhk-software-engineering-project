@@ -1,0 +1,45 @@
+#login .title{
+	position:absolute;
+	margin-left:15%;
+	width:100%;
+	top:5%;
+	height:40%;
+	background-image:url(../../img/title.png);
+	background-size:contain;
+	background-repeat:no-repeat;
+}
+
+#login .background{
+	position:absolute;
+	top:55%;
+	height:40%;
+	width:100%;
+}
+#login .login_title{
+	position:absolute;
+	width:100%;
+	top:5%;
+	height:40%;
+	background-image:url(../../img/login_select.png);
+}
+#login .login_service{
+	position:relative;
+	top:55%;
+	height:40%;
+	margin:auto;
+}
+/*
+#login .background div{
+	margin:auto;
+	display:table;
+}
+#login .background img{
+	display:inline;
+	margin-top:30px;
+	margin-left:40px;
+	margin-right:40px;
+}
+
+#login .background .login-service{
+	padding-bottom:30px;
+}*/

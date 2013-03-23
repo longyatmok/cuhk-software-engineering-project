@@ -18,15 +18,16 @@
 #login .login_title{
 	position:absolute;
 	width:100%;
-	top:5%;
-	height:40%;
-	background-image:url(../../img/login_select.png);
+	top:10%;
+	height:25%;
+	background-image:url(../../img/account/login_select.png);
+	background-position:center;
 }
 #login .login_service{
-	position:relative;
-	top:55%;
-	height:40%;
-	margin:auto;
+	position:absolute;
+	top:50%;
+	height:45%;
+	width:100%;
 }
 /*
 #login .background div{
@@ -43,3 +44,19 @@
 #login .background .login-service{
 	padding-bottom:30px;
 }*/
+#login .login_service .center{
+	height:100%;
+	width:40%;
+	left:0px;
+	margin:auto;
+	border-collapse:collapse;
+	border-spacing: 0px;
+}#login .login_service .center td{
+	text-align:center;
+}
+#login .login_service .center .link{
+	height:100%;
+	display:table;
+	margin:auto;
+	cursor:pointer;
+}

@@ -26,10 +26,9 @@ if(isset($_GET['logout'])){
 	include(INTERFACE_PATH . 'p1Header.php');
 // load all script here
 	loadRes('common');
-//	loadRes('account');
+	loadRes('account');
   include(INTERFACE_PATH . 'p2Header.php');
 	loadInterface('account');
-	loadRes('account');
 	callLayer('login');
 	// show google or facebook login link
 //	include(INTERFACE_PATH . 'account/header.php');

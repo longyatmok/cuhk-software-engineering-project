@@ -23,6 +23,16 @@ body>.container.show{
 	background-color:rgba(100,100,100,0.5);
 	padding:10px;
 }
+body>.background{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	background-image:url(../../img/bg.jpg);
+	background-size:cover;
+	background-position:center;
+}
 .scaleBg{
 	background-size:contain;
 	background-repeat:no-repeat;

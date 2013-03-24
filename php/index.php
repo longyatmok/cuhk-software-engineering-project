@@ -13,12 +13,15 @@ if(isset($_GET['logout'])){
 	loadRes('common');
 	loadRes('game');
 	include(INTERFACE_PATH . 'p2Header.php');
+	loadInterface('game');
 	if($Account->getStatus()){
 		//logined 
 //		include(INTERFACE_PATH . 'account/welcome.php');
+		callLayer('modeSelect');
 	}else{
 		// ask user name
 //		include(INTERFACE_PATH . 'account/missName.php');
+		callLayer('changeNickname');
 	}
 //	include(INTERFACE_PATH . 'account/footer.php');
 	include(INTERFACE_PATH . 'footer.php');

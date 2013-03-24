@@ -15,15 +15,49 @@ body>.container{
 	-moz-transition:left 1s ease-in-out;
 	-webkit-transition:left 1s ease-in-out;
 }
+
+/* transition */
+.transit{
+	transition:left 1s ease-in-out 0.7s, opacity 1s ease-in-out;
+	-o-transition:left 1s ease-in-out 0.7s, opacity 1s ease-in-out;
+	-ms-transition:left 1s ease-in-out 0.7s, opacity 1s ease-in-out;
+	-moz-transition:left 1s ease-in-out 0.7s, opacity 1s ease-in-out;
+	-webkit-transition:left 1s ease-in-out 0.7s, opacity 1s ease-in-out;
+	left:100%;
+	opacity:0;
+}
+.ed{
+	left:0%;
+	opacity:1;
+}
+.bgCenter{
+	background-position:center;
+}
+/* transition end */
+
 body>.container.show{
 	left:0;
 	z-index:1;
 }
 .background{
-	background-color:rgba(100,100,100,0.5);
+	background-color:rgba(200,200,200,0.6);
 	padding:10px;
+}
+body>.background{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	background-image:url(../../img/bg.jpg);
+	background-size:cover;
+	background-position:center;
 }
 .scaleBg{
 	background-size:contain;
 	background-repeat:no-repeat;
+}
+.link{
+	margin:auto;
+	cursor:pointer;
 }

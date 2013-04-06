@@ -1,5 +1,10 @@
 /**
  * Advanced Vehicle Controller (Experiment)
+ * @constructor
+ * @this {AdvancedController}
+ * @param {object}   gameobject : gameobject
+ *                   camera : camera of player
+ *                   opts : opts of world
  */
 var THREE = require('../../vendor/Three');
 var util = require('../Util');

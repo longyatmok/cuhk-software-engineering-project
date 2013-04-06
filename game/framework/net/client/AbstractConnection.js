@@ -7,6 +7,12 @@ var io = require('../../../vendor/socket.io-client');
 var ClientMessage = require('./ClientMessage');
 var ServerMessage = require('./ServerMessage');
 
+/**
+ * AbstractConnection (Abstract Class) 
+ * @constructor
+ * @this {AbstractConnection}
+ * @param opts 
+ */
 var AbstractConnection = function(opts) {
 	var conn = this;
 
@@ -23,7 +29,11 @@ var AbstractConnection = function(opts) {
 	this.ON_DISCONNECT = 'disconnect';
 	this.ON_ERROR = 'error';
 }
-
+/**
+ * AbstractConnection (Abstract Class) connect
+ * @this {AbstractConnection}
+ * @param opts
+ */
 AbstractConnection.prototype.connect = function() {
 	var conn = this;
 	var socket = this.socket = io.connect(this.opts.address);
@@ -50,14 +60,31 @@ AbstractConnection.prototype.connect = function() {
 	});
 
 };
+
+/**
+ * AbstractConnection (Abstract Class) register
+ * @this {AbstractConnection}
+ * @param className
+ */
 AbstractConnection.prototype.register = function(className) {
 	console.log(className);
 	this.listeners.push(className);
 };
+/**
+ * AbstractConnection (Abstract Class) connection "on"
+ * @this {AbstractConnection}
+ * @param e, callback
+ */
 AbstractConnection.prototype.on = function(e, callback) {
 	callback.NAME = e;
 	this.register(callback);
 };
+
+/**
+ * AbstractConnection (Abstract Class) connection "on"
+ * @this {AbstractConnection}
+ * @param object
+ */
 AbstractConnection.prototype.emit = function(object) {
 	console.log(" <<< [" + object.NAME + ']');
 	// console.log(object.data);

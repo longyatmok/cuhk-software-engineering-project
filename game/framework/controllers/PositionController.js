@@ -1,6 +1,12 @@
 /**
  * Simple Controller
+ * @constructor
+ * @this {PositionController}
+ * @param {gameobject, opts} gameobject : gameobject
+ *                           opts : opts of world
+ * @return {function()}
  */
+
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
 
@@ -51,6 +57,10 @@ var PositionController = function(gameobject, opts) {
 	    false);
 };
 
+/**
+ * Simple Controller update
+ * @this {PositionController}
+ */
 PositionController.prototype.update = function() {
 	if(!this.enable) return;
     if (this.keyStatus.forward)

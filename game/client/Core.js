@@ -33,6 +33,12 @@ var TitleScreen = require('./regions/TitleScreen');
 var TestRegion = require('./regions/TestRegion');
 var DemoOneRegion = require('./regions/DemoOneRegion');
 var scene;
+/**
+ * Game Core
+ * @constructor
+ * @this {Core}
+ * @param opts
+ */
 
 var Core = function(opts) {
     Core.super_.call(this, util.extend({
@@ -48,6 +54,11 @@ var Core = function(opts) {
 
 };
 util.inherits(Core, World);
+/**
+ * Game Core initialize
+ * @this {Core}
+ * @param callback
+ */
 
 // methods start here
 Core.prototype.initialize = function(callback) {
@@ -82,6 +93,12 @@ Core.prototype.initialize = function(callback) {
 
 
 var now, lastbox = 0, boxes = [];
+
+/**
+ * Game Core render
+ * @this {Core}
+ */
+
 Core.prototype.render = function() { 
     TWEEN.update();
     Core.super_.prototype.render.call(this);

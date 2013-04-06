@@ -1,3 +1,4 @@
+// this is a demo region for demo use
 var THREE = require('../../vendor/Three');
 var util = require('../../framework/Util');
 var GameObjectManager = require('../../framework/GameObjectManager');
@@ -9,6 +10,12 @@ var geometry, material, mesh;
 var controls,time = Date.now();
 
 var ray;
+/**
+ * This is a demo region for demo use
+ * @constructor
+ * @this {DemoOneRegion}
+ * @param opts
+ */
 
 var DemoOneRegion = function(opts) {
 	DemoOneRegion.super_.call(this, util.extend({

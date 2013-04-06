@@ -1,4 +1,5 @@
-﻿var THREE = require('../../../vendor/Three');
+﻿// temp chatbox
+var THREE = require('../../../vendor/Three');
 var util = require('../../../framework/Util');
 var GameObjectManager = require('../../../framework/GameObjectManager');
 var World = require('../../../framework/World');
@@ -9,6 +10,13 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
 var CM_Chat = require('./CM_Chat');
 var SM_Chat = require('./SM_Chat');
 
+/**
+ * Chatbox
+ * @constructor
+ * @this {Chatbox}
+ * @param data 
+ */
+
 var Chatbox = function (data) {
     this.world = data.world;
     this.connection = AbstractConnection.instance;
@@ -17,7 +25,13 @@ var Chatbox = function (data) {
 
 };
 
-Chatbox.onMessage = function (data) {
+/**
+ * Chatbox onmessage
+ * @this {Chatbox}
+ * @param data 
+ */
+
+Chatbox.prototype.onMessage = function (data) {
     io.sockets.on('connection', function (socket) {
         socket.on('CM_Chat', function (data) {
             this.data = data;
@@ -27,18 +41,33 @@ Chatbox.onMessage = function (data) {
 
 };
 
-Chatbox.send = function (data) {
+/**
+ * Chatbox send
+ * @this {Chatbox}
+ * @param data 
+ */
+
+Chatbox.prototype.send = function (data) {
     io.sockets.on('connection', function (socket) {
         socket.emit('SM_Chat', { msg: this.data.msg });
         socket.broadcast.emit('SM_Chat', { msg: this.data.msg });
     });
 };
-
-Chatbox.update = function (data) {
+/**
+ * Chatbox update
+ * @this {Chatbox}
+ * @param data 
+ */
+Chatbox.prototype.update = function (data) {
     return this;
 };
+/**
+ * Chatbox dispose
+ * @this {Chatbox}
+ * @param data 
+ */
 
-Chatbox.dispose = function () {
+Chatbox.prototype.dispose = function () {
     delete this;
 };
 

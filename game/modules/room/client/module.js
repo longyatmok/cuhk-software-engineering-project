@@ -17,6 +17,13 @@ var SM_RoomList_Response = require('./SM_RoomList_Response');
 var CM_Room_GameStart = require('./CM_Room_GameStart');
 var SM_Room_Status = require('./SM_Room_Status');
 
+// room module
+/**
+ * module for room
+ * @constructor
+ * @this {RoomModule}
+ * @param world 
+ */
 var RoomModule = function(world) {
 	this.roomList = new RoomList();
 	this.world = world;
@@ -24,6 +31,8 @@ var RoomModule = function(world) {
 
 	world.connection.register(SM_RoomList_Response);
 	world.connection.register(SM_Room_Status);
+
+    // GUI for mode selection
 	world.overlay
 			.add(
 					RoomModule.ModeSelection,
@@ -42,6 +51,8 @@ var RoomModule = function(world) {
 							+ '_rank" src="ui_im/ranking_full.png">' + '</div>'
 
 			);
+
+    // GUI for room
 	world.overlay
 			.add(
 					RoomModule.Room,
@@ -112,6 +123,7 @@ var RoomModule = function(world) {
 
 			);
 
+    // GUI for room list
 	world.overlay
 			.add(
 					RoomModule.RoomList,
@@ -171,11 +183,21 @@ var RoomModule = function(world) {
 };
 util.inherits(RoomModule, Module);
 
+/**
+ * refresh room list
+ * @this {RoomModule}
+ * @param list 
+ */
 RoomModule.prototype.updateRoomList = function(list) {
 	this.roomList = list;
 	// TODO redraw UI
 };
 
+/**
+ * refresh room
+ * @this {RoomModule}
+ * @param data 
+ */
 RoomModule.prototype.updateRoom = function(data) {
 	this.room = data;
 
@@ -208,10 +230,18 @@ RoomModule.prototype.updateRoom = function(data) {
 	World.instance.overlay.changeState(SM_Room_Status.RoomState, variables);
 };
 
+
 RoomModule.NAME = 'Room-Module';
 RoomModule.ModeSelection = RoomModule.NAME + '-ModeSelection';
 RoomModule.RoomList = RoomModule.NAME + '-RoomList';
 RoomModule.Room = RoomModule.NAME + '-Room';
+
+
+/**
+* return room list
+* @this {RoomModule}
+* @param mode 
+*/
 RoomModule.prototype.requestRoomList = function(mode) {
 
 	var cm = new CM_RoomList_Request(mode);

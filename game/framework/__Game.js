@@ -1,4 +1,8 @@
-//abstract game class
+/**
+*abstract game class
+* 
+*/
+
 var jQuery = require('../vendor/jQuery');
 var THREE = require('../vendor/Three');
 var THREEx = THREEx || {};

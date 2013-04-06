@@ -7,7 +7,12 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 var RoomModule = require('./module');
-
+/**
+ * server side msg to return room list
+ * @constructor
+ * @this {SM_RoomList_Response}
+ * @param data 
+ */
 var SM_RoomList_Response = function (data) {
     this.name = 'SM_RoomList_Response';
     this.list = data.list;

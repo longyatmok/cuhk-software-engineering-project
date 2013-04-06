@@ -126,7 +126,8 @@ World.prototype.boilerplate = function() {
 World.prototype.setRegion = function( region , c , opts){
 	this.activeRegion = new this.regions [ region ]( opts );
 	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion , opts );
-	//this.gameplay.respawn();
+	this.gameplay.initialize();
+	this.gameplay.respawn();
 }
 
 /**

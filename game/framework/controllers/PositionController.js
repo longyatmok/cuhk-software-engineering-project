@@ -29,7 +29,9 @@ var PositionController = function(gameobject, opts) {
     }
 
     this.onKeyDown = function(event) {
-	if (this.keyStateMapping[event.keyCode] && this.active) {
+	
+	if (this.keyStateMapping[event.keyCode] && this.enabled) {
+	
 	    this.keyStatus[this.keyStateMapping[event.keyCode]] = true;
 	}
     };

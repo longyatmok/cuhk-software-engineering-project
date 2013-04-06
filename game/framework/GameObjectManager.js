@@ -30,6 +30,11 @@ GameObjectManager.prototype.add = function(name, objects) {
     this.names.push(name);
     this.count++;
 };
+GameObjectManager.prototype.set = function(name,objects) {
+
+    return this.objects[this.names.indexOf(name)] = objects;
+};
+
 GameObjectManager.prototype.get = function(name) {
 
     return this.objects[this.names.indexOf(name)];
@@ -37,7 +42,7 @@ GameObjectManager.prototype.get = function(name) {
 
 GameObjectManager.prototype.render = function(dt) {
     this.objects.forEach(function(object) {
-	if (object.update != null)
+	if (object != undefined && object.update != null)
 	    object.update(dt);
     });
     return this;
@@ -45,7 +50,7 @@ GameObjectManager.prototype.render = function(dt) {
 
 GameObjectManager.prototype.dispose = function(dt) {
     this.objects.forEach(function(object) {
-	if (object.dispose != null)
+	if (object != undefined && object.update != null)
 	    object.dispose();
     });
     

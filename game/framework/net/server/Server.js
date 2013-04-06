@@ -18,7 +18,7 @@ var Server = function(opts) {
 	var demoRoom = new Room({
 				id: 0,
 				region : 'demo-one',
-				gameplay : 'free' ,
+				gameplay : 'practice',//free' ,
 				players : {}
 	});
 	

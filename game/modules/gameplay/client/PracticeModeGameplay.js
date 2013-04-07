@@ -5,15 +5,17 @@ var World = require('../../../framework/World');
 var FreeGameplay = require('../../../framework/gameplay/FreeGameplay');
 var ColladaLoader = require('../../../vendor/loaders/ColladaLoader');
 var CharacterController = require('../../../framework/controllers/CharacterController');
-
-
+var THREEx = THREEx || {};
+THREE.TrackballControls = require('../../../vendor/THREE/TrackballControls');
 /**
- * Practice Mode is a standalone free mode.
- * inherited from FreeGameplay
+ * Practice Mode is a standalone free mode. inherited from FreeGameplay
+ * 
  * @constructor
  * @this {PracticeModeGameplay}
- * @param region Region
- * @param opts Options Object
+ * @param region
+ *                Region
+ * @param opts
+ *                Options Object
  */
 var PracticeModeGameplay = function(region, opts) {
     this.opts = World.extend({
@@ -27,14 +29,38 @@ PracticeModeGameplay.prototype.respawn = function() {
     if (!this.ready)
 	return false;
     // FreeGameplay.super_.prototype.respawn.call(this);
-
-    this.region.camera.position = new THREE.Vector3(0, 0, 0);
-    this.region.camera.rotation = this.region.spawnRotation.clone();
-
-    this.controls = new CharacterController(
-	    this.gameobjects.get('game.player'), this.region.camera);
-    this.gameobjects.add('controls', this.controls);
-    this.scene.add(this.controls.dummy);
+    if (this.controls == undefined) {
+	this.region.camera.position = new THREE.Vector3(0, 0, 0);
+	this.region.camera.rotation = new THREE.Vector3(0, 0, 0);
+	this.gameobjects.get('game.player').position = this.region.spawnLocation
+		.clone();
+	this.controls = new CharacterController(this.gameobjects
+		.get('game.player'), this.region.camera);
+	this.gameobjects.add('controls', this.controls);
+	this.scene.add(this.controls.dummy);
+	
+	    this.controls2 = new THREE.TrackballControls(this.region.camera);
+	    this.controls2.rotateSpeed = 4.0;
+	    this.controls2.zoomSpeed = 3.6;
+	    this.controls2.panSpeed = 2.0;
+	    this.controls2.noZoom = false;
+	    this.controls2.noPan = true;
+	    this.controls2.staticMoving = true;
+	    this.controls2.dynamicDampingFactor = 0.3;
+	 
+	    this.gameobjects.add("__boilerplate_controls_trackball", this.controls2);
+	
+	
+	
+	
+	
+	
+    } else {
+	this.gameobjects.get('game.player').position.x = this.region.spawnLocation.x;
+	this.gameobjects.get('game.player').position.y = this.region.spawnLocation.y;
+	this.gameobjects.get('game.player').position.z = this.region.spawnLocation.z;
+	this.controls.reset();
+    }
 };
 
 PracticeModeGameplay.prototype.initialize = function() {
@@ -48,6 +74,7 @@ PracticeModeGameplay.prototype.initialize = function() {
     this.directions.push(new THREE.Vector3(0, 0, -1));// 3 east
     this.directions.push(new THREE.Vector3(1, 0, 0)); // 4 south
     this.directions.push(new THREE.Vector3(-1, 0, 0));// 5 north
+    this.directions.push(new THREE.Vector3(1, -1, 1));
     var self = this;
 
     console.log("[loader]start");
@@ -55,7 +82,7 @@ PracticeModeGameplay.prototype.initialize = function() {
     loader.load('gameobjects/avatar/boy01_v2.dae', function(result) {
 	var avatar = result.scene;
 	self.gameobjects.add('character.template', avatar.clone());
-	avatar.scale = new THREE.Vector3(0.02, 0.02, 0.02);
+	avatar.scale = new THREE.Vector3(0.01, 0.01, 0.02);
 	console.log("[loader] success");
 
 	self.gameobjects.add('game.player', avatar);
@@ -105,9 +132,7 @@ PracticeModeGameplay.prototype.render = function(dt) {
 	if (intersections.length > 0) {
 
 	    var geometry = new THREE.Geometry();
-
-	    // DEBUG RAY LINE START
-	    // POSITION OF MESH TO SHOOT RAYS OUT OF
+	    // DEBUG RAY LINE START // POSITION OF MESH TO SHOOT RAYS OUT OF
 	    geometry.vertices
 		    .push(this.gameobjects.get('game.player').position);
 	    geometry.vertices.push(intersections[0].point);
@@ -117,16 +142,19 @@ PracticeModeGameplay.prototype.render = function(dt) {
 			color : 0x990000
 		    }));
 	    this.scene.add(lines[direction]);
+
 	    // DEBUG RAY LINE END
 	    var distance = intersections[0].distance;
 	    if (distance) {
-		// console.log('['+ direction + '] hitted + '+ distance);
-		directionDistance[direction] = distance;// this.controls.updatex(dt,
-		// distance);
+		directionDistance[direction] = distance;
 	    }
 
 	}
 
+    }
+
+    if (this.gameobjects.get('game.player').position.y < 40) {
+	this.respawn();
     }
     // DEBUG
     /*

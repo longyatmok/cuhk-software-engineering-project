@@ -9,23 +9,24 @@ var AbstractController = require('./PositionController');
 var CharacterController = function(gameobject, camera, opts) {
     CharacterController.super_.call(this, gameobject, util.extend({
 	'keys' : {
-	    /* w s a d q e z space-bar */
+	    /* w s a d q e z space-bar p*/
 	    forward : 87,
 	    backward : 83,
 	    left : 65,
 	    right : 68,
-	    up : 32
+	    up : 32,
+	    checkpt : 80 
 
 	}
     }, opts));
 
     this.camera = camera;
 
-    this.pitchObject = new THREE.Object3D();
+    this.pitchObject = camera;//new THREE.Object3D();
     // camera relative position
     this.pitchObject.position = new THREE.Vector3(0, 40, 70);
 
-    this.pitchObject.add(camera);
+  //  this.pitchObject.add(camera);
     this.gameobject = gameobject;
 
     this.dummy = new THREE.Object3D();
@@ -88,6 +89,21 @@ var CharacterController = function(gameobject, camera, opts) {
 
 };
 util.inherits(CharacterController, AbstractController);
+CharacterController.prototype.reset = function(){
+    this.dummy.rotation.x = this.gameobject.rotation.x;
+    this.gameobject.rotation.y = -Math.PI / 2;
+    this.dummy.rotation.y = Math.PI / 2;
+    this.dummy.rotation.z = this.gameobject.rotation.z;
+    this.gameobject.parent.add(this.dummy);
+    this.isOnObject = false;
+    this.canJump = false;
+
+    this.lastVelocity = new THREE.Vector3(0, 0, 0);
+    this.velocity = new THREE.Vector3(0, 0, 0);
+
+    this.movement = new THREE.Vector3(0, 0, 0);
+    this.rotation = new THREE.Vector3(0, 0, 0);
+};
 
 CharacterController.prototype.isOnObjectFN = function(boolean) {
 
@@ -109,8 +125,16 @@ CharacterController.prototype.updatex = function(delta, distances) {
     this.velocity.x += (-this.velocity.x) * 0.08 * delta;
     this.velocity.z += (-this.velocity.z) * 0.08 * delta;
 
-    this.velocity.y -= 0.25 * delta;
+    this.velocity.y -= 0.0825 * delta;
 
+    if(this.keyStatus.checkpt){
+	this.temp.checkpt = true;
+    }else if( this.temp.checkpt === true){
+	console.log(this.gameobject.position);
+    
+	this.temp.checkpt = false;
+    }
+    
     if (this.keyStatus.forward) {
 	if (distances[5] != undefined && this.lastVelocity.z <= 0
 		&& this.velocity.z <= 0
@@ -150,13 +174,13 @@ CharacterController.prototype.updatex = function(delta, distances) {
 	// this.velocity.x += 0.06 * delta;
     }
     if (this.keyStatus.up && this.canJump) {
-	this.velocity.y += 7;
+	this.velocity.y += 5;
 	this.keyStatus.up = false;
 	this.canJump = false;
     }
 
     // if(distances[0]!=undefined) console.log(distances[0]);
-    this.isOnObjectFN(distances[0] >= 0 && distances[0] <= 1);
+    this.isOnObjectFN(distances[0] >= 0 && distances[0] <= 2);
 
     // above
     if (distances[1] != undefined && this.lastVelocity.y >= 0

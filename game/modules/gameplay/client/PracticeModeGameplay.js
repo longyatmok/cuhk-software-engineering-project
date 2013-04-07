@@ -22,8 +22,8 @@ PracticeModeGameplay.prototype.respawn = function() {
     this.region.camera.position = new THREE.Vector3(0, 0, 0);
     this.region.camera.rotation = this.region.spawnRotation.clone();
 
-    this.controls = new CharacterController(this.gameobjects.get('game.player'),
-	    this.region.camera);
+    this.controls = new CharacterController(
+	    this.gameobjects.get('game.player'), this.region.camera);
     this.gameobjects.add('controls', this.controls);
     this.scene.add(this.controls.dummy);
 };
@@ -78,7 +78,8 @@ PracticeModeGameplay.prototype.render = function(dt) {
 	// caster.ray.origin.y += 5;
 	var vector = this.directions[direction].clone();
 	var axis = new THREE.Vector3(0, 1, 0);
-	var angle = (Math.PI / 2) + (this.gameobjects.get('game.player').rotation.y); // prefect!
+	var angle = (Math.PI / 2)
+		+ (this.gameobjects.get('game.player').rotation.y); // prefect!
 	// (the direction vector change as the character's rotation is changed
 	var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
 
@@ -98,7 +99,8 @@ PracticeModeGameplay.prototype.render = function(dt) {
 
 	    // DEBUG RAY LINE START
 	    // POSITION OF MESH TO SHOOT RAYS OUT OF
-	    geometry.vertices.push(this.gameobjects.get('game.player').position);
+	    geometry.vertices
+		    .push(this.gameobjects.get('game.player').position);
 	    geometry.vertices.push(intersections[0].point);
 
 	    lines[direction] = new THREE.Line(geometry,
@@ -117,9 +119,10 @@ PracticeModeGameplay.prototype.render = function(dt) {
 	}
 
     }
-    //DEBUG
-    /* if (directionDistance.length > 0)
-    console.log(directionDistance);*/
+    // DEBUG
+    /*
+     * if (directionDistance.length > 0) console.log(directionDistance);
+     */
     this.controls.updatex(dt, directionDistance);
     return;
 

@@ -45,6 +45,7 @@ class Account{
 				$this->setSession();
 				$this->isLogin = true;
 				$result = true;
+				$this->clearToken(); // clear expire token. for performance, only login via social service will clear token
 			}else if($this->createAccount($userInfo['uid'], $userInfo['email'], $userInfo['socialName'])){
 				$result = true;
 				$this->uid = $userInfo['uid'];
@@ -153,6 +154,13 @@ class Account{
 		$GLOBALS['PDO']->inTransaction() && $GLOBALS['PDO']->rollBack() && $result = false;
 		return $result;
 	}
+	private function clearToken(){
+		$sql = 'DELETE FROM `'.self::TOKEN_TABLE.'` WHERE `uid`=? AND NOW() > `expire`';
+		$pS = $GLOBALS['PDO']->prepare($sql);
+		$pS->execute(array($this->uid));
+		return true;
+	}
+
 	private function setToken(){
 		$result = false;
 		$sql = 'INSERT INTO `'.self::TOKEN_TABLE.'` (`uid`, `token`, `expire`, `ip`) VALUE (?, ?, DATE_ADD(NOW(), INTERVAL ? second), ?)';

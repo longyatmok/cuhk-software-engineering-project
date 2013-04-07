@@ -27,6 +27,7 @@ var GameModule = require('../modules/game/client/module');
 //gameplay
 var Gameplay = require('../framework/gameplay/Gameplay');
 var FreeGameplay = require('../framework/gameplay/FreeGameplay');
+var PracticeModeGameplay = require('../modules/gameplay/client/PracticeModeGameplay');
 //regions
 var Region = require('../framework/Region');
 var TitleScreen = require('./regions/TitleScreen');
@@ -60,6 +61,7 @@ Core.prototype.initialize = function(callback) {
 
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
+    this.gameplayClasses['practice'] = PracticeModeGameplay;
    
     this.setRegion('title-screen','empty');
   //  this.activeRegion = this.regions['demo-one']; //we have the terrain now   

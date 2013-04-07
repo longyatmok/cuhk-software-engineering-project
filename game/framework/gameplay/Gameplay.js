@@ -17,8 +17,10 @@ var Gameplay = function(region, opts) {
 	this.scene = this.region.scene;
 	this.camera = this.region.camera;
 	this.gameobjects = new GameObjectManager();
-	this.initialize();
-	this.respawn();
+	
+//	this.initialize();
+//	this.respawn();
+	
 };
 
 Gameplay.prototype.respawn = function(){
@@ -28,7 +30,7 @@ Gameplay.prototype.respawn = function(){
 };
 
 Gameplay.prototype.initialize = function(){
-	this.respawn();
+	//this.respawn();
 	console.log('calling abstract method');
 	//abstract method
 };

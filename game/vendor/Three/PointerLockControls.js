@@ -8,14 +8,22 @@ THREE.PointerLockControls = function(camera, pitchObject) {
 
 	if (pitchObject == undefined) {
 		pitchObject = new THREE.Object3D();
+		pitchObject.position = new THREE.Vector3(0,40,70);//camera position
 	}
+
 	pitchObject.add(camera);
-	
+
+	var yawObject = new THREE.Object3D();
+	yawObject.position.y = 1;
+	yawObject.add(pitchObject);
+	yawObject.position.x = 0;
+	yawObject.position.z = 420;
+	/*
 	var yawObject = new THREE.Object3D();
 	yawObject.position.y = 10;
 	yawObject.add(pitchObject);
 	yawObject.position.x = -8;
-	yawObject.position.z = 420;
+	yawObject.position.z = 420;*/
 	var moveForward = false;
 	var moveBackward = false;
 	var moveLeft = false;
@@ -23,7 +31,7 @@ THREE.PointerLockControls = function(camera, pitchObject) {
 
 	var isOnObject = false;
 	var canJump = false;
-
+	var lastVelocity = new THREE.Vector3();
 	var velocity = new THREE.Vector3();
 
 	var PI_2 = Math.PI / 2;
@@ -72,7 +80,7 @@ THREE.PointerLockControls = function(camera, pitchObject) {
 
 		case 32: // space
 			if (canJump === true)
-				velocity.y += 10;
+				velocity.y += 7;
 			canJump = false;
 			break;
 
@@ -126,8 +134,8 @@ THREE.PointerLockControls = function(camera, pitchObject) {
 		canJump = boolean;
 
 	};
-
-	this.update = function(delta) {
+	this.update = function(delta){}
+	this.updatex = function(delta ,distance) {
 
 		if (scope.enabled === false)
 			return;
@@ -149,25 +157,34 @@ THREE.PointerLockControls = function(camera, pitchObject) {
 		if (moveRight)
 			velocity.x += 0.12 * delta;
 
-		if (isOnObject === true) {
+		//if(distance!=undefined) console.log(distance);
+		this.isOnObject( distance >=0 && distance <= 1 );
 
-			velocity.y = Math.max(0, velocity.y);
-
+		if( (lastVelocity.y <= 0 && velocity.y <= 0 &&  velocity.y >  lastVelocity.y ) /*less negative*/){
+		    
 		}
+		
+		if(distance!=undefined && lastVelocity.y <= 0 && velocity.y <= 0 &&  velocity.y <  lastVelocity.y && Math.abs(velocity.y) > distance /*more negative*/){
+		    velocity.y = -distance + 0.95;
+		}
+		if (isOnObject === true) {
+		    velocity.y = Math.max(0, velocity.y);
+		}
+
 
 		yawObject.translateX(velocity.x);
 		yawObject.translateY(velocity.y);
 		yawObject.translateZ(velocity.z);
-
-		if (yawObject.position.y < 10) {
+		
+		if (yawObject.position.y < 1) {
 
 			velocity.y = 0;
-			yawObject.position.y = 10;
+			yawObject.position.y = 1;
 
 			canJump = true;
-
 		}
-
+		
+		lastVelocity = velocity.clone();
 	};
 
 };

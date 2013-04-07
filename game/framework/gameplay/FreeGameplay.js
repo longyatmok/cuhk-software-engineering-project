@@ -1,5 +1,8 @@
 /**
- * FreeGameplay (Abstract Class)
+ * FreeGameplay (Abstract Class) inherited from Gameplay
+ * @constructor
+ * @this {FreeGameplay}
+ * @param {region, opts} 
  */
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
@@ -18,8 +21,12 @@ var FreeGameplay = function(region, opts) {
     FreeGameplay.super_.call(this, region, this.opts);
 
 };
-util.inherits(FreeGameplay, Gameplay);
 
+util.inherits(FreeGameplay, Gameplay);
+/**
+ * Respawn of gameplay
+ * @this {FreeGameplay}
+ */
 FreeGameplay.prototype.respawn = function() {
     // FreeGameplay.super_.prototype.respawn.call(this);
 
@@ -30,8 +37,12 @@ FreeGameplay.prototype.respawn = function() {
     this.gameobjects.add('controls', this.controls);
     this.scene.add(this.controls.getObject());
 };
-
+/**
+ * Initialization of gameplay
+ * @this {FreeGameplay}
+ */
 FreeGameplay.prototype.initialize = function() {
+
 
     var self = this;
     this.directions = [];
@@ -173,6 +184,11 @@ FreeGameplay.prototype.initialize = function() {
 
 };
 
+/**
+ * Reder gameplay
+ * @this {FreeGameplay}
+ * @parem dt
+ */
 FreeGameplay.prototype.render = function(dt) {
     this.gameobjects.render(dt);
 

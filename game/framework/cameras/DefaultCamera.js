@@ -1,3 +1,9 @@
+/**
+ * default camera class for the viewing angle of player the the game world
+ * @constructor
+ * @this {DefaultCamera}
+ */
+
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
 var DefaultCamera = function() {
@@ -14,6 +20,13 @@ var DefaultCamera = function() {
 
 };
 
+/**
+* Refresh camera angle and status
+*
+* @this {DefaultCamera}
+*/
+
+// 
 DefaultCamera.prototype.update = function(){
 	if(this._marker.parent != this.parent){
 		this.parent.add(this._marker);

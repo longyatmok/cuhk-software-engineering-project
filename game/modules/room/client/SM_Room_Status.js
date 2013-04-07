@@ -8,6 +8,13 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 var Room = require('../shared/Room');
 
+
+/**
+ * server side msg to return room status
+ * @constructor
+ * @this {SM_Room_Status}
+ * @param data 
+ */
 var SM_Room_Status = function(data) {
 	this.name = 'SM_Room_Status';
 	if(data.error != undefined){

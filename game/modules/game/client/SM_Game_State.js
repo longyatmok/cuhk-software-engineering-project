@@ -1,4 +1,5 @@
-﻿var THREE = require('../../../vendor/Three');
+﻿// server side game state msg for sync
+var THREE = require('../../../vendor/Three');
 var util = require('../../../framework/Util');
 var GameObjectManager = require('../../../framework/GameObjectManager');
 var World = require('../../../framework/World');
@@ -6,6 +7,13 @@ var io = require('../../../vendor/socket.io-client');
 var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
+
+/**
+ * SM_Game_State for sync
+ * @constructor
+ * @this {SM_Game_State}
+ * @param data 
+ */
 
 var SM_Game_State = function(data) {
 	this.name = 'SM_Game_State';

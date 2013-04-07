@@ -4,6 +4,14 @@ var GameObject = require('../../../gameobject/GameObject');
 var GameObjectManager = require('../../../framework/GameObjectManager');
 var PlayerCharacter = require('./PlayerCharacter');
 
+
+/**
+ * NetworkPlayerCharacter is a PlayerCharacter for player uses in gameplay
+ * inherited from PlayerCharacter
+ * @constructor
+ * @this {NetworkPlayerCharacter}
+ * @param data 
+ */
 var NetworkPlayerCharacter = function (data) {
     this.id = data.id;
     this.name = data.name;
@@ -16,4 +24,4 @@ NetworkPlayerCharacter.prototype.getName = function () {
 NetworkPlayerCharacter.prototype.update = function () {
 };
 
-module.exports = NonPlayerCharacter;
+module.exports = NetworkPlayerCharacter;

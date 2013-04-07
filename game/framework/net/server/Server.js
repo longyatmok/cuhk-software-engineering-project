@@ -8,6 +8,13 @@ var Room = require('../../../modules/room/shared/Room');
 var RoomList = require('../../../modules/room/shared/RoomList');
 
 var counter = 1;
+
+/**
+ * Server 
+ * @constructor
+ * @this {Server}
+ * @param opts
+ */
 var Server = function(opts) {
 	var server = this
 	this.server = _server;
@@ -138,15 +145,34 @@ var Server = function(opts) {
 	});
 	this.listeners = [];
 };
+
+/**
+ * Server onconnection
+ * @param socket
+ */
 Server.prototype.onconnection = function(socket) {
 
 };
+
+/**
+ * Server disconnection
+ * @param socket
+ */
 Server.prototype.ondisconnection = function(socket) {
 
 };
+
+/**
+ * Server register
+ * @param ServerMessageClass
+ */
 Server.prototype.register = function(ServerMessageClass) {
 	// register the Server Message Class to the socket
 };
+/**
+ * Server emit
+ * @param MessageObject
+ */
 Server.prototype.emit = function(MessageObject) {
 	// emit an event described in the Client Message Object
 };

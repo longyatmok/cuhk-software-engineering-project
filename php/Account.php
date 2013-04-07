@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Accounter of player
+ */
+
 class Account{
 	const TOKEN_TABLE = 'logins';
 	const ACCOUNT_TABLE = 'account';
 	
+	/**
+	 * Data of player
+	 */
 	private $isLogin = false;
 	private $uid = NULL;
 	private $email = NULL;
@@ -11,7 +18,10 @@ class Account{
 	private $socialName = NULL;
 	private $token = NULL;
 	
-	
+	/**
+	 * Login
+	 * @return boolean result of login(true of false)
+	 */
 	public function login(){
 		$result = false;
 		$userInfo = NULL;
@@ -58,10 +68,17 @@ class Account{
 		}
 		return $result;
 	}
+	/**
+	 * Logout
+	 */
 	public function logout(){
 		$this->rmToken();
 		$GLOBALS['Session']->delSession();
 	}
+	/**
+	 * changeNickname
+	 * @return boolean of success or not
+	 */
 	public function changeNickname(){
 		$result = false;
 		if(isset($_GET['nickname']) && $_GET['nickname'] != ''){
@@ -79,7 +96,10 @@ class Account{
 		}
 		return $result;
 	}
-	
+	/**
+	 * Get login URL
+	 * @return array $arr of URL
+	 */	
 	public function getLoginWay(){
 		// print Login to ? service link
 		$arr = array();
@@ -88,31 +108,64 @@ class Account{
 		}
 		return $arr;
 	}
+	/**
+	 * Get account UID
+	 * @return int UID of account
+	 */	
 	public function getUid(){
 		return $this->uid;
 	}
+	/**
+	 * Get account email
+	 * @return email of account
+	 */	
 	public function getEmail(){
 		return $this->email;
 	}
+	/**
+	 * Get account social name
+	 * @return socialName of account
+	 */	
 	public function getSocialName(){
 		return $this->socialName;
 	}
+	/**
+	 * Get account nickname
+	 * @return nickname of account
+	 */	
 	public function getNickname(){
 		return $this->nickname;
 	}
+	/**
+	 * Get account Token
+	 * @return int session_id() of account
+	 */	
 	public function getToken(){
 		return session_id();
 	}
+	/**
+	 * Get account status(registered or not) 
+	 * @return nickname of account
+	 */	
 	public function getStatus(){ // just register (false) or already register (true)
 		return !!$this->nickname;
 	}
 	
+	/**
+	 * Set account
+	 * this {
+	 */	
 	private function setSession(){
 		$_SESSION['uid'] = $this->uid;
 		$_SESSION['email'] = $this->email;
 		$_SESSION['nickname'] = $this->nickname;
 		$_SESSION['socialName'] = $this->socialName;
 	}
+	/**
+	 * @throws
+	 * Get account social token
+	 * @return array() $result of token
+	 */	
 	private function getSocialToken(){
 		$token = $GLOBALS['SocialCore']->storage->get(SocialGateway_Core::STORAGE_Token);
 		$result = array();
@@ -129,6 +182,10 @@ class Account{
 		}
 		return $result;
 	}
+	/**
+	 * Extend token
+	 * @return boolean $result 
+	 */	
 	private function extendToken(){
 		$sql = 'UPDATE `'.self::TOKEN_TABLE.'` SET `expire`=DATE_ADD(NOW(), INTERVAL ? second) WHERE `uid`=? AND `token`=?';
 		$GLOBALS['PDO']->beginTransaction();
@@ -141,6 +198,10 @@ class Account{
 		$GLOBALS['PDO']->inTransaction() && $GLOBALS['PDO']->rollBack() && $result = false;
 		return $result;
 	}
+	/**
+	 * Remove token
+	 * @return boolean $result 
+	 */	
 	private function rmToken(){
 		$sql = 'DELETE FROM `'.self::TOKEN_TABLE.'` WHERE `uid`=? AND `token`=?';
 		$GLOBALS['PDO']->beginTransaction();
@@ -153,6 +214,10 @@ class Account{
 		$GLOBALS['PDO']->inTransaction() && $GLOBALS['PDO']->rollBack() && $result = false;
 		return $result;
 	}
+	/**
+	 * Set token
+	 * @return boolean $result 
+	 */	
 	private function setToken(){
 		$result = false;
 		$sql = 'INSERT INTO `'.self::TOKEN_TABLE.'` (`uid`, `token`, `expire`, `ip`) VALUE (?, ?, DATE_ADD(NOW(), INTERVAL ? second), ?)';
@@ -166,6 +231,12 @@ class Account{
 		$GLOBALS['PDO']->inTransaction() && $GLOBALS['PDO']->rollBack() && $result = false;
 		return $result;
 	}
+	/**
+	 * Check token
+	 * @param $uid
+	 * @param $token
+	 * @return boolean $result 
+	 */	
 	private function checkToken($uid, $token){
 		$isExist = false;
 		$result = false;
@@ -183,6 +254,11 @@ class Account{
 		}
 		return $result;
 	}
+	/**
+	 * Get account
+	 * @param $uid
+	 * @return boolean $result 
+	 */	
 	private function getAccount($uid){
 		$isExist = false;
 		$result = false;
@@ -200,6 +276,13 @@ class Account{
 		}
 		return $result;
 	}
+	/**
+	 * Create account
+	 * @param $uid
+	 * @param $email
+	 * @socialName
+	 * @return boolean $result 
+	 */	
 	private function createAccount($uid, $email, $socialName){
 		$result = false;
 		$GLOBALS['PDO']->beginTransaction();

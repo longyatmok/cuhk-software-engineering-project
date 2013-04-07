@@ -7,7 +7,12 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
-
+/**
+ * Client side msg for game start
+ * @constructor
+ * @this {CM_Room_GameStart}
+ * @param data 
+ */
 var CM_Room_GameStart = function (data) {
     this.NAME = 'CM_Room_GameStart';
     this.data = data;

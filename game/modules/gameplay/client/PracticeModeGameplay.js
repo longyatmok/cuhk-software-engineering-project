@@ -6,6 +6,15 @@ var FreeGameplay = require('../../../framework/gameplay/FreeGameplay');
 var ColladaLoader = require('../../../vendor/loaders/ColladaLoader');
 var CharacterController = require('../../../framework/controllers/CharacterController');
 
+
+/**
+ * Practice Mode is a standalone free mode.
+ * inherited from FreeGameplay
+ * @constructor
+ * @this {PracticeModeGameplay}
+ * @param region Region
+ * @param opts Options Object
+ */
 var PracticeModeGameplay = function(region, opts) {
     this.opts = World.extend({
 	name : 'practice-world'

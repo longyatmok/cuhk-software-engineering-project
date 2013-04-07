@@ -1,3 +1,4 @@
+// module of client and server message in authentication
 var THREE = require('../../../vendor/Three');
 var $ = require('../../../vendor/jQuery');
 var util = require('../../../framework/Util');
@@ -13,8 +14,18 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 // server messages
 var SM_Login_Response = require('./SM_Login_Response');
 var CM_Login = require('./CM_Login');
+
+/**
+ * Initialization module of auth process
+ * @constructor
+ * @this {CM_LAuthModuleogin}
+ * @param world 
+ */
+
 var AuthModule = function(world) {
-	world.connection.register(SM_Login_Response);
+    world.connection.register(SM_Login_Response);
+    
+    // GUI of the process
 	world.overlay
 			.add(
 					AuthModule.NAME,
@@ -30,6 +41,8 @@ var AuthModule = function(world) {
 							+ '</div>'
 
 			);
+
+    // data exchange
 	$('#' + AuthModule.NAME + '_demo_button').click(function() {
 		console.log("demo session");
 		var username = window.prompt("Your Username", "DEMO_USER");
@@ -56,6 +69,7 @@ var AuthModule = function(world) {
 util.inherits(AuthModule, Module);
 AuthModule.NAME = "Auth-Module";
 
+// data encap in auth msg
 AuthModule.prototype.login = function(user_id, user_token) {
 	var cm = new CM_Login({
 		id : user_id,

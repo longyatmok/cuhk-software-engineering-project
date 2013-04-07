@@ -1,4 +1,5 @@
-﻿var THREE = require('../../../vendor/Three');
+﻿
+var THREE = require('../../../vendor/Three');
 var util = require('../../../framework/Util');
 var GameObjectManager = require('../../../framework/GameObjectManager');
 var World = require('../../../framework/World');
@@ -6,6 +7,14 @@ var io = require('../../../vendor/socket.io-client');
 var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
+
+
+/**
+ * Client Message on the client for chat
+ * @constructor
+ * @this {CM_Chat}
+ * @param data 
+ */
 
 
 var CM_Chat = function (data) {

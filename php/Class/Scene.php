@@ -4,16 +4,16 @@ class Scene{
 	private static $Info = false;
 	private static $InfoID = false;
 	public static function getInfo(){ // use in javascript
-		$result = $this->Info ;
+		$result = self::$Info ;
 		if(!$result){
 			$sql = 'SELECT * FROM `'.self::TABLE.'`';
 			$pS = $GLOBALS['PDO']->prepare($sql);
 			$pS->execute();
 		}
-		return !$Info ? ($Info = $pS->fetchAll()) : $Info;
+		return !$Info ? (self::$Info = $pS->fetchAll()) : $Info;
 	}
 	public static function getAllID(){ // use in php
-		$result = $this->InfoID ;
+		$result = self::$InfoID ;
 		if(!$result){
 			$result = array();
 			$sql = 'SELECT `scene_id` FROM `'.self::TABLE.'`';
@@ -22,6 +22,7 @@ class Scene{
 			while($row = $pS->fetch){
 				$result[] = $row['scene_id'];
 			}
+			self::$InfoID = $result;
 		}
 		return $result;
 	}

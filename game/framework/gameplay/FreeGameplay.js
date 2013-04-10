@@ -117,8 +117,8 @@ FreeGameplay.prototype.initialize = function() {
 
 	instructions.addEventListener('click', function(event) {
 
-	    instructions.style.display = 'none';
-	    if (!self.gameobjects.get('controls').enabled) {
+	    //instructions.style.display = 'none';
+	    /*if (!self.gameobjects.get('controls').enabled) {
 
 		self.gameobjects.get('controls').enabled = true;
 		World.instance.overlay.visible(false);
@@ -131,8 +131,8 @@ FreeGameplay.prototype.initialize = function() {
 		World.instance.overlay.visible(true);
 		instructions.style.display = '';
 
-	    }
-/*
+	    }*/
+
 	    // Ask the browser to lock the pointer
 	    element.requestPointerLock = element.requestPointerLock
 		    || element.mozRequestPointerLock
@@ -172,7 +172,7 @@ FreeGameplay.prototype.initialize = function() {
 
 		element.requestPointerLock();
 
-	    }*/
+	    }
 
 	}, false);
 

@@ -29,7 +29,7 @@ var DemoOneRegion = function(opts) {
     console.log(this.opts.seed);
     srand.seedrandom(this.opts.seed);
     this.spawnLocation = new THREE.Vector3(495, 200, 0);
-    // this.spawnRotation = new THREE.Vector3(0, 0, 0);
+     this.spawnRotation = new THREE.Vector3(0, -Math.PI/2, 0);
     /*
      * this.regionobjects.boilerplate(); this.camera.position = new
      * THREE.Vector3(0,3,2); this.camera.rotation = new THREE.Vector3(-1, 0, 1);

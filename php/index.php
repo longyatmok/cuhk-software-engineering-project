@@ -1,6 +1,5 @@
 <?php
 require_once('Init.php');
-$Account = new Account();
 if(isset($_GET['logout'])){
 	$Account->logout();
 	die('<script>location="?";</script>');

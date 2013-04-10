@@ -18,7 +18,7 @@ define('DB_DRIVE', 'mysql:dbname='.DB_NAME.';host='.DB_HOST);
 
 // Session
 define('SESSION_NAME', 'csci3100');			// session name
-define('SESSION_MAX_AGE', 30*24*60*60); // login maximun time limit
+define('SESSION_MAX_AGE', 1*24*60*60); // login maximun time limit
 // Session End
 
 

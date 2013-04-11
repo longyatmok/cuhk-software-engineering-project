@@ -41,7 +41,6 @@ body>.container.show{
 }
 .background{
 	background-color:rgba(200,200,200,0.6);
-	padding:10px;
 }
 body>.background{
 	position:absolute;

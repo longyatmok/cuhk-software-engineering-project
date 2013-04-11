@@ -27,11 +27,13 @@ var GameModule = require('../modules/game/client/module');
 //gameplay
 var Gameplay = require('../framework/gameplay/Gameplay');
 var FreeGameplay = require('../framework/gameplay/FreeGameplay');
+var NetworkGameplay = require('../framework/gameplay/NetworkGameplay');
 var PracticeModeGameplay = require('../modules/gameplay/client/PracticeModeGameplay');
 //regions
 var Region = require('../framework/Region');
 var TitleScreen = require('./regions/TitleScreen');
 var TestRegion = require('./regions/TestRegion');
+var Test2Region =  require('./regions/Test2Region');
 var DemoOneRegion = require('./regions/DemoOneRegion');
 var scene;
 /**
@@ -69,11 +71,12 @@ Core.prototype.initialize = function(callback) {
     this.regions['title-screen'] = TitleScreen;
  //   this.regions['test-region'] = new TestRegion();
     this.regions['demo-one'] = DemoOneRegion;
-
+    this.regions['test2'] = Test2Region;
+    
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
     this.gameplayClasses['practice'] = PracticeModeGameplay;
-   
+    this.gameplayClasses['network'] = NetworkGameplay;
     this.setRegion('title-screen','empty');
   //  this.activeRegion = this.regions['demo-one']; //we have the terrain now   
   //  this.gameplay = new FreeGameplay(this.activeRegion); 

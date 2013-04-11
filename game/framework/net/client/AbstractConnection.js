@@ -36,7 +36,7 @@ var AbstractConnection = function(opts) {
  */
 AbstractConnection.prototype.connect = function() {
 	var conn = this;
-	var socket = this.socket = io.connect(this.opts.address);
+	var socket = this.socket = io.connect(this.opts.address,{'force new connection':true});
 	this.connected = true;
 	socket.profile = {
 
@@ -49,8 +49,8 @@ AbstractConnection.prototype.connect = function() {
 		console.log(listener.NAME + ' listened');
 		if (listener.NAME) {
 			socket.on(listener.NAME, function(data) {
-				console.log(" >>> [" + listener.NAME + "] ");
-				console.log(data);
+			//	console.log(" >>> [" + listener.NAME + "] ");
+			//	console.log(data);
 				var sm = new listener(data);
 			});
 
@@ -86,7 +86,7 @@ AbstractConnection.prototype.on = function(e, callback) {
  * @param object
  */
 AbstractConnection.prototype.emit = function(object) {
-	console.log(" <<< [" + object.NAME + ']');
+	//console.log(" <<< [" + object.NAME + ']');
 	// console.log(object.data);
 
 	this.socket.emit(object.NAME, object.data);

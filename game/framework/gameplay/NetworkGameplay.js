@@ -1,61 +1,131 @@
 /**
- * Network Gameplay
+ * NetworkGameplay (Abstract Class) inherited from NetworkGameplay
+ * 
+ * @constructor
+ * @this {NetworkGameplay}
+ * @param {region,
+ *            opts}
  */
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
 var GameObjectManager = require('../GameObjectManager');
 var World = require('../World');
-THREE.PointerLockControls = require('../../vendor/THREE/PointerLockControls');
 
-var controls, time = Date.now();
-
+var DefaultCamera = require('../cameras/DefaultCamera');
+var FreeGameplay = require('./FreeGameplay');
+var ColladaLoader = require('../../vendor/loaders/ColladaLoader');
+var CharacterController = require('../controllers/CharacterController');
+var GameModule = require('../../modules/game/client/module');
+var CM_Game_State = require('../../modules/game/client/CM_Game_State');
+var SM_Game_State = require('../../modules/game/client/SM_Game_State');
+var RoomModule = require('../../modules/room/client/module');
+var AuthModule = require('../../modules/auth/client/module');
 /**
+ * 
+ * 
  * @constructor
- * @this {Gameplay}
- * @param {region, opts} 
+ * @this {NetworkGameplay}
+ * @param region
+ *            Region
+ * @param opts
+ *            Options Object
  */
-
-var Gameplay = function(region, opts) {
+var NetworkGameplay = function(region, opts) {
 	this.opts = World.extend({
-		name : 'abstract-gameplay'
+		name : 'network',
+		yLevel : 40,
+		debugLine : true
 	}, opts);
-	this.region = region;
-	this.scene = this.region.scene;
-	this.camera = this.region.camera;
-	this.gameobjects = new GameObjectManager();
-	this.initialize();
-	this.respawn();
+	this.ready = false;
+	NetworkGameplay.super_.call(this, region, this.opts);
+	// network start
+	this.roomModule = World.instance.modules[RoomModule.NAME];
+	this.gameModule = World.instance.modules[GameModule.NAME];
+	if (typeof this.roomModule == 'undefined'
+			|| typeof this.gameModule == 'undefined') {
+		throw new Error('Room Module and Game Module not Found.');
+	}
+
+	this.gameModule.gameplay = this;
+
+	this.positionClone_ = null
+	this.rotationClone_ = null;
+
+};
+util.inherits(NetworkGameplay, FreeGameplay);
+
+NetworkGameplay.prototype.respawn = function() {
+	if (!this.ready)
+		return false;
+
+	if (typeof this.controls == "undefined") {
+		var me = World.instance.modules[AuthModule.NAME].user;
+		// spawn networked players
+		for ( var i in this.gameModule.room.players) {
+			if (this.gameModule.room.players[i].id == me.user_id) {
+				continue;
+			}
+			var character = this.gameobjects.get('character.template').clone();
+			console.log("[SPAWN] spawning character id "
+					+ this.gameModule.room.players[i].id);
+			this.gameobjects.add('game.net.objects.'
+					+ this.gameModule.room.players[i].id, character);
+			this.scene.add(character);
+
+		}
+	}
+	NetworkGameplay.super_.prototype.respawn.call(this);
+
 };
 
-/**
- * Gameplay respawn
- * @this {Gameplay}
- */
+NetworkGameplay.prototype.initialize = function() {
+	NetworkGameplay.super_.prototype.initialize.call(this);
 
-Gameplay.prototype.respawn = function(){
-	//this.camera = this.region.camera.clone();
-	this.camera.position = this.region.spawnLocation.clone();
-	this.camera.rotation = this.region.spawnRotation.clone();
+	this.miniCamera = new DefaultCamera(75, 200 / 200, 0.1, 2000); /*
+																	 * mini
+																	 * camera
+																	 * ratio
+																	 */
+	this.scene.add(this.miniCamera);
+	this.miniCamera.rotation.set(-Math.PI / 2, 0, 0);
+	this.miniCamera.position.y = 400;
+};
+NetworkGameplay.prototype.updateNeworkedObject = function(data) {
+	if (typeof data.id != "undefined") {
+		try {
+
+			var object = this.gameobjects.get('game.net.objects.' + data.id);
+			object.position.set.apply(object.position, data.position);
+			object.rotation.set.apply(object.rotation, data.rotation);
+
+		} catch (e) {
+		}
+	}
+};
+NetworkGameplay.prototype.render = function(dt) {
+	if (!this.ready || !this.gameobjects.get('controls').enabled)
+		return;
+	// delete this.positionClone_;
+	// delete this.rotationClone_;
+	// this.positionClone_ =
+	// this.gameobjects.get('game.player').position.clone();
+	// this.rotationClone_ =
+	// this.gameobjects.get('game.rotation').position.clone();
+	NetworkGameplay.super_.prototype.render.call(this, dt);
+	// if(this.rotationClone_.x )
+	var msg = new CM_Game_State(this.gameobjects.get('game.player'));
+	msg.emit();
+	return;
 };
 
-/**
- * Gameplay initialization
- * @this {Gameplay}
- */
+NetworkGameplay.prototype.renderAfter = function(renderer, dt) {
+	/*if (this.ready && typeof this.gameobjects.get('controls') != "undefined") {
 
-Gameplay.prototype.initialize = function(){
-	this.respawn();
-	console.log('calling abstract method');
-	//abstract method
+		this.miniCamera.position.x = this.gameobjects.get('game.player').position.x;
+		this.miniCamera.position.y = 400 + this.gameobjects.get('game.player').position.y;
+		this.miniCamera.position.z = this.gameobjects.get('game.player').position.z;
+		renderer.setViewport(0, 0, 200, 200);
+		renderer.render(this.scene, this.miniCamera);
+	}*/
 };
-
-/**
- * Gameplay render
- * @this {Gameplay}
- * @param dt
- */
-Gameplay.prototype.render = function(dt) {
-	this.gameobjects.render(dt);
-};
-
-module.exports = Gameplay;
+module.exports = NetworkGameplay;

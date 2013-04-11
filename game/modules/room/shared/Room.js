@@ -50,7 +50,7 @@ Room.prototype.toJSON = function() {
 Room.prototype.isAllReady = function(){
 	if(this.noOfPlayer() == 1) return false;
 	for ( var i in this.players) {
-		if (this.players [ i].ready == false) return false;
+		if (this.players[ i ].ready == false) return false;
 	}
 
 	return true;
@@ -94,7 +94,7 @@ Room.prototype.removePlayer = function(player) {
 	if (!player instanceof Player) {
 		player = new Player(player);
 	}
-    console.log(this.players);
+    //console.log(this.players);
 
     // remove player success
 	if (this.players[player.id] != undefined) {

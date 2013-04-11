@@ -24,7 +24,7 @@ var CM_Login = require('./CM_Login');
 
 var AuthModule = function(world) {
     world.connection.register(SM_Login_Response);
-    
+    this.user = null;
     // GUI of the process
 	world.overlay
 			.add(

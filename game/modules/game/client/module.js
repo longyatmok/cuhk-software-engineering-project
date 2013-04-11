@@ -26,7 +26,7 @@ var GameModule = function(world) {
 	
 	this.world = world;
 	this.room = null;
-
+	this.gameplay
 	world.connection.register(SM_Game_State);
 
 

@@ -1,0 +1,60 @@
+newmtl test_01:Cobblestone1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd test_01-RGB.png
+map_Ka test_01-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl test_01:Dirt1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd test_01-RGB.png
+map_Ka test_01-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl test_01:Fence1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd test_01-RGB.png
+map_Ka test_01-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl test_01:Stationary_Lava1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd test_01-RGB.png
+map_Ka test_01-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl test_01:Stone_Brick1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd test_01-RGB.png
+map_Ka test_01-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl test_01:Stone_Brick_Stairs1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd test_01-RGB.png
+map_Ka test_01-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00

@@ -15,9 +15,11 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
  */
 
 var CM_Game_State = function (object) {
+	this.NAME = "CM_Game_State";
+	this.connection = AbstractConnection.instance;
 	this.data = {
-			position: object.position,
-			rotation: object.rotation
+			position: object.position.toArray(),
+			rotation: object.rotation.toArray()
 	};
 };
 

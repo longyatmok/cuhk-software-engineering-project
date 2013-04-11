@@ -18,9 +18,11 @@ var CharacterController = function(gameobject, camera, opts) {
 			checkpt : 80
 
 		},
-		velocityDecreaseRate : 0.08,
-		velocityGravity : 0.0825,
-		jumpVelocity : 5,
+		velocityDecreaseRate : 0.07,
+		velocityIncreaseRate : 0.19,
+		velocityGravity : 0.195,
+		
+		jumpVelocity : 6,
 		cameraPosition : [ 0, 37, 42 ],
 		cameraRotation : [ -Math.PI / 4.5, 0, 0 ]
 	}, opts));
@@ -86,8 +88,8 @@ var CharacterController = function(gameobject, camera, opts) {
 				|| event.webkitMovementX || 0;
 		var movementY = event.movementY || event.mozMovementY
 				|| event.webkitMovementY || 0;
-
-		this.dummy.rotation.y -= movementX * 0.004;
+	//	this.pitchObject.rotation.y -= movementX * 0.004;
+	this.dummy.rotation.y -= movementX * 0.004;
 		this.gameobject.rotation.y -= movementX * 0.004;
 
 		/*	this.pitchObject.rotation.x -= movementY * 0.002;
@@ -167,7 +169,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 			this.velocity.y = -distances[5];
 		}
 		this.velocity.z = distances[5] == undefined || distances[5] > 5 ? this.velocity.z
-				- 0.12 * delta
+				-  (this.opts.velocityIncreaseRate) * delta
 				: 0;
 
 	}
@@ -181,7 +183,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 			this.velocity.y = distances[4];
 		}
 		this.velocity.z = distances[4] == undefined || distances[4] > 5 ? this.velocity.z
-				+ 0.12 * delta
+				+ (this.opts.velocityIncreaseRate) * delta
 				: 0;
 
 	}

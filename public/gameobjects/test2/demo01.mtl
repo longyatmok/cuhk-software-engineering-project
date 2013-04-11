@@ -1,0 +1,63 @@
+newmtl demo01:Diamond_Block
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl demo01:Dirt
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl demo01:Gold_Block
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl demo01:Grass
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl demo01:Stationary_Lava
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl demo01:Stone_Brick
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl demo01:Wall_Sign
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd demo01-RGB.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06

@@ -19,6 +19,7 @@ var SM_Login_Response = function(data) {
 
 	if (data.message == 'success') {
 		//	alert('login success');
+		World.instance.modules[SM_Login_Response.AuthModuleNAME].user = data.user;
 		World.instance.overlay.changeState(RoomModule.ModeSelection);
 		//overlay => Mode Selection
 		//add username to the overlay
@@ -32,6 +33,7 @@ var SM_Login_Response = function(data) {
 };
 
 util.inherits(SM_Login_Response, ServerMessage);
+SM_Login_Response.AuthModuleNAME = "Auth-Module";
 SM_Login_Response.NAME = "SM_Login_Response";
 
 module.exports = SM_Login_Response;

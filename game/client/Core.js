@@ -46,6 +46,7 @@ var scene;
 var Core = function(opts) {
     Core.super_.call(this, util.extend({
 	"rendererOpts" : {
+		/*"physics" : true,*/
 	/*    clearColor : 0x000000,*/
 	 /*   clearAlpha : 1,*/
 	    antialias : true

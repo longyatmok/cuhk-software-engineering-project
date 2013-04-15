@@ -34,7 +34,7 @@ var NetworkGameplay = function(region, opts) {
 	this.opts = World.extend({
 		name : 'network',
 		yLevel : 40,
-		debugLine : true
+		debugLine : false
 	}, opts);
 	this.ready = false;
 	NetworkGameplay.super_.call(this, region, this.opts);

@@ -19,11 +19,12 @@ var CharacterController = function(gameobject, camera, opts) {
 
 		},
 		velocityDecreaseRate : 0.07,
-		velocityIncreaseRate : 0.19,
-		velocityGravity : 0.195,
-		
-		jumpVelocity : 6,
-		cameraPosition : [ 0, 37, 42 ],
+		velocityIncreaseRate : 0.28,
+		velocityGravity : 0.22,
+
+		jumpVelocity : 1.6,
+		cameraPosition : [ 0, 18,15 ],
+		//cameraPosition : [ 0, 37, 42 ],
 		cameraRotation : [ -Math.PI / 4.5, 0, 0 ]
 	}, opts));
 	this.enabled = false;
@@ -37,19 +38,19 @@ var CharacterController = function(gameobject, camera, opts) {
 	this.pitchObject.rotation.set.apply(this.pitchObject.rotation,
 			this.opts.cameraRotation);
 
-	//this.pitchObject.position.set(0, 37,40);
-	//this.pitchObject.rotation.set(-Math.PI/4.5,0,0);
+	// this.pitchObject.position.set(0, 37,40);
+	// this.pitchObject.rotation.set(-Math.PI/4.5,0,0);
 	// this.pitchObject.add(camera);
 	this.gameobject = gameobject;
 
 	this.dummy = new THREE.Object3D();
-	//this.dummy.position.y = 1;
+	// this.dummy.position.y = 1;
 	this.dummy.add(this.pitchObject);
-	//this.dummy.position.x = 0;
-	//this.dummy.position.z = 420;
+	// this.dummy.position.x = 0;
+	// this.dummy.position.z = 420;
 	this.dummy.position = this.gameobject.position;
 
-	var cubeGeometry = new THREE.CubeGeometry(7, 14, 7, 1, 1, 1);
+/*	var cubeGeometry = new THREE.CubeGeometry(7, 14, 7, 1, 1, 1);
 	var wireMaterial = new THREE.MeshBasicMaterial({
 		color : 0xff0000,
 		wireframe : true
@@ -57,7 +58,7 @@ var CharacterController = function(gameobject, camera, opts) {
 	this.collisionDetectBox = new THREE.Mesh(cubeGeometry, wireMaterial);
 	this.dummy.add(this.collisionDetectBox);
 	this.collisionDetectBox.position.y = 8;
-
+*/
 	this.dummy.rotation.x = this.gameobject.rotation.x;
 	this.gameobject.rotation.y = -Math.PI / 2;
 	this.dummy.rotation.y = Math.PI / 2;
@@ -88,14 +89,16 @@ var CharacterController = function(gameobject, camera, opts) {
 				|| event.webkitMovementX || 0;
 		var movementY = event.movementY || event.mozMovementY
 				|| event.webkitMovementY || 0;
-	//	this.pitchObject.rotation.y -= movementX * 0.004;
-	this.dummy.rotation.y -= movementX * 0.004;
+		// this.pitchObject.rotation.y -= movementX * 0.004;
+		this.dummy.rotation.y -= movementX * 0.004;
 		this.gameobject.rotation.y -= movementX * 0.004;
 
-		/*	this.pitchObject.rotation.x -= movementY * 0.002;
-
-			/this.pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2,
-					this.pitchObject.rotation.x));*/
+		/*
+		 * this.pitchObject.rotation.x -= movementY * 0.002;
+		 * 
+		 * /this.pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2,
+		 * this.pitchObject.rotation.x));
+		 */
 	};
 
 	function bindx(scope, fn) {
@@ -141,7 +144,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 	if (!this.enabled)
 		return;
 
-	//console.log(distances);
+	// console.log(distances);
 	delta *= 0.1;
 
 	this.velocity.x += (-this.velocity.x) * (this.opts.velocityDecreaseRate)
@@ -169,7 +172,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 			this.velocity.y = -distances[5];
 		}
 		this.velocity.z = distances[5] == undefined || distances[5] > 5 ? this.velocity.z
-				-  (this.opts.velocityIncreaseRate) * delta
+				- (this.opts.velocityIncreaseRate) * delta
 				: 0;
 
 	}
@@ -203,7 +206,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 				- 0.08 * delta
 				: 0;
 
-		//this.velocity.x -= 0.08 * delta;
+		// this.velocity.x -= 0.08 * delta;
 	}
 	if (this.keyStatus.right) {
 		// this.dummy.rotation.y -= 0.022 * delta;
@@ -221,25 +224,26 @@ CharacterController.prototype.updatex = function(delta, distances) {
 				+ 0.08 * delta
 				: 0;
 
-		//	this.velocity.x += 0.08 * delta;
+		// this.velocity.x += 0.08 * delta;
 	}
 	if (this.keyStatus.up && this.canJump) {
-		this.velocity.y += this.opts.jumpVelocity;
+		// above
+		if (distances[1] != undefined && this.lastVelocity.y >= 0
+				&& this.velocity.y >= 0
+				&& this.velocity.y > this.lastVelocity.y
+				&& Math.abs(this.velocity.y) > distances[1] /*
+				 * more positive
+				 */) {
+			this.velocity.y = distances[1] - 1;
+		} else {
+			this.velocity.y += this.opts.jumpVelocity * delta;
+		}
 		this.keyStatus.up = false;
 		this.canJump = false;
 	}
 
 	// if(distances[0]!=undefined) console.log(distances[0]);
-	this.isOnObjectFN(distances[0] >= 0 && distances[0] <= 2);
-
-	// above
-	if (distances[1] != undefined && this.lastVelocity.y >= 0
-			&& this.velocity.y >= 0 && this.velocity.y < this.lastVelocity.y
-			&& Math.abs(this.velocity.y) > distances[1] /*
-			 * more positive
-			 */) {
-		this.velocity.y = distances[1];
-	}
+	this.isOnObjectFN(distances[0] >= 0 && distances[0] <= 2.5);
 
 	// below
 	if (distances[0] != undefined && this.lastVelocity.y <= 0
@@ -247,7 +251,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 			&& Math.abs(this.velocity.y) > distances[0] /*
 			 * more negative
 			 */) {
-		this.velocity.y = -distances[0] + 0.95;
+		this.velocity.y = -distances[0] + 1;
 	}
 	if (this.isOnObject === true) {
 		this.velocity.y = Math.max(0, this.velocity.y);

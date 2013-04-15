@@ -28,7 +28,7 @@ var FreeGameplay = function(region, opts) {
 	this.opts = World.extend({
 		name : 'free-world',
 		yLevel : 40,
-		debugLine : true
+		debugLine : false
 	}, opts);
 	this.ready = false;
 	FreeGameplay.super_.call(this, region, this.opts);
@@ -205,7 +205,8 @@ FreeGameplay.prototype.initialize = function() {
 		avatar.scale = new THREE.Vector3(0.01, 0.01, 0.02);
 		console.log("[loader] success");
 		self.gameobjects.add('character.template', avatar.clone());
-		self.gameobjects.add('game.player', avatar);
+		//avatar_fps = new THREE.Object3D();
+		self.gameobjects.add('game.player',avatar);
 		self.scene.add(avatar);
 
 		self.ready = true;

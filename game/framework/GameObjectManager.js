@@ -5,6 +5,12 @@ var THREE = require('../vendor/Three');
 var util = require('util');
 var GameObject = require('./gameobjects/GameObject');
 
+/**
+ * GameObject Manager
+ * @contructor
+ * @this {GameObjectManager}
+ * @param opts
+ */
 var GameObjectManager = function(opts) {
 
     this.objects = [];
@@ -12,6 +18,11 @@ var GameObjectManager = function(opts) {
     this.count = 0;
 };
 
+/**
+ * Push GameObject
+ * @this {GameObjectManager}
+ * @param objects
+ */
 GameObjectManager.prototype.push = function(objects) {
     /*
      * if (!objects instanceof GameObject) { throw Error('Error on adding an
@@ -21,6 +32,11 @@ GameObjectManager.prototype.push = function(objects) {
     this.names.push('unnamed-' + this.count);
     this.count++;
 };
+/**
+ * Add GameObject
+ * @this {GameObjectManager}
+ * @param name, objects
+ */
 GameObjectManager.prototype.add = function(name, objects) {
     /*
      * if (!objects instanceof GameObject) { throw Error('Error on adding an
@@ -30,16 +46,34 @@ GameObjectManager.prototype.add = function(name, objects) {
     this.names.push(name);
     this.count++;
 };
-GameObjectManager.prototype.set = function(name,objects) {
+
+/**
+ * set GameObject (Replace)
+ * @this {GameObjectManager}
+ * @param name, objects
+ */
+GameObjectManager.prototype.set = function(name, objects) {
 
     return this.objects[this.names.indexOf(name)] = objects;
 };
 
+/**
+ * Get GameObject
+ * @this {GameObjectManager}
+ * @param name
+ * @return {objects} this objects
+ */
 GameObjectManager.prototype.get = function(name) {
 
     return this.objects[this.names.indexOf(name)];
 };
 
+/**
+ * Render GameObject
+ * @this {GameObjectManager}
+ * @param dt
+ * @return {GameObjectManager} this 
+ */
 GameObjectManager.prototype.render = function(dt) {
     this.objects.forEach(function(object) {
 	if (object != undefined && object.update != null)
@@ -48,15 +82,23 @@ GameObjectManager.prototype.render = function(dt) {
     return this;
 };
 
+/**
+ * dispose GameObject
+ * @this {GameObjectManager}
+ * @param dt
+ * @return {GameObjectManager} this 
+ */
+
 GameObjectManager.prototype.dispose = function(dt) {
     this.objects.forEach(function(object) {
 	if (object != undefined && object.update != null)
 	    object.dispose();
     });
-    
+
     //TODO dispose object
     return this;
 };
+
 GameObjectManager.prototype.boilerplate = function() {
     // define Boilerplate Class
     this.add("__boilerplate_cube", new BoilerplateCube());

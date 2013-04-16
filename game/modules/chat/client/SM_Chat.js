@@ -5,7 +5,12 @@ var World = require('../../../framework/World');
 var io = require('../../../vendor/socket.io-client');
 var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
-
+/**
+ * Server Message for chat
+ * @constructor
+ * @this {SM_Chat}
+ * @param data 
+ */
 var SM_Chat = function (data) {
     console.log(" SM_Chat");
     console.log(data);

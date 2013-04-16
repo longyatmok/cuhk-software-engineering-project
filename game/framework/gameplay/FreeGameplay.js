@@ -1,211 +1,295 @@
 /**
- * FreeGameplay (Abstract Class)
+ * FreeGameplay (Abstract Class) inherited from Gameplay
+ * 
+ * @constructor
+ * @this {FreeGameplay}
+ * @param {region,
+ *            opts}
  */
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
 var GameObjectManager = require('../GameObjectManager');
 var World = require('../World');
-
 var Gameplay = require('./Gameplay');
-THREE.PointerLockControls = require('../../vendor/THREE/PointerLockControls');
+var ColladaLoader = require('../../vendor/loaders/ColladaLoader');
+var CharacterController = require('../controllers/CharacterController');
 
-var time = Date.now();
-
+/**
+ * 
+ * 
+ * @constructor
+ * @this {FreeGameplay}
+ * @param region
+ *            Region
+ * @param opts
+ *            Options Object
+ */
 var FreeGameplay = function(region, opts) {
-    this.opts = World.extend({
-	name : 'free-world'
-    }, opts);
-    FreeGameplay.super_.call(this, region, this.opts);
-
+	this.opts = World.extend({
+		name : 'free-world',
+		yLevel : 40,
+		debugLine : false
+	}, opts);
+	this.ready = false;
+	FreeGameplay.super_.call(this, region, this.opts);
 };
 util.inherits(FreeGameplay, Gameplay);
 
 FreeGameplay.prototype.respawn = function() {
-    // FreeGameplay.super_.prototype.respawn.call(this);
+	if (!this.ready)
+		return false;
+	// FreeGameplay.super_.prototype.respawn.call(this);
+	if (this.controls == undefined) {
+		this.region.camera.position = new THREE.Vector3(0, 0, 0);
+		this.region.camera.rotation = new THREE.Vector3(0, 0, 0);
+		this.gameobjects.get('game.player').position = this.region.spawnLocation
+				.clone();
+		this.gameobjects.get('game.player').rotation = this.region.spawnRotation
+				.clone();
+		this.controls = new CharacterController(this.gameobjects
+				.get('game.player'), this.region.camera);
+		this.gameobjects.add('controls', this.controls);
+		this.scene.add(this.controls.dummy);
+		/*
+		 * this.controls2 = new THREE.TrackballControls(this.region.camera);
+		 * this.controls2.rotateSpeed = 4.0; this.controls2.zoomSpeed = 3.6;
+		 * this.controls2.panSpeed = 2.0; this.controls2.noZoom = false;
+		 * this.controls2.noPan = true; this.controls2.staticMoving = true;
+		 * this.controls2.dynamicDampingFactor = 0.3;
+		 * 
+		 * this.gameobjects.add("__boilerplate_controls_trackball",
+		 * this.controls2);
+		 */
 
-    this.region.camera.position = new THREE.Vector3(0, 0, 0);
-    this.region.camera.rotation = this.region.spawnRotation.clone();
-
-    this.controls = new THREE.PointerLockControls(this.region.camera);
-    this.gameobjects.add('controls', this.controls);
-    this.scene.add(this.controls.getObject());
+	} else {
+		this.gameobjects.get('game.player').position.x = this.region.spawnLocation.x;
+		this.gameobjects.get('game.player').position.y = this.region.spawnLocation.y;
+		this.gameobjects.get('game.player').position.z = this.region.spawnLocation.z;
+		this.controls.reset();
+	}
 };
 
 FreeGameplay.prototype.initialize = function() {
+	FreeGameplay.super_.prototype.initialize.call(this);
 
-    var self = this;
-    this.directions = [];
-  
+	var havePointerLock = 'pointerLockElement' in document
+			|| 'mozPointerLockElement' in document
+			|| 'webkitPointerLockElement' in document;
 
-    
-    this.directions.push(new THREE.Vector3(0, -1, 0)); // below
-    this.directions.push(new THREE.Vector3(0, 1, 0)); // above
-    this.directions.push(new THREE.Vector3(0, 0, 1)); // front
-    this.directions.push(new THREE.Vector3(0, 0, -1)); // behind
+	if (havePointerLock) {
 
-    /*
-     * this.directions.push(new THREE.Vector3(1, 1, 1)); this.directionspush(new
-     * THREE.Vector3(-1, 1, 1)); this.directionspush(new THREE.Vector3(1, 1,
-     * -1)); this.directionspush(new THREE.Vector3(-1, 1, -1));
-     * this.directionspush(new THREE.Vector3(1, -1, 1)); this.directionspush(new
-     * THREE.Vector3(-1, -1, 1)); this.directionspush(new THREE.Vector3(1, -1,
-     * -1)); this.directionspush(new THREE.Vector3(-1, -1, -1));
-     */
-    // this.controls = controls = new
-    // THREE.PointerLockControls(this.region.camera);
-    // this.scene.add(controls.getObject());
-    // this.gameobjects = new GameObjectManager();
-    var havePointerLock = 'pointerLockElement' in document
-	    || 'mozPointerLockElement' in document
-	    || 'webkitPointerLockElement' in document;
+		var element = document.body;
 
-    if (havePointerLock) {
+		var pointerlockchange = function(event) {
 
-	var element = document.body;
+			if (document.pointerLockElement === element
+					|| document.mozPointerLockElement === element
+					|| document.webkitPointerLockElement === element) {
 
-	var pointerlockchange = function(event) {
+				self.gameobjects.get('controls').enabled = true;
+				World.instance.overlay.visible(false);
+				// blocker.style.display = 'none';
 
-	    if (document.pointerLockElement === element
-		    || document.mozPointerLockElement === element
-		    || document.webkitPointerLockElement === element) {
+			} else {
 
-		self.gameobjects.get('controls').enabled = true;
-		World.instance.overlay.visible(false);
-		// blocker.style.display = 'none';
+				self.gameobjects.get('controls').enabled = false;
 
-	    } else {
+				World.instance.overlay.visible(true);
+				instructions.style.display = '';
 
-		self.gameobjects.get('controls').enabled = false;
-
-		World.instance.overlay.visible(true);
-		instructions.style.display = '';
-
-	    }
-
-	}
-
-	var pointerlockerror = function(event) {
-
-	    instructions.style.display = '';
-
-	}
-
-	// Hook pointer lock state change events
-	document
-		.addEventListener('pointerlockchange', pointerlockchange, false);
-	document.addEventListener('mozpointerlockchange', pointerlockchange,
-		false);
-	document.addEventListener('webkitpointerlockchange', pointerlockchange,
-		false);
-
-	document.addEventListener('pointerlockerror', pointerlockerror, false);
-	document.addEventListener('mozpointerlockerror', pointerlockerror,
-		false);
-	document.addEventListener('webkitpointerlockerror', pointerlockerror,
-		false);
-
-	instructions.addEventListener('click', function(event) {
-
-	    instructions.style.display = 'none';
-	    if (!self.gameobjects.get('controls').enabled) {
-
-		self.gameobjects.get('controls').enabled = true;
-		World.instance.overlay.visible(false);
-		// blocker.style.display = 'none';
-
-	    } else {
-
-		self.gameobjects.get('controls').enabled = false;
-
-		World.instance.overlay.visible(true);
-		instructions.style.display = '';
-
-	    }
-/*
-	    // Ask the browser to lock the pointer
-	    element.requestPointerLock = element.requestPointerLock
-		    || element.mozRequestPointerLock
-		    || element.webkitRequestPointerLock;
-
-	    if (/Firefox/i.test(navigator.userAgent)) {
-
-		var fullscreenchange = function(event) {
-
-		    if (document.fullscreenElement === element
-			    || document.mozFullscreenElement === element
-			    || document.mozFullScreenElement === element) {
-
-			document.removeEventListener('fullscreenchange',
-				fullscreenchange);
-			document.removeEventListener('mozfullscreenchange',
-				fullscreenchange);
-
-			element.requestPointerLock();
-		    }
+			}
 
 		}
 
-		document.addEventListener('fullscreenchange', fullscreenchange,
-			false);
-		document.addEventListener('mozfullscreenchange',
-			fullscreenchange, false);
+		var pointerlockerror = function(event) {
 
-		element.requestFullscreen = element.requestFullscreen
-			|| element.mozRequestFullscreen
-			|| element.mozRequestFullScreen
-			|| element.webkitRequestFullscreen;
+			instructions.style.display = '';
 
-		element.requestFullscreen();
+		}
 
-	    } else {
+		// Hook pointer lock state change events
+		document
+				.addEventListener('pointerlockchange', pointerlockchange, false);
+		document.addEventListener('mozpointerlockchange', pointerlockchange,
+				false);
+		document.addEventListener('webkitpointerlockchange', pointerlockchange,
+				false);
 
-		element.requestPointerLock();
+		document.addEventListener('pointerlockerror', pointerlockerror, false);
+		document.addEventListener('mozpointerlockerror', pointerlockerror,
+				false);
+		document.addEventListener('webkitpointerlockerror', pointerlockerror,
+				false);
 
-	    }*/
+		instructions.addEventListener('click', function(event) {
 
-	}, false);
+			// instructions.style.display = 'none';
+			/*
+			 * if (!self.gameobjects.get('controls').enabled) {
+			 * 
+			 * self.gameobjects.get('controls').enabled = true;
+			 * World.instance.overlay.visible(false); // blocker.style.display =
+			 * 'none';
+			 *  } else {
+			 * 
+			 * self.gameobjects.get('controls').enabled = false;
+			 * 
+			 * World.instance.overlay.visible(true); instructions.style.display =
+			 * '';
+			 *  }
+			 */
 
-    } else {
+			// Ask the browser to lock the pointer
+			element.requestPointerLock = element.requestPointerLock
+					|| element.mozRequestPointerLock
+					|| element.webkitRequestPointerLock;
 
-	instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+			if (/Firefox/i.test(navigator.userAgent)) {
 
-    }
+				var fullscreenchange = function(event) {
 
-};
+					if (document.fullscreenElement === element
+							|| document.mozFullscreenElement === element
+							|| document.mozFullScreenElement === element) {
 
-FreeGameplay.prototype.render = function(dt) {
-    this.gameobjects.render(dt);
+						document.removeEventListener('fullscreenchange',
+								fullscreenchange);
+						document.removeEventListener('mozfullscreenchange',
+								fullscreenchange);
 
-    // DemoOneRegion.super_.prototype.render.call(this);
-    time = Date.now();
-    var directionDistance = [];
-    for ( var direction in this.directions) {
-	// this.position refers to the character's current position
-	/*
-	 * var ray = new THREE.Ray(controls.getObject().position,
-	 * this.directions[direction]);
-	 */
-	var caster = new THREE.Raycaster();
-	caster.ray.origin.copy(this.controls.getObject().position);
-	// caster.ray.origin.y -= 20;
-	caster.ray.direction = this.directions[direction];
-	var intersections = caster
-		.intersectObjects(this.region.regionobjects.objects);
+						element.requestPointerLock();
+					}
 
-	if (intersections.length > 0) {
+				}
 
-	    var distance = intersections[0].distance;
-	    directionDistance[ direction ] = distance;
-	    break;
-	   // return;
+				document.addEventListener('fullscreenchange', fullscreenchange,
+						false);
+				document.addEventListener('mozfullscreenchange',
+						fullscreenchange, false);
+
+				element.requestFullscreen = element.requestFullscreen
+						|| element.mozRequestFullscreen
+						|| element.mozRequestFullScreen
+						|| element.webkitRequestFullscreen;
+
+				element.requestFullscreen();
+
+			} else {
+
+				element.requestPointerLock();
+
+			}
+
+		}, false);
+
+	} else {
+
+		instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+
 	}
 
-    }
-    this.controls.updatex(dt,directionDistance[0]);
-    return;
-    // this.controls.isOnObject(false);
-    this.controls.updatex(dt);
+	this.directions = [];
+	this.directions.push(new THREE.Vector3(0, -1, 0));// 0 below
+	this.directions.push(new THREE.Vector3(0, 1, 0)); // 1 above
+	this.directions.push(new THREE.Vector3(0, 0, 1)); // 2 west
+	this.directions.push(new THREE.Vector3(0, 0, -1));// 3 east
+	this.directions.push(new THREE.Vector3(1, 0, 0)); // 4 south
+	this.directions.push(new THREE.Vector3(-1, 0, 0));// 5 north
+	// this.directions.push(new THREE.Vector3(1, -1, 1));
+	var self = this;
+
+	console.log("[loader]start");
+	var loader = new THREE.ColladaLoader();
+	loader.load('gameobjects/avatar/boy01_v2.dae', function(result) {
+		var avatar = result.scene;
+		avatar.scale = new THREE.Vector3(0.01, 0.01, 0.02);
+		console.log("[loader] success");
+		self.gameobjects.add('character.template', avatar.clone());
+		//avatar_fps = new THREE.Object3D();
+		self.gameobjects.add('game.player',avatar);
+		self.scene.add(avatar);
+
+		self.ready = true;
+		self.respawn();
+		/*
+		 * avatar.position = self.controls.getObject().position; avatar.rotation =
+		 * self.controls.getObject().rotation;
+		 */
+	});
 
 }
+var lines = [];
+FreeGameplay.prototype.render = function(dt) {
+	if (!this.ready)
+		return;
+	this.gameobjects.render(dt);
 
+	var directionDistance = [];
+
+	
+
+	for ( var direction in this.directions) {
+		// this.position refers to the character's current position
+		var caster = new THREE.Raycaster();
+		caster.ray.origin.copy(this.gameobjects.get('game.player').position);
+		// caster.ray.origin.y += 5;
+		var vector = this.directions[direction].clone();
+		var axis = new THREE.Vector3(0, 1, 0);
+		var angle = (Math.PI / 2)
+				+ (this.gameobjects.get('game.player').rotation.y); // prefect!
+		// (the direction vector change as the character's rotation is changed
+		var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
+
+		vector.applyMatrix4(matrix);
+
+		caster.ray.direction = vector;
+		var intersections = caster
+				.intersectObjects(this.region.regionobjects.objects);
+
+		if (this.opts.debugLine === true && lines[direction] != undefined) {
+			this.scene.remove(lines[direction]);
+		}
+
+		if (intersections.length > 0) {
+
+			var geometry = new THREE.Geometry();
+			// DEBUG RAY LINE START // POSITION OF MESH TO SHOOT RAYS OUT OF
+			geometry.vertices
+					.push(this.gameobjects.get('game.player').position);
+			geometry.vertices.push(intersections[0].point);
+
+			if (this.opts.debugLine === true) {
+				lines[direction] = new THREE.Line(geometry,
+
+				new THREE.LineBasicMaterial({
+					color : 0x990000
+				}));
+				this.scene.add(lines[direction]);
+
+			}
+			// DEBUG RAY LINE END
+			if (intersections[0].distance) {
+				directionDistance[direction] = intersections[0].distance; // take
+				// the
+				// nearest
+				// intersection
+				// object
+			}
+
+		}
+
+	}
+	
+/*
+	if (this.gameobjects.get('game.player').position.y < this.opts.yLevel) {
+		this.respawn();
+	}*/
+	// DEBUG
+	/*
+	 * if (directionDistance.length > 0) console.log(directionDistance);
+	 */
+	this.controls.updatex(Date.now() - World.instance.time, directionDistance);
+	return;
+
+}
 module.exports = FreeGameplay;

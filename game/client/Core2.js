@@ -17,6 +17,14 @@ var PositionController = require('../framework/controllers/PositionController');
 var AdvancedController = require('../framework/controllers/AdvancedController');
 
 var scene;
+
+/**
+ * Game Core
+ * @constructor
+ * @this {Core}
+ * @param opts
+ */
+
 var Core = function(opts) {
     Core.super_.call(this, util.extend({
 	"rendererOpts" : {
@@ -31,6 +39,13 @@ var Core = function(opts) {
 util.inherits(Core, World);
 
 // methods start here
+
+/**
+ * Game Core initialize
+ * @this {Core}
+ * @param callback
+ */
+
 Core.prototype.initialize = function(callback) {
     Core.super_.prototype.initialize.call(this);
 
@@ -142,6 +157,12 @@ ground_material.map.wrapS = ground_material.map.wrapT = THREE.RepeatWrapping;
 };
 
 var now, lastbox = 0, boxes = [];
+
+/**
+ * Game Core render
+ * @this {Core}
+ */
+
 Core.prototype.render = function() {
     /*
      * // Create a new box every second now = new Date().getTime(); if (now -
@@ -154,7 +175,12 @@ Core.prototype.render = function() {
     Core.super_.prototype.render.call(this);
 };
 
-//deprecated
+
+/**
+ * Game Core onWindowResize
+ * @this {Core}
+ * @deprecated
+ */
 Core.prototype.onWindowResize = function() {
 
     this.scenes.active.cameras.main.aspect = window.innerWidth

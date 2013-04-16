@@ -27,17 +27,26 @@ var GameModule = require('../modules/game/client/module');
 //gameplay
 var Gameplay = require('../framework/gameplay/Gameplay');
 var FreeGameplay = require('../framework/gameplay/FreeGameplay');
+var NetworkGameplay = require('../framework/gameplay/NetworkGameplay');
 var PracticeModeGameplay = require('../modules/gameplay/client/PracticeModeGameplay');
 //regions
 var Region = require('../framework/Region');
 var TitleScreen = require('./regions/TitleScreen');
 var TestRegion = require('./regions/TestRegion');
+var Test2Region =  require('./regions/Test2Region');
 var DemoOneRegion = require('./regions/DemoOneRegion');
 var scene;
+/**
+ * Game Core
+ * @constructor
+ * @this {Core}
+ * @param opts
+ */
 
 var Core = function(opts) {
     Core.super_.call(this, util.extend({
 	"rendererOpts" : {
+		/*"physics" : true,*/
 	/*    clearColor : 0x000000,*/
 	 /*   clearAlpha : 1,*/
 	    antialias : true
@@ -49,6 +58,11 @@ var Core = function(opts) {
 
 };
 util.inherits(Core, World);
+/**
+ * Game Core initialize
+ * @this {Core}
+ * @param callback
+ */
 
 // methods start here
 Core.prototype.initialize = function(callback) {
@@ -58,11 +72,12 @@ Core.prototype.initialize = function(callback) {
     this.regions['title-screen'] = TitleScreen;
  //   this.regions['test-region'] = new TestRegion();
     this.regions['demo-one'] = DemoOneRegion;
-
+    this.regions['test2'] = Test2Region;
+    
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
     this.gameplayClasses['practice'] = PracticeModeGameplay;
-   
+    this.gameplayClasses['network'] = NetworkGameplay;
     this.setRegion('title-screen','empty');
   //  this.activeRegion = this.regions['demo-one']; //we have the terrain now   
   //  this.gameplay = new FreeGameplay(this.activeRegion); 
@@ -84,6 +99,12 @@ Core.prototype.initialize = function(callback) {
 
 
 var now, lastbox = 0, boxes = [];
+
+/**
+ * Game Core render
+ * @this {Core}
+ */
+
 Core.prototype.render = function() { 
     TWEEN.update();
     Core.super_.prototype.render.call(this);

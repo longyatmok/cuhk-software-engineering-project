@@ -7,7 +7,12 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
-
+/**
+ * Client side msg for room creation
+ * @constructor
+ * @this {CM_Room_Create}
+ * @param data 
+ */
 var CM_Room_Create = function (data) {
     this.name = 'CM_Room_Create';
     this.data = data;

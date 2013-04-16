@@ -28,6 +28,7 @@ Overlay.prototype.changeState = function(state, data) {
 				data[key]);
 		// console.log('key:' + key + ' value:' + data[key]);
 	}
+	this.visible(true);
 	if (this.currentState != state) {
 		console.log("change state to " + state);
 		for ( var key in this.states) {

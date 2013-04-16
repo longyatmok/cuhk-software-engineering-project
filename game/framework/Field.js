@@ -1,4 +1,5 @@
 /**
+ * @constructor
  * @deprecated
  * Field (Abstract Class)
  */
@@ -13,6 +14,11 @@ var Field = function(regions) {
     this.region.push(regions);
     this.activated_ = false;
 };
+/**
+ * Field activate
+ * @this {Field}
+ * @return {boolean} activated or not
+ */
 
 Field.prototype.activate = function() {
     if (this.activated_)

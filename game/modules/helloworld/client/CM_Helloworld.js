@@ -7,7 +7,12 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
-
+/**
+ * client side msg for connection
+ * @constructor
+ * @this {CM_Helloworld}
+ * @param info 
+ */
 var CM_Helloworld = function( info ){
 	this.NAME = "CM_helloworld";
 	this.connection = AbstractConnection.instance;

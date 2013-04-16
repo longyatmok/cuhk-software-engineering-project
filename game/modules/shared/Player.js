@@ -1,4 +1,9 @@
-
+/**
+ * player info and data
+ * @constructor
+ * @this {Player}
+ * @param data 
+ */
 var Player = function( data ){
 	this.username = data.username;
 	this.id = data.user_id;
@@ -7,10 +12,21 @@ var Player = function( data ){
 	this.ready = data.ready ? data.ready : false;
 };
 
+
+/**
+ * return player information
+ * @this {Player}
+ * @return {info} player info
+ */
 Player.prototype.toJSON = function(){
 	return { username:this.username , user_id: this.id , ready : this.ready};
 };
 
+
+/**
+ * remove player from room
+ * @this {Player}
+ */
 Player.prototype.leaveRoom = function(){
 	var room = this.room;
 	if(room != null){
@@ -22,6 +38,11 @@ Player.prototype.leaveRoom = function(){
 		delete room;
 	}
 };
+
+
+/**
+ * delete player
+ */
 Player.prototype.dispose = function(){
 	
 };

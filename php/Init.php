@@ -13,11 +13,19 @@ header( 'Pragma: no-cache' );
 require_once('CONFIG.php');
 // load config file end
 
-// load class
-require_once('Account.php');
-require_once('Session.php');
-// load class end
+// load function
+	$files = glob('functions/*');
+	foreach( $files as $file){
+		require_once($file);
+	}
+// load function end
 
+// load class
+	$files = glob('Class/*');
+	foreach( $files as $file){
+		require_once($file);
+	}
+// load class end
 
 // session control
 $Session = new Session();
@@ -57,10 +65,4 @@ if(isset($_GET['provider']) && !!$_GET['provider']){
 
 // social networking service get access token end
 
-
-// load require function
-	$files = glob('functions/*');
-	foreach( $files as $file){
-		require_once($file);
-	}
-// load require function end
+$Account = new Account();

@@ -1,5 +1,3 @@
-<script src="/r/game/bundle.js" type="text/javascript"></script>
-
 <style type="text/css">
 html,body {
 	width: 100%;
@@ -19,13 +17,14 @@ body {
 	width: 100%;
 	height: 100%;
 	z-index: 10;
-	display:none;
+	/*display:none;*/
 }
 
 .overlay {
 	width: 100%;
 	height: 100%;
 	display: none;
+	opacity :1;
 }
 
 .overlay-center {

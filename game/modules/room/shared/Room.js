@@ -97,12 +97,12 @@ Room.prototype.removePlayer = function(player) {
     //console.log(this.players);
 
     // remove player success
-	if (this.players[player.id] != undefined) {
-
-		this.players[player.id].room = null;
-		delete this.players[player.id];
-		console.log("remove player");
-		console.log(this.players);
+	if (typeof this.players[player.id] != "undefined") {
+		var p = this.players[player.id];
+		this.players[p.id].room = null;
+		delete 	this.players[p.id];
+		console.log("removed a player from room #"+this.id+" - "+p.username);
+		console.log(p);
 		return true;
 	}
 

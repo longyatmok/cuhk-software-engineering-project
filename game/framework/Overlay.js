@@ -34,9 +34,9 @@ Overlay.prototype.changeState = function(state, data) {
 		for ( var key in this.states) {
 			$(Overlay.OVERLAY_SELECTOR).find('#' + key).fadeOut(200);
 		}
-
-		$(Overlay.OVERLAY_SELECTOR).find('#' + state).fadeIn(600);
 	}
+	$(Overlay.OVERLAY_SELECTOR).find('#' + state).show();//fadeIn(600);
+	
 
 	this.currentState = state;
 };
@@ -46,6 +46,7 @@ Overlay.prototype.visible = function(bool) {
 		$(Overlay.OVERLAY_SELECTOR).show();
 	} else {
 		$(Overlay.OVERLAY_SELECTOR).hide();
+		
 	}
 };
 

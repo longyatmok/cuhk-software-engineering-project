@@ -28,7 +28,7 @@ var SM_Login_Response = function(data) {
 		//overlay => Mode Selection
 		//add username to the overlay
 	} else {
-		world.overlay.changeState('title', {
+		World.instance.overlay.changeState('title', {
 			msg : 'Login Failed , reason:' + data.message
 		});
 

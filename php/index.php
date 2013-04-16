@@ -15,8 +15,6 @@ if(isset($_GET['logout'])){
 	loadInterface('game');
 	if($Account->getStatus()){
 		?>
-<script
-	src="/r/game/bundle.js" type="text/javascript"></script>
 <script type="text/javascript">
 game.modules['Auth-Module'].login('<?=$Account->getUid()?>','<?=$Account->getToken()?>');
 </script>

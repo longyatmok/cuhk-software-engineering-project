@@ -31,7 +31,7 @@ var RoomModule = function(world) {
 	this.roomList = new RoomList();
 	this.world = world;
 	this.room = null;
-
+	var self = this;
 	world.connection.register(SM_RoomList_Response);
 	world.connection.register(SM_Room_Status);
 
@@ -178,8 +178,7 @@ var RoomModule = function(world) {
 	});
 	
 	$('#'+RoomModule.Room + '_start').click(function(){
-		var cm = new CM_Room_GameStart();
-		cm.emit();
+		self.iAmReady();
 	});
 	
 	console.log("room module loaded");
@@ -195,9 +194,11 @@ RoomModule.prototype.updateRoomList = function(list) {
 	this.roomList = list;
 	// TODO redraw UI
 };
+RoomModule.prototype.iAmReady = function(){
+	var cm = new CM_Room_GameStart();
+	cm.emit();
+};
 
-//var CM_Room_Create = require('./CM_Room_Create');
-//var CM_Room_Join = require('./CM_Room_Join');
 
 RoomModule.prototype.newRoom = function(data) {
 	var cm = new CM_Room_Create(data);

@@ -22,6 +22,7 @@ var Server = function(opts) {
 			'free' : [],
 			'speed' : []
 	};
+	this.roomIdCounter = 10;
 	var demoRoom = new Room({
 				id: 0,
 				region : 'test2',// 'demo-one',
@@ -32,7 +33,7 @@ var Server = function(opts) {
 	this.roomList.free [ 0 ] = demoRoom;
 	this.roomList.free [ 0 ] .channel = io.sockets.in(demoRoom.getChannelName());
 	this.playerList = [];
-	
+	this.socketToplayerList = [];
 	this.conn = mysql.createConnection({
 		  host     : 'allenp.tk',
 		  user     : 'csci3100',
@@ -40,34 +41,18 @@ var Server = function(opts) {
 		  database : 'totheskies'
 		});
 	this.conn.connect(function(err) {
-		  if( err != null) console.error("can't connect to the dataase");// connected!
-																			// (unless
-																			// `err`
-																			// is
-																			// set)
+		  if( err != null) console.error("can't connect to the dataase");
 	});
-/*
- * connection.connect();
- * 
- * connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) { if
- * (err) throw err;
- * 
- * console.log('The solution is: ', rows[0].solution); });
- * 
- * connection.end();
- */
 	/*
 	 * var opts = { VERSION : '0.0.0', KEY : 'CSCI3100-GROUP6', port : 7777 };
 	 */
 	_server.listen(opts.port, function() {
 		console.log("Express server listening on port" + opts.port);
 	});
-// io.set('log level', 1); // hide debug message
+	io.set('log level', 1); // hide debug message
 
 	io.sockets.on('connection', function(socket) {
-		this.room = null;
-		this.player = null;
-		
+
 		socket.on('disconnect',function(data){
 			if(!socket.player) return;
 			console.log("[DISCONNECTED] : " + '{' + socket.player.id+'} ' + socket.player.username);
@@ -87,11 +72,12 @@ var Server = function(opts) {
 			
 			socket.player.room = null;
 			delete server.playerList[ socket.player.id ];
-			delete socket.player;			
+			//delete socket.player;			
 		});
 	
 		// Game State Sync
 		socket.on('CM_Game_State',function(data){
+			if(!socket.player) return;
 			// console.log(socket.player);
 			socket.broadcast.to( socket.player.room.getChannelName() ).emit('SM_Game_State',{
 				id:socket.player.id,
@@ -100,8 +86,108 @@ var Server = function(opts) {
 			});
 		});
 		
+		
+		
+		
+		
+		
+		socket.on('CM_Room_Create',function(data){
+			if(!socket.player) return;
+			//socket.emit('SM_Room_Status',{error:"error on creating a new room"});
+			//return ;
+			try{
+			server.roomIdCounter++;
+			    var room = new Room({
+			    	id: server.roomIdCounter,
+			    	region : data.region_id,// 'demo-one',
+			    	gameplay : 'network',// 'practice',//free' ,
+			    	players : {}});
+				
+			    var newRoomID = server.roomIdCounter;
+				
+				server.roomList.free [ room.id ] = room;
+				server.roomList.free [ room.id ].channel = io.sockets.in(room.getChannelName());
+				
+			}catch(e){
+				socket.emit('SM_Room_Status',{error:"error on creating a new room"});
+			}
+			
+			//try{
+				// leave room and then join room
+				var room = socket.player.room;
+	
+				if(room != null){
+					console.log("removing from a room");
+					socket.leave( room.getChannelName());
+					room.removePlayer( socket.player );		
+		
+					// notify other players in the room that this player is disconnected
+					room.channel.emit('SM_Room_Status',room); 			
+					if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
+						room.status = Room.STATUS_WAITING; 
+					}			
+				}
+				
+	
+				
+				var result = server.roomList.free [ newRoomID ].addPlayer( socket.player );
+				
+				
+				if(result == true){
+					socket.join( server.roomList.free [ newRoomID ].getChannelName() );
+					io.sockets.in(socket.player.room.getChannelName()).emit('SM_Room_Status',server.roomList.free [ newRoomID ]);
+				}else{
+					socket.emit('SM_Room_Status',{error:"The World you are attempting to join is full or playing."});
+				}
+			//}catch(e){
+			//	socket.emit('SM_Room_Status',{error:"error on joining a new room"});
+			//}
+			
+		});
+		
+		
+		
+		
+		socket.on('CM_Room_Join',function(data){
+			if(!socket.player) return;
+			try{		
+				// leave room and then join room
+				var room = socket.player.room;
+				if(room != null){
+					socket.leave( room.getChannelName());
+				
+					room.removePlayer( socket.player );
+					
+	// notify other players in the room that this player is disconnected
+					room.channel.emit('SM_Room_Status',room); 
+				
+				
+					if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
+						room.status = Room.STATUS_WAITING; 
+					}
+				
+				}	
+				
+			
+				
+			var result = server.roomList.free [ data.id ].addPlayer( socket.player );
+			if(result == true){
+				
+				socket.join( server.roomList.free [ data.id ].getChannelName());
+				io.sockets.in(socket.player.room.getChannelName()).emit('SM_Room_Status',server.roomList.free [ data.id ]);
+			}else{
+				socket.emit('SM_Room_Status',{error:"The World you are attempting to join is full or playing."});
+			}
+			}catch(e){
+				socket.emit('SM_Room_Status',{error:"error on joining a new room"});
+			}
+
+		});
+		
 		socket.on('CM_Room_GameStart',function(){
-			socket.player.ready = true;
+			if(!socket.player) return;
+			
+			server.socketToplayerList[socket.id].ready = true;
 			
 		
 			if(socket.player.room.isAllReady()){
@@ -114,9 +200,10 @@ var Server = function(opts) {
 		});
 		
 		socket.on('CM_RoomList_Request',function(data){
+			if(!socket.player) return;
 			// console.log(data);
-			// socket.emit('SM_RoomList_Response',{});
-			
+			socket.emit('SM_RoomList_Response',server.roomList.free);
+			return;
 			var result = server.roomList.free [ 0 ].addPlayer( socket.player );
 			if(result == true){
 				socket.join( server.roomList.free [ 0 ].getChannelName());
@@ -153,7 +240,7 @@ var Server = function(opts) {
 						if(results.length > 0){
 							 var result = results[0];
 							 if(server.playerList[ result.uid ]){
-								 if(server.playerList[ result.uid ].socket_){
+								
 									 server.playerList[ result.uid ].socket_.disconnect();
 									 
 										socket.emit('SM_Login_Response', {
@@ -161,14 +248,16 @@ var Server = function(opts) {
 										});
 										socket.disconnect();
 										return;
-								 }
+								 
 							 }
 							 server.playerList [ result.uid ] = new Player({username:result.nickname,user_id: result.uid,socket:socket});
 							 socket.player = server.playerList [ result.uid ];	
+							 server.socketToplayerList[socket.id] =  server.playerList [ result.uid ] ;
 							 socket.emit('SM_Login_Response', {
 								message : "success",
-								user : socket.player
+								user : server.socketToplayerList[socket.id]
 							 });
+							
 						 }else{
 							socket.emit('SM_Login_Response', {
 								message : "forbidden"

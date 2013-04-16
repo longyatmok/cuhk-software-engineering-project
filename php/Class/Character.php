@@ -11,10 +11,8 @@ class Character{
 			$pS->execute();
 			self::$Info = array();
 			while($row = $pS->fetch()){
-				self::$Info['character_id'] = $row;
+				self::$Info[$row['character_id']] = $row;
 			}
-			self::$Info = $pS->fetchAll();
-			
 		}
 		return self::$Info;
 	}
@@ -25,7 +23,7 @@ class Character{
 			$sql = 'SELECT `character_id` FROM `'.self::TABLE.'`';
 			$pS = $GLOBALS['PDO']->prepare($sql);
 			$pS->execute();
-			while($row = $pS->fetch){
+			while($row = $pS->fetch()){
 				$result[] = $row;
 			}
 			self::$InfoID = $result;

@@ -11,10 +11,8 @@ class Scene{
 			$pS->execute();
 			self::$Info = array();
 			while($row = $pS->fetch()){
-				self::$Info['scene_id'] = $row;
+				self::$Info[$row['scene_id']] = $row;
 			}
-			self::$Info = $pS->fetchAll();
-			
 		}
 		return self::$Info;
 	}

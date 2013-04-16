@@ -12,7 +12,8 @@
     "twig": "*",
     "browserify": "1.16",
     "jsmin" : "*",
-    "socket.io" :"*"
+    "socket.io" : "*",
+    "mysql" : "2.0.0-alpha7"
   }
 
 }

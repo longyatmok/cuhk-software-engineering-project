@@ -20,7 +20,11 @@ var SM_Login_Response = function(data) {
 	if (data.message == 'success') {
 		//	alert('login success');
 		World.instance.modules[SM_Login_Response.AuthModuleNAME].user = data.user;
-		World.instance.overlay.changeState(RoomModule.ModeSelection);
+		if(typeof showRDiv !="undefined"){
+			showRDiv('modeSelect');
+		}else{
+			World.instance.overlay.changeState(RoomModule.ModeSelection);
+		}
 		//overlay => Mode Selection
 		//add username to the overlay
 	} else {

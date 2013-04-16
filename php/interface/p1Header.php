@@ -2,4 +2,6 @@
 <html>
 	<head>
   	<title>To The Skies</title>
-      <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>

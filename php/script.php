@@ -5,11 +5,11 @@ if($Account->login()){
   if(!isset($_GET['stat'])){
 ?>
 Game={
-	'scene' : <?php echo json_encode(Scene::getInfo());?>,
-	'character' : <?php echo json_encode(Character::getInfo());?>,
+  'scene' : <?php echo json_encode(Scene::getInfo());?>,
+  'character' : <?php echo json_encode(Character::getInfo());?>,
 };
 <?php
-	}
+  }
 ?>
 Game.stat = {
   'self' : {

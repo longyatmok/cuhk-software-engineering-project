@@ -7,13 +7,17 @@ body>.container{
 	position:absolute;
 	height:100%;
 	width:100%;
-	left:100%;
+	top:100%;
 	z-index:0;
-	transition:left 1s ease-in-out;
-	-o-transition:left 1s ease-in-out;
-	-ms-transition:left 1s ease-in-out;
-	-moz-transition:left 1s ease-in-out;
-	-webkit-transition:left 1s ease-in-out;
+	transition:top 1s ease-in-out;
+	-o-transition:top 1s ease-in-out;
+	-ms-transition:top 1s ease-in-out;
+	-moz-transition:top 1s ease-in-out;
+	-webkit-transition:top 1s ease-in-out;
+}
+body>.container.show{
+	top:0;
+	z-index:1;
 }
 
 /* transition */
@@ -35,10 +39,6 @@ body>.container{
 }
 /* transition end */
 
-body>.container.show{
-	left:0;
-	z-index:1;
-}
 .background{
 	background-color:rgba(200,200,200,0.6);
 }

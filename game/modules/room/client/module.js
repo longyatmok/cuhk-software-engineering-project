@@ -12,6 +12,9 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var Room = require('../shared/Room');
 var RoomList = require('../shared/RoomList');
 
+var CM_Room_Create = require('./CM_Room_Create');
+var CM_Room_Join = require('./CM_Room_Join');
+
 var CM_RoomList_Request = require('./CM_RoomList_Request');
 var SM_RoomList_Response = require('./SM_RoomList_Response');
 var CM_Room_GameStart = require('./CM_Room_GameStart');
@@ -193,6 +196,17 @@ RoomModule.prototype.updateRoomList = function(list) {
 	// TODO redraw UI
 };
 
+//var CM_Room_Create = require('./CM_Room_Create');
+//var CM_Room_Join = require('./CM_Room_Join');
+
+RoomModule.prototype.newRoom = function(data) {
+	var cm = new CM_Room_Create(data);
+	cm.emit();
+};
+RoomModule.prototype.joinRoom = function(data) {
+	var cm = new CM_Room_Join(data);
+	cm.emit();
+};
 /**
  * refresh room
  * @this {RoomModule}

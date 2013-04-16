@@ -149,5 +149,5 @@ body {
 	</div>
 	
 	<div id="canvas_container" style="position:absolute;"></div>
-	<div class="canvas"></div>
-	<div class="background"></div>
+<!-- 	<div class="canvas"></div>
+	<div class="background"></div> -->

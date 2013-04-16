@@ -79,14 +79,14 @@ var Server = function(opts) {
 				room.channel.emit('SM_Room_Status',room); 
 			
 			
-			if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
-				room.status = Room.STATUS_WAITING; 
-			}
+				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
+					room.status = Room.STATUS_WAITING; 
+				}
 			
 			}
 			
 			socket.player.room = null;
-			server.playerList[ socket.player.id ] = null;
+			delete server.playerList[ socket.player.id ];
 			delete socket.player;			
 		});
 	
@@ -152,6 +152,17 @@ var Server = function(opts) {
 					server.conn.query('SELECT a.* FROM `account` a LEFT JOIN  `logins` l ON a.uid = l.uid WHERE l.uid = ? AND l.token = ?', [data.user_id,data.user_token], function(err, results) {
 						if(results.length > 0){
 							 var result = results[0];
+							 if(server.playerList[ result.uid ]){
+								 if(server.playerList[ result.uid ].socket_){
+									 server.playerList[ result.uid ].socket_.disconnect();
+									 
+										socket.emit('SM_Login_Response', {
+											message : "duplicated"
+										});
+										socket.disconnect();
+										return;
+								 }
+							 }
 							 server.playerList [ result.uid ] = new Player({username:result.nickname,user_id: result.uid,socket:socket});
 							 socket.player = server.playerList [ result.uid ];	
 							 socket.emit('SM_Login_Response', {

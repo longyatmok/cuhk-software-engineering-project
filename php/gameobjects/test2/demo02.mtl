@@ -1,0 +1,109 @@
+newmtl demo02:Block_of_Emerald
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Block_of_Emerald2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Diamond_Block
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Diamond_Block2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Gold_Block
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Gold_Block2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Stone_Brick
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Stone_Brick2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Stone_Brick_Stairs
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+map_Ka demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Stone_Brick_Stairs2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Wooden_Plank
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl demo02:Wooden_Plank2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd demo02-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00

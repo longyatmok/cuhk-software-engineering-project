@@ -37,6 +37,8 @@ game.modules['Auth-Module'].login('<?=$Account->getUid()?>','<?=$Account->getTok
 	loadRes('common');
 	loadRes('account');
 	include(INTERFACE_PATH . 'p2Header.php');
+
+	loadRes('game');
 	loadInterface('account');
 	loadInterface('game');
 	//callLayer('login');

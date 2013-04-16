@@ -5,7 +5,7 @@ if(isset($_GET['logout'])){
 	die('<script>location="?";</script>');
 }else if($Account->login()){
 	if(isset($_GET['changeNickname'])){
-		$Account->changeNickname();
+		$Account->changeNickname($_GET['changeNickname']);
 	}
 	include(INTERFACE_PATH . 'p1Header.php');
 	// load all script here

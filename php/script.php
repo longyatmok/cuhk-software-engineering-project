@@ -5,11 +5,11 @@ if($Account->login()){
   if(!isset($_GET['stat'])){
 ?>
 Game={
-	'scene' : <?php echo json_encode(Scene::getInfo());?>,
-	'character' : <?php echo json_encode(Character::getInfo());?>,
+  'scene' : <?php echo json_encode(Scene::getInfo());?>,
+  'character' : <?php echo json_encode(Character::getInfo());?>,
 };
 <?php
-	}
+  }
 ?>
 Game.stat = {
   'self' : {
@@ -18,7 +18,7 @@ Game.stat = {
     'height':<?php echo json_encode(Stat::getSelfHeightList());?>,
     'time':<?php echo json_encode(Stat::getSelfTimeList());?>,
     'highest':<?php echo json_encode(Stat::getSelfHighest());?>,
-    'fasteest':<?php echo json_encode(Stat::getSelfFastest());?>,
+    'fastest':<?php echo json_encode(Stat::getSelfFastest());?>,
   },
   'global' : {
     'height':<?php echo json_encode(Stat::getGlobalHeight());?>,
@@ -30,7 +30,7 @@ Game.stat = {
     'height':<?php echo json_encode(Stat::getSceneSelfHeightList());?>,
     'time':<?php echo json_encode(Stat::getSceneSelfTimeList());?>,
     'highest':<?php echo json_encode(Stat::getSceneSelfHighest());?>,
-    'fasteest':<?php echo json_encode(Stat::getSceneSelfFastest());?>,
+    'fastest':<?php echo json_encode(Stat::getSceneSelfFastest());?>,
   },
   'sglobal' : {
     'height':<?php echo json_encode(Stat::getSceneGlobalHeight());?>,

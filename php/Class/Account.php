@@ -76,21 +76,23 @@ class Account{
 		$this->rmToken();
 		$GLOBALS['Session']->delSession();
 	}
+
 	/**
 	 * changeNickname
 	 * @return boolean of success or not
 	 */
-	public function changeNickname(){
+	public function changeNickname($name){
+
 		$result = false;
-		if(isset($_GET['nickname']) && $_GET['nickname'] != ''){
+		if($name != ''){
 			$sql = 'UPDATE `'.self::ACCOUNT_TABLE.'` SET `nickname`=? WHERE `uid`=?';
 			$GLOBALS['PDO']->beginTransaction();
 			$pS = $GLOBALS['PDO']->prepare($sql);
-			$pS->execute(array($_GET['nickname'], $this->uid));
+			$pS->execute(array($name, $this->uid));
 			if($pS->rowCount()===1){
 				$GLOBALS['PDO']->commit();
-				$_SESSION['nickname'] = $_GET['nickname'];
-				$this->nickname=$_GET['nickname'];
+				$_SESSION['nickname'] = $name;
+				$this->nickname=$name;
 				$result = true;
 			}
 			$GLOBALS['PDO']->inTransaction() && $GLOBALS['PDO']->rollBack() && $result = false;

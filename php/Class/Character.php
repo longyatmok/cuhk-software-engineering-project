@@ -9,8 +9,12 @@ class Character{
 			$sql = 'SELECT * FROM `'.self::TABLE.'`';
 			$pS = $GLOBALS['PDO']->prepare($sql);
 			$pS->execute();
+			self::$Info = array();
+			while($row = $pS->fetch()){
+				self::$Info[$row['character_id']] = $row;
+			}
 		}
-		return !$Info ? (self::$Info = $pS->fetchAll()) : $Info;
+		return self::$Info;
 	}
 	public static function getAllID(){ // use in php
 		$result = self::$InfoID;
@@ -19,7 +23,7 @@ class Character{
 			$sql = 'SELECT `character_id` FROM `'.self::TABLE.'`';
 			$pS = $GLOBALS['PDO']->prepare($sql);
 			$pS->execute();
-			while($row = $pS->fetch){
+			while($row = $pS->fetch()){
 				$result[] = $row;
 			}
 			self::$InfoID = $result;

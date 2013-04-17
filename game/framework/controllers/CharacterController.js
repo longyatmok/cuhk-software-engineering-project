@@ -158,74 +158,86 @@ CharacterController.prototype.updatex = function(delta, distances) {
 		this.temp.checkpt = true;
 	} else if (this.temp.checkpt === true) {
 		console.log(this.gameobject.position);
-
+		console.log(this.opts.jumpVelocity * delta);
 		this.temp.checkpt = false;
 	}
 
 	if (this.keyStatus.forward) {
-		if (distances[5] != undefined && this.lastVelocity.z <= 0
-				&& this.velocity.z <= 0
-				&& this.velocity.z < this.lastVelocity.z
-				&& Math.abs(this.velocity.z) > distances[5] /*
-				 * more negative
-				 */) {
-			this.velocity.y = -distances[5];
-		}
+		
 		this.velocity.z = distances[5] == undefined || distances[5] > 5 ? this.velocity.z
 				- (this.opts.velocityIncreaseRate) * delta
 				: 0;
 
 	}
+	
+	if (distances[5] != undefined && this.lastVelocity.z <= 0
+				&& this.velocity.z <= 0
+				&& this.velocity.z < this.lastVelocity.z
+				&& Math.abs(this.velocity.z) > distances[5] /*
+				 * more negative
+				 */) {
+			this.velocity.z = -(distances[5] - 1.0);
+	}
+				 
 	if (this.keyStatus.backward) {
+	
+		this.velocity.z = distances[4] == undefined || distances[4] > 5 ? this.velocity.z
+				+ (this.opts.velocityIncreaseRate) * delta
+				: 0;
+
+	}
+	
 		if (distances[4] != undefined && this.lastVelocity.z >= 0
 				&& this.velocity.z >= 0
 				&& this.velocity.z > this.lastVelocity.z
 				&& Math.abs(this.velocity.z) > distances[4] /*
 				 * more negative
 				 */) {
-			this.velocity.y = distances[4];
+			this.velocity.z = distances[4] - 1.0;
 		}
-		this.velocity.z = distances[4] == undefined || distances[4] > 5 ? this.velocity.z
-				+ (this.opts.velocityIncreaseRate) * delta
-				: 0;
-
-	}
+				 
 	if (this.keyStatus.left) {
 		// this.dummy.rotation.y += 0.022 * delta;
 		// this.gameobject.rotation.y += 0.022 * delta;
 
-		if (distances[2] != undefined && this.lastVelocity.x <= 0
-				&& this.velocity.x <= 0
-				&& this.velocity.x < this.lastVelocity.x
-				&& Math.abs(this.velocity.x) > distances[2] /*
-				 * more negative
-				 */) {
-			this.velocity.x = -distances[2];
-		}
+		
 		this.velocity.x = distances[2] == undefined || distances[2] > 5 ? this.velocity.x
 				- 0.1 * delta
 				: 0;
 
 		// this.velocity.x -= 0.08 * delta;
 	}
+	
+	if (distances[2] != undefined && this.lastVelocity.x <= 0
+				&& this.velocity.x <= 0
+				&& this.velocity.x < this.lastVelocity.x
+				&& Math.abs(this.velocity.x) > distances[2] /*
+				 * more negative
+				 */) {
+			this.velocity.x = -(distances[2] - 1.0);
+		}
+				 
 	if (this.keyStatus.right) {
 		// this.dummy.rotation.y -= 0.022 * delta;
 		// this.gameobject.rotation.y -= 0.022 * delta;
 
-		if (distances[3] != undefined && this.lastVelocity.x >= 0
-				&& this.velocity.x >= 0
-				&& this.velocity.x > this.lastVelocity.x
-				&& Math.abs(this.velocity.x) > distances[3] /*
-				 * more negative
-				 */) {
-			this.velocity.x = distances[3];
-		}
+		
 		this.velocity.x = distances[3] == undefined || distances[3] > 5 ? this.velocity.x
 				+ 0.1 * delta
 				: 0;
 
 		// this.velocity.x += 0.08 * delta;
 	}
+	
+	if (distances[3] != undefined && this.lastVelocity.x >= 0
+				&& this.velocity.x >= 0
+				&& this.velocity.x > this.lastVelocity.x
+				&& Math.abs(this.velocity.x) > distances[3] /*
+				 * more negative
+				 */) {
+			this.velocity.x = distances[3] - 1.0;
+		}
+				 
 	if (this.keyStatus.up && this.canJump) {
 		// above
 		if (distances[1] != undefined && this.lastVelocity.y >= 0
@@ -236,27 +248,30 @@ CharacterController.prototype.updatex = function(delta, distances) {
 				 */) {
 			this.velocity.y = distances[1] - 1;
 		} else {
-			this.velocity.y += this.opts.jumpVelocity * delta;
+			this.velocity.y += Math.min(this.opts.jumpVelocity * delta,20);
 		}
 		this.keyStatus.up = false;
 		this.canJump = false;
 	}
 
 	// if(distances[0]!=undefined) console.log(distances[0]);
-	this.isOnObjectFN(distances[0] >= 0 && distances[0] <= 2.5);
+	this.isOnObjectFN(distances[0] >= 0 && distances[0] <= 3);
 
 	// below
+	
+			 
+	if (this.isOnObject === true) {
+		this.velocity.y = Math.max(0, this.velocity.y);
+	}
+
 	if (distances[0] != undefined && this.lastVelocity.y <= 0
 			&& this.velocity.y <= 0 && this.velocity.y < this.lastVelocity.y
 			&& Math.abs(this.velocity.y) > distances[0] /*
 			 * more negative
 			 */) {
-		this.velocity.y = -distances[0] + 1;
+		this.velocity.y = -(distances[0] - 2.0);
 	}
-	if (this.isOnObject === true) {
-		this.velocity.y = Math.max(0, this.velocity.y);
-	}
-
+			 
 	this.dummy.translateX(this.velocity.x);
 	this.dummy.translateY(this.velocity.y);
 	this.dummy.translateZ(this.velocity.z);

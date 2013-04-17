@@ -145,6 +145,8 @@ World.prototype.boilerplate = function() {
 };
 
 World.prototype.setRegion = function( region , c , opts){
+	delete this.activeRegion;
+	delete this.gameplay;
 	this.activeRegion = new this.regions [ region ]( opts );
 	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion , opts );
 	this.gameplay.initialize();

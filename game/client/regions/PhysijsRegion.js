@@ -2,6 +2,8 @@ var THREE = require('../../vendor/Three');
 var util = require('../../framework/Util');
 var GameObjectManager = require('../../framework/GameObjectManager');
 var Region = require('../../framework/Region');
+var Physijs = require('../../vendor/Physi');
+
 // var Android = require('../gameobjects/Android');
 
 THREE.PointerLockControls = require('../../vendor/THREE/PointerLockControls');
@@ -21,7 +23,8 @@ var ray;
 
 var DemoOneRegion = function(opts) {
 	DemoOneRegion.super_.call(this, util.extend({
-		id : 'test2-region',
+		id : 'physijs-tset2-region',
+		physics : true,
 		seed : 'Sun Mar 17 2013 20:01:35 GMT+0800 '
 	}, opts));
 
@@ -61,17 +64,33 @@ var DemoOneRegion = function(opts) {
 
 	loader.addEventListener('load', function(e) {
 		var object = e.content;
-		object.scale.set(10, 10, 10);
+		//object.scale.set(10, 10, 10);
 
-		xdxd = object;
-		self.scene.add(object);
-		self.regionobjects.objects = self.regionobjects.objects
-				.concat(object.children);
+		for(var i = 0 ; i < object.children.length;i++){
+			var mesh =  new Physijs.BoxMesh(object.children[i].geometry, object.children[i].material,0);
+			mesh.scale.set(10,10,10);
+			self.scene.add(mesh);
+		}
+		/*
+		pobject = new Physijs.BoxMesh(
+				object.geometry,
+				//new THREE.PlaneGeometry(50, 50),
+				object.material,
+				0 // mass
+			);
+		*/
+		return;
+		
+		xdxd = pobject;
+		self.scene.add(pobject);
+		/*self.regionobjects.objects = self.regionobjects.objects
+				.concat(object.children);*/
 		//self.regionobjects.push(object.child);
 
 	});
-	//loader.load('gameobjects/challedge-map/05.obj', 'gameobjects/challedge-map/05.mtl');
-		loader.load('gameobjects/test2/demo02.obj', 'gameobjects/test2/demo02.mtl');
+//	loader.load('gameobjects/challedge-map/05.obj', 'gameobjects/challedge-map/05.mtl');
+	
+	loader.load('gameobjects/test2/demo02.obj', 'gameobjects/test2/demo02.mtl');
 //	loader.load('gameobjects/test2/demo01.obj', 'gameobjects/test2/demo01.mtl');
 
 	/*

@@ -67,6 +67,7 @@ class Account{
 				$result = true;
 			}
 		}
+
 		return $result;
 	}
 	/**

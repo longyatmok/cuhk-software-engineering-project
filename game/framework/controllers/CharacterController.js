@@ -18,9 +18,9 @@ var CharacterController = function(gameobject, camera, opts) {
 			checkpt : 80
 
 		},
-		velocityDecreaseRate : 0.07,
-		velocityIncreaseRate : 0.28,
-		velocityGravity : 0.22,
+		velocityDecreaseRate : 0.05,
+		velocityIncreaseRate : 0.3,
+		velocityGravity : 0.3,
 
 		jumpVelocity : 1.6,
 		cameraPosition : [ 0, 18,15 ],
@@ -203,7 +203,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 			this.velocity.x = -distances[2];
 		}
 		this.velocity.x = distances[2] == undefined || distances[2] > 5 ? this.velocity.x
-				- 0.08 * delta
+				- 0.1 * delta
 				: 0;
 
 		// this.velocity.x -= 0.08 * delta;
@@ -221,7 +221,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 			this.velocity.x = distances[3];
 		}
 		this.velocity.x = distances[3] == undefined || distances[3] > 5 ? this.velocity.x
-				+ 0.08 * delta
+				+ 0.1 * delta
 				: 0;
 
 		// this.velocity.x += 0.08 * delta;

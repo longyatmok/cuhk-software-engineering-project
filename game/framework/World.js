@@ -112,7 +112,7 @@ var World = function(opts) {
 World.instance = null;
 World.opts = {};
 
-World.ready = function(func) {
+World.prototype.ready = World.ready = function(func) {
 	window.addEventListener("load", function load(event) {
 		window.removeEventListener("load", load, false);
 		func();

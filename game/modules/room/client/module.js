@@ -224,6 +224,7 @@ RoomModule.prototype.updateRoom = function(data) {
 				room : this.room
 			});
 	if (this.room.status != Room.STATUS_WAITING) {
+		hideRDiv();
 		World.instance.overlay.changeState('instruction');
 		return;
 	}

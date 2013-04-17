@@ -35,10 +35,15 @@ var Server = function(opts) {
 	this.playerList = [];
 	this.socketToplayerList = [];
 	this.conn = mysql.createConnection({
-		  host     : 'allenp.tk',
+		/*  host     : 'allenp.tk',
 		  user     : 'csci3100',
 		  password : '0102030405',
-		  database : 'totheskies'
+		 */
+host : '127.0.0.1',
+user : 'site',
+password : 'sitepassword',
+
+ database : 'totheskies'
 		});
 	this.conn.connect(function(err) {
 		  if( err != null) console.error("can't connect to the dataase");
@@ -72,7 +77,7 @@ var Server = function(opts) {
 			
 			socket.player.room = null;
 			delete server.playerList[ socket.player.id ];
-			//delete socket.player;			
+			delete socket.player;			
 		});
 	
 		// Game State Sync
@@ -237,6 +242,7 @@ var Server = function(opts) {
 					}
 					
 					server.conn.query('SELECT a.* FROM `account` a LEFT JOIN  `logins` l ON a.uid = l.uid WHERE l.uid = ? AND l.token = ?', [data.user_id,data.user_token], function(err, results) {
+					try{
 						if(results.length > 0){
 							 var result = results[0];
 							 if(server.playerList[ result.uid ]){
@@ -249,6 +255,16 @@ var Server = function(opts) {
 										socket.disconnect();
 										return;
 								 
+							 }
+							 console.log(result);
+							 if(result.nickname == ''){
+								 console.log("<<< request-nickname");
+							socket.emit('SM_Login_Response', {
+								message : "request-nickname",
+								user : result
+							 });
+								//socket.disconnect();
+								 return;
 							 }
 							 server.playerList [ result.uid ] = new Player({username:result.nickname,user_id: result.uid,socket:socket});
 							 socket.player = server.playerList [ result.uid ];	
@@ -264,7 +280,17 @@ var Server = function(opts) {
 							});
 							socket.disconnect();
 						 }
+						 
+					}catch(e){
+							socket.emit('SM_Login_Response', {
+								message : "error on loginning in to your account"
+							});
+							socket.disconnect();
+					}
+					
 					});
+					
+					
 /*
  * if (data.user_id == '0' && data.user_token == 'DEMO_SESSION') {
  * 

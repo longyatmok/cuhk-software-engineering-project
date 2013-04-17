@@ -200,7 +200,8 @@ FreeGameplay.prototype.initialize = function() {
 
 	console.log("[loader]start");
 	var loader = new THREE.ColladaLoader();
-	loader.load('gameobjects/avatar/boy01_v2.dae', function(result) {
+	
+	loader.load('gameobjects/steve/steve.dae', function(result) {
 		var avatar = result.scene;
 		avatar.scale = new THREE.Vector3(0.01, 0.01, 0.02);
 		console.log("[loader] success");
@@ -211,11 +212,21 @@ FreeGameplay.prototype.initialize = function() {
 
 		self.ready = true;
 		self.respawn();
-		/*
-		 * avatar.position = self.controls.getObject().position; avatar.rotation =
-		 * self.controls.getObject().rotation;
-		 */
+
 	});
+/*	loader.load('gameobjects/avatar/boy01_v2.dae', function(result) {
+		var avatar = result.scene;
+		avatar.scale = new THREE.Vector3(0.01, 0.01, 0.02);
+		console.log("[loader] success");
+		self.gameobjects.add('character.template', avatar.clone());
+		//avatar_fps = new THREE.Object3D();
+		self.gameobjects.add('game.player',avatar);
+		self.scene.add(avatar);
+
+		self.ready = true;
+		self.respawn();
+
+	});*/
 
 }
 var lines = [];

@@ -20,14 +20,19 @@ var SM_Login_Response = function(data) {
 	if (data.message == 'success') {
 		//	alert('login success');
 		World.instance.modules[SM_Login_Response.AuthModuleNAME].user = data.user;
+		console.log("login success");
+		showRDiv('modeSelect');
+		/*
 		if(typeof showRDiv !="undefined"){
 			showRDiv('modeSelect');
 		}else{
 			World.instance.overlay.changeState(RoomModule.ModeSelection);
-		}
+		}*/
 		//overlay => Mode Selection
 		//add username to the overlay
-	} else {
+		}else if (data.message == 'request-nickname'){
+			showRDiv('changeNickname');
+		} else {
 		World.instance.overlay.changeState('title', {
 			msg : 'Login Failed , reason:' + data.message
 		});

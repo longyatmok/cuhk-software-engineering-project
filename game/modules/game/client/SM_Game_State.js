@@ -21,9 +21,10 @@ var SM_Game_State = function(data) {
 	switch (data.type) {
 	case 'start':
 		World.instance.modules[SM_Game_State.GameModuleName].room = World.instance.modules[RoomModule.NAME].room;
+		hideRDiv();
 		break;
 	case 'end':
-
+		showRDiv('modeSelect');
 		break;
 	case 'sync':
 	default:

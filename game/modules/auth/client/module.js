@@ -63,7 +63,10 @@ var AuthModule = function(world) {
 		setTimeout(function() {
 			if (typeof showRDiv != "undefined") {
 				world.overlay.visible(false);
-				showRDiv('login');//
+				showRDiv('login');
+				if(typeof  _loginCallback !="undefined"){
+					 _loginCallback();
+				}
 			} else {
 				world.overlay.changeState(AuthModule.NAME);
 			}

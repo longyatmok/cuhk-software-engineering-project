@@ -11,11 +11,13 @@ document.querySelector('#timeRoom .roomList').innerHTML='';
 function addRoom(room){
   var newE = document.createElement('div');
   newE.classList.add('room');
+
   newE.onclick=function (){enterRoom(room.id)};
 
+  newE.classList.add('link');
 
 	//model_path change to hard code link
-  newE.innerHTML = '<div class="sceneImg"><img src="gameobjects/test2/preview.png"></div>\
+  newE.innerHTML = '<div class="sceneImg scaleBg" style="background-image:url(img/game/map01.png)"><img src="img/t1x1.png"></div>\
                     <div class="roomInfo">\
                       <div class="roomTitle">'+room.id+'</div>\
                       <div class="roomStatus"><span class="numOfPeople">'+Object.keys(room.players).length+'</span>/8</div>\

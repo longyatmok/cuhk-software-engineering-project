@@ -18,6 +18,7 @@ var CM_Room_Join = require('./CM_Room_Join');
 var CM_RoomList_Request = require('./CM_RoomList_Request');
 var SM_RoomList_Response = require('./SM_RoomList_Response');
 var CM_Room_GameStart = require('./CM_Room_GameStart');
+var CM_Room_GameQuit = require('./CM_Room_GameQuit');
 var SM_Room_Status = require('./SM_Room_Status');
 
 // room module
@@ -210,6 +211,12 @@ RoomModule.prototype.joinRoom = function(data) {
 	var cm = new CM_Room_Join(data);
 	cm.emit();
 };
+
+RoomModule.prototype.leaveRoom = function() {
+	var cm = new CM_Room_GameQuit();
+	cm.emit();
+};
+
 /**
  * refresh room
  * @this {RoomModule}
@@ -231,6 +238,8 @@ RoomModule.prototype.updateRoom = function(data) {
 		return;
 	}
 	// redraw UI
+	renderRoom(this.room.id,this.room);
+	return;
 	var variables = [];
 	var order = 1;
 	for ( var i in this.room.players) {

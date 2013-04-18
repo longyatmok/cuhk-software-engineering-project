@@ -164,7 +164,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 
 	if (this.keyStatus.forward) {
 		
-		this.velocity.z = distances[5] == undefined || distances[5] > 5 ? this.velocity.z
+		this.velocity.z = distances[5] == undefined || distances[5] > 7 ? this.velocity.z
 				- (this.opts.velocityIncreaseRate) * delta
 				: 0;
 
@@ -181,7 +181,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 				 
 	if (this.keyStatus.backward) {
 	
-		this.velocity.z = distances[4] == undefined || distances[4] > 5 ? this.velocity.z
+		this.velocity.z = distances[4] == undefined || distances[4] > 7 ? this.velocity.z
 				+ (this.opts.velocityIncreaseRate) * delta
 				: 0;
 
@@ -201,7 +201,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 		// this.gameobject.rotation.y += 0.022 * delta;
 
 		
-		this.velocity.x = distances[2] == undefined || distances[2] > 5 ? this.velocity.x
+		this.velocity.x = distances[2] == undefined || distances[2] > 7 ? this.velocity.x
 				- 0.1 * delta
 				: 0;
 
@@ -222,7 +222,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 		// this.gameobject.rotation.y -= 0.022 * delta;
 
 		
-		this.velocity.x = distances[3] == undefined || distances[3] > 5 ? this.velocity.x
+		this.velocity.x = distances[3] == undefined || distances[3] > 7 ? this.velocity.x
 				+ 0.1 * delta
 				: 0;
 

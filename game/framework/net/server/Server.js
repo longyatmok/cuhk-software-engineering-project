@@ -66,6 +66,8 @@ password : 'sitepassword',
 				socket.leave( room.getChannelName());
 				room.removePlayer( socket.player );			
 // notify other players in the room that this player is disconnected
+				socket.leave( room.getChannelName());
+				
 				room.channel.emit('SM_Room_Status',room); 
 			
 			
@@ -111,8 +113,32 @@ password : 'sitepassword',
 		
 		
 		
+		socket.on('CM_Room_GameQuit',function(){
+			
 		
+			var room = socket.player.room;
+			if(room != null){
+				console.log(socket.manager.roomClients[socket.id]);
+				
+				console.log(socket.player.username + ' leave room '+ socket.player.room.id);
+				socket.leave( room.getChannelName());
+				room.removePlayer( socket.player );
+				
+// notify other players in the room that this player is disconnected
+				io.sockets.in(room.getChannelName()).emit('SM_Room_Status',room); 
+				
+				console.log(socket.manager.roomClients[socket.id]);
+				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
+					room.status = Room.STATUS_WAITING; 
+				}
+				
+			//	io.sockets.in(room.getChannelName()).emit('SM_Room_Status',room);
+			}			
 		
+			socket.player.ready = false;
+		
+			
+		});
 		socket.on('CM_Room_Create',function(data){
 			if(!socket.player) return;
 			//socket.emit('SM_Room_Status',{error:"error on creating a new room"});
@@ -182,7 +208,7 @@ password : 'sitepassword',
 					
 	// notify other players in the room that this player is disconnected
 					room.channel.emit('SM_Room_Status',room); 
-				
+					socket.leave( room.getChannelName());
 				
 					if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 						room.status = Room.STATUS_WAITING; 
@@ -208,7 +234,7 @@ password : 'sitepassword',
 		
 		socket.on('CM_Room_GameStart',function(){
 			if(!socket.player) return;
-			
+			if(!socket.player.room) return;
 			server.socketToplayerList[socket.id].ready = true;
 			
 		

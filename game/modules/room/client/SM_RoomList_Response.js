@@ -17,6 +17,8 @@ var SM_RoomList_Response = function (data) {
     this.name = 'SM_RoomList_Response';
 
     Game.roomlist = data;
+    
+    reloadRoomList();
     console.log(data);
     showRDiv('timeRoom');
     console.log("roomlist response");

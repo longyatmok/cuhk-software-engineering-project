@@ -3,7 +3,7 @@
   	<tbody>
     	<tr>
       	<td>
-          <div class="back link scaleBg" style="background-image:url(img/back.png)"><img class="link" src="img/t3x1.png" onclick="showRDiv('speedRoom')"></div> <!-- need to set another one //-->
+          <div class="back link scaleBg" style="background-image:url(img/back.png)"><img class="link" src="img/t3x1.png" onclick="game.modules['Room-Module'].leaveRoom();game.modules['Room-Module'].requestRoomList('free');"></div> <!-- need to set another one //-->
           <div class="setSize">
           	<div class="title"></div>
 						<div class="peoples">

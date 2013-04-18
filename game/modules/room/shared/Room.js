@@ -98,16 +98,19 @@ Room.prototype.removePlayer = function(player) {
 	if (!player instanceof Player) {
 		player = new Player(player);
 	}
+	player.socket_.leave( this.getChannelName());
+	
     //console.log(this.players);
 
     // remove player success
 	if (typeof this.players[player.id] != "undefined") {
 		var p = this.players[player.id];
 		p.ready = false;
+		
 		this.players[p.id].room = null;
 		delete 	this.players[p.id];
 		console.log("removed a player from room #"+this.id+" - "+p.username);
-		console.log(p);
+//		console.log(p);
 		return true;
 	}
 

@@ -1,8 +1,9 @@
 function reloadRoomList(){
+document.querySelector('#timeRoom .roomList').innerHTML='';
   if(Game.roomlist instanceof Object && Game.roomlist.free instanceof Object){
 		for( var i in Game.roomlist.free){
 			if(Game.roomlist.free[i] instanceof Object){
-				add(Game.roomlist.free[i]);
+				addRoom(Game.roomlist.free[i]);
 			}
 		}
 	}
@@ -10,54 +11,64 @@ function reloadRoomList(){
 function addRoom(room){
   var newE = document.createElement('div');
   newE.classList.add('room');
-  newE.onclick=enterRoom;
-	var i=0;
-	for(var j in room.people){
-		i++;
-	}
+  newE.onclick=function (){enterRoom(room.id)};
+
+
 	//model_path change to hard code link
   newE.innerHTML = '<div class="sceneImg"><img src="gameobjects/test2/preview.png"></div>\
                     <div class="roomInfo">\
                       <div class="roomTitle">'+room.id+'</div>\
-                      <div class="roomStatus"><span class="numOfPeople">'+i+'</span>/8</div>\
+                      <div class="roomStatus"><span class="numOfPeople">'+Object.keys(room.players).length+'</span>/8</div>\
                       <span class="id">'+room.id+'</span>\
                     </div>';
   document.querySelector('#timeRoom .roomList').insertBefore(newE, document.querySelector('#timeRoom .roomList>div'));
-  Game.roomlist.free[id].e = newE;
-  return id;
+  Game.roomlist.free[room.id].e = newE;
+  return room.id;
 }
 function enterRoom(id){
 	// ask server enter room
-	if(askServerEnterRoom){
-		var roomInfo = Game.roomList.free[id];
+	console.log("enter room "+id);
+	game.modules['Room-Module'].joinRoom({'id':id});
+	
+}
+function renderRoom(id , room){
+	
+		var roomInfo = room;
 		var e = document.getElementById('room');
 		e.querySelector('.title').textContent = 'Room: '+id;
 		var people = e.querySelectorAll('.people');
-		for(var i in roomInfo.people){
-			if(people[i] instanceof Object){
-				people[i].querySelector('.name').textContent = roomInfo.people[i].username;
-				people[i].querySelector('.ready.scaleBg').backgroundImage = 'url(img/game/'+(roomInfo.people[i].ready?'':'n')+'ready.png)';
-				people[i].querySelector('.preview.scaleBg').backgroundImage = 'url(gameobjects/test2/preview.png)';
+		var j=0
+		console.log("[RENDER ROOM]");
+		clearRoom();
+		for(var i in roomInfo.players){
+			console.log(i);
+			
+			if(roomInfo.players[i] instanceof Object){
+				console.log(roomInfo.players[i]);
+				people[j].querySelector('.name').textContent = roomInfo.players[i].username;
+				console.log('url(img/game/'+(roomInfo.players[i].ready?'':'n')+'ready.png)');
+				people[j].querySelector('.ready.scaleBg').style.backgroundImage = 'url(img/game/'+(roomInfo.players[i].ready?'':'n')+'ready.png)';
+				people[j].querySelector('.preview.scaleBg').style.backgroundImage = 'url(gameobjects/test2/preview.png)';
+				j++;
 			}
 		}
 		e.querySelector('.info .id').textContent = id;
-		e.querySelector('.info .mode').textContent = mode;
+		e.querySelector('.info .mode').textContent = 'Online';//mode;
 		showRDiv('room');
-	}
+	
 }
 function clearRoom(){
   var e = document.getElementById('room');
   var people = e.querySelectorAll('.people');
-	var j=0;
-  for(var i in people){
-		if(roomInfo.people[i] instanceof Object){
-			people[j].querySelector('.name').textContent = '';
-			people[j].querySelector('.ready.scaleBg').backgroundImage = 'url(img/game/nready.png)';
+  for(var i=0 ; i < 8; i++){
+		
+			people[i].querySelector('.name').textContent = '';
+			people[i].querySelector('.ready.scaleBg').style.backgroundImage = 'url(img/game/nready.png)';
 			
-			people[j].querySelector('.preview img').src = 'no one pic'; // change it please
+			people[i].querySelector('.preview img').src = 'no one pic'; // change it please
 			// hardcode link
-			j++;
-		}
+			
+		
   }
 }
 function changeRoom(id, changeInfo){ // change Info = { 'title': 'str', 'people' : {user_id:{'user_id':int, 'username':String, 'ready':boolean}}}
@@ -86,6 +97,9 @@ function changeRoom(id, changeInfo){ // change Info = { 'title': 'str', 'people'
 		}
 	}
 }
+function delAll(){
+	var e = document.querySelector('#timeRoom .roomList').innerHTML='';
+}
 function delRoom(isSpeed, id){
   try{
     document.querySelector('#timeRoom .roomList').removeChild(Game.roomList.free[id].e);
@@ -93,11 +107,12 @@ function delRoom(isSpeed, id){
   }catch(e){}
 }
 function newRoom(mode){
+	game.modules['Room-Module'].newRoom({region_id:'test2'});
 //	if(room = askServerToCreateRoom()){
 //		Game.roomlist.free[room.id] = room;
 //		addRoom(room);
 //	}
-  showRDiv('room');
+// showRDiv('room');
 }
 /*
 Game.roomlist = {

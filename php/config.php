@@ -37,15 +37,15 @@ define('SESSION_MAX_AGE', 1*24*60*60); // login maximun time limit
 // Social Plugin
 // Core Setting
 if(gethostbyaddr('127.0.0.1') == 'alpha.ntflab.com'){
-define('SOCI_REDIRECT_URL', 'http://totheskies.dev/?provider={service}');
+define('SOCI_REDIRECT_URL', 'http://totheskies.com/?provider={service}');
 
 // facebook
 define('SOCI_FB_ID', '635731566441344');
 define('SOCI_FB_SID', 'e5b4b0116380f5e6c6aa318dc44620a0');
 
 // google
-define('SOCI_GL_ID', '');
-define('SOCI_GL_SID', '');
+define('SOCI_GL_ID', '426160609634.apps.googleusercontent.com');
+define('SOCI_GL_SID', 'jgIX9w7oewfewJo1YS8EIl0W');
 // Social Plugin end
 }else{
 define('SOCI_REDIRECT_URL', 'http://www.allenp.tk/csci3100/php/?provider={service}');

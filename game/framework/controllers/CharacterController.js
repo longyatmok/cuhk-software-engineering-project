@@ -18,11 +18,11 @@ var CharacterController = function(gameobject, camera, opts) {
 			checkpt : 80
 
 		},
-		velocityDecreaseRate : 0.05,
+		velocityDecreaseRate : 0.07,
 		velocityIncreaseRate : 0.3,
 		velocityGravity : 0.3,
 
-		jumpVelocity : 1.6,
+		jumpVelocity : 1.8,
 		cameraPosition : [ 0, 18,15 ],
 		//cameraPosition : [ 0, 37, 42 ],
 		cameraRotation : [ -Math.PI / 4.5, 0, 0 ]
@@ -248,7 +248,7 @@ CharacterController.prototype.updatex = function(delta, distances) {
 				 */) {
 			this.velocity.y = distances[1] - 1;
 		} else {
-			this.velocity.y += Math.min(this.opts.jumpVelocity * delta,20);
+			this.velocity.y += Math.min(this.opts.jumpVelocity * delta,25);
 		}
 		this.keyStatus.up = false;
 		this.canJump = false;

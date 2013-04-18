@@ -35,9 +35,8 @@ var Server = function(opts) {
 	this.playerList = [];
 	this.socketToplayerList = [];
 	this.conn = mysql.createConnection({
-		/*  host     : 'allenp.tk',
-		  user     : 'csci3100',
-		  password : '0102030405',
+		/*
+		 * host : 'allenp.tk', user : 'csci3100', password : '0102030405',
 		 */
 host : '127.0.0.1',
 user : 'site',
@@ -88,20 +87,31 @@ password : 'sitepassword',
 		// Game State Sync
 		socket.on('CM_Game_State',function(data){
 			if(!socket.player) return;
-			// console.log(socket.player);
-			if (data.position.y > 400) { //reach the goal!
-				socket.player.room.status = Room.STATUS_RESULT;
-				socket.player.room.endTime = Date.now();
-				socket.player.room.channel.emit('SM_Game_State',{
-					id:socket.player.id,
-					username:socket.player.username,
-					type : "end",
-					room:socket.player.room
-				});
-				socket.player.room.channel.emit('SM_Room_Status',socket.player.room); 
-				return;
-			}
-			if(socket.player.room.status = Room.STATUS_PLAYING){
+			if(!socket.player.room) return;
+			if(socket.player.room.status == Room.STATUS_PLAYING){
+				if (data.position[1] >= 400.0) { // reach the goal!
+					var room = socket.player.room;
+					console.log("reach the goal!");
+					socket.player.room.status = Room.STATUS_RESULT;
+					socket.player.room.endTime = Date.now();
+					
+					io.sockets.in(room.getChannelName()).emit('SM_Game_State',{
+						id:socket.player.id,
+						username:socket.player.username,
+						type : "end",
+						room:socket.player.room
+					});
+				//	io.sockets.in(room.getChannelName()).emit('SM_Room_Status',socket.player.room); 
+					console.log("REMOVE ALL PLAYERS");
+					for ( var i in room.players) {
+						room.removePlayer(room.players[i]);
+					}
+					
+					delete server.roomList[ room.id];
+					delete room;
+					return;
+				}
+	
 			socket.broadcast.to( socket.player.room.getChannelName() ).emit('SM_Game_State',{
 				id:socket.player.id,
 				position:data.position,
@@ -132,7 +142,7 @@ password : 'sitepassword',
 					room.status = Room.STATUS_WAITING; 
 				}
 				
-			//	io.sockets.in(room.getChannelName()).emit('SM_Room_Status',room);
+			// io.sockets.in(room.getChannelName()).emit('SM_Room_Status',room);
 			}			
 		
 			socket.player.ready = false;
@@ -141,8 +151,9 @@ password : 'sitepassword',
 		});
 		socket.on('CM_Room_Create',function(data){
 			if(!socket.player) return;
-			//socket.emit('SM_Room_Status',{error:"error on creating a new room"});
-			//return ;
+			// socket.emit('SM_Room_Status',{error:"error on creating a new
+			// room"});
+			// return ;
 			try{
 			server.roomIdCounter++;
 			    var room = new Room({
@@ -160,7 +171,7 @@ password : 'sitepassword',
 				socket.emit('SM_Room_Status',{error:"error on creating a new room"});
 			}
 			
-			//try{
+			// try{
 				// leave room and then join room
 				var room = socket.player.room;
 	
@@ -169,7 +180,8 @@ password : 'sitepassword',
 					socket.leave( room.getChannelName());
 					room.removePlayer( socket.player );		
 		
-					// notify other players in the room that this player is disconnected
+					// notify other players in the room that this player is
+					// disconnected
 					room.channel.emit('SM_Room_Status',room); 			
 					if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 						room.status = Room.STATUS_WAITING; 
@@ -187,9 +199,10 @@ password : 'sitepassword',
 				}else{
 					socket.emit('SM_Room_Status',{error:"The World you are attempting to join is full or playing."});
 				}
-			//}catch(e){
-			//	socket.emit('SM_Room_Status',{error:"error on joining a new room"});
-			//}
+			// }catch(e){
+			// socket.emit('SM_Room_Status',{error:"error on joining a new
+			// room"});
+			// }
 			
 		});
 		
@@ -307,7 +320,7 @@ password : 'sitepassword',
 								message : "request-nickname",
 								user : result
 							 });
-								//socket.disconnect();
+								// socket.disconnect();
 								 return;
 							 }
 							 server.playerList [ result.uid ] = new Player({username:result.nickname,user_id: result.uid,socket:socket});

@@ -24,6 +24,8 @@ var CharacterController = require('../controllers/CharacterController');
  * @param opts
  *            Options Object
  */
+
+var EventListener;
 var FreeGameplay = function(region, opts) {
 	this.opts = World.extend({
 		name : 'free-world',
@@ -70,7 +72,14 @@ FreeGameplay.prototype.respawn = function(position) {
 		this.controls.reset();
 	}
 };
+FreeGameplay.prototype.dispose = function(){
+	document.removeEventListener('pointerlockchange', EventListener, false);
+document.removeEventListener('mozpointerlockchange',EventListener,
+	false);
+document.removeEventListener('webkitpointerlockchange', EventListener,
+	false);
 
+};
 FreeGameplay.prototype.initialize = function() {
 	FreeGameplay.super_.prototype.initialize.call(this);
 
@@ -82,7 +91,7 @@ FreeGameplay.prototype.initialize = function() {
 
 		var element = document.body;
 
-		var pointerlockchange = function(event) {
+		var pointerlockchange = EventListener = function(event) {
 
 			if (document.pointerLockElement === element
 					|| document.mozPointerLockElement === element
@@ -205,7 +214,7 @@ FreeGameplay.prototype.initialize = function() {
 	
 	loader.load('gameobjects/steve/steve.dae', function(result) {
 		var avatar = result.scene;
-		avatar.scale = new THREE.Vector3(0.01, 0.01, 0.02);
+		avatar.scale = new THREE.Vector3(0.02, 0.02, 0.04);
 		console.log("[loader] success");
 		self.gameobjects.add('character.template', avatar.clone());
 		//avatar_fps = new THREE.Object3D();
@@ -296,6 +305,10 @@ FreeGameplay.prototype.render = function(dt) {
 
 	if (this.gameobjects.get('game.player').position.y < this.opts.yLevel) {
 		this.respawn();
+	}
+	
+	if(this.gameobjects.get('game.player').position.y > 174){
+		this.region.spawnLocation = new THREE.Vector3( -119.58874315990386, 180.5245740939652, -12.909299118498613);
 	}
 	// DEBUG
 	/*

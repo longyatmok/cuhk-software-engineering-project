@@ -112,6 +112,7 @@ NetworkGameplay.prototype.render = function(dt) {
 	// this.rotationClone_ =
 	// this.gameobjects.get('game.rotation').position.clone();
 	NetworkGameplay.super_.prototype.render.call(this, dt);
+
 	// if(this.rotationClone_.x )
 
 	var msg = new CM_Game_State(this.gameobjects.get('game.player'));

@@ -272,7 +272,7 @@ body {
 	<li><span>Not Logined In</span></li>
 
 <?php }?>
-	<li><a href="https://www.facebook.com/dialog/apprequests?app_id=635731566441344&message=Let's%20play%20To%20The%20Skies!&redirect_uri=http://totheskies.dev/"><span>Invite Friends on Facebook</span></a></li></ul>
+	<li><a target="_blank" href="https://www.facebook.com/dialog/apprequests?app_id=635731566441344&message=Let's%20play%20To%20The%20Skies!&redirect_uri=http://totheskies.com/"><span>Invite Friends on Facebook</span></a></li></ul>
 </div>
 
 		<span class="status" style="color: rgb(255, 255, 255); font-weight: bold; float: right; font-size: 12px; margin: 2px 15pt 0pt;"></span>

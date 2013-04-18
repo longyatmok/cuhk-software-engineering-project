@@ -1,0 +1,35 @@
+#mark .title{
+	position:absolute;
+	margin-left:15%;
+	width:100%;
+	top:2%;
+	height:13%;
+	background-image:url(../../img/title.png);
+	background-size:contain;
+	background-repeat:no-repeat;
+}
+
+#mark .background{
+	position:absolute;
+	top:15%;
+	height:80%;
+	width:100%;
+}
+#mark .background>table{
+	position:relative;
+	margin:auto;
+	width:45%;
+	height:100%;
+	font-size:36px;
+}
+#mark .background .back{
+  position:absolute;
+  bottom:3%;
+  height:7%;
+  right:3%;
+}
+#mark .background .back img{
+  position:relative;
+  height:100%;
+}
+

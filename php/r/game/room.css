@@ -74,58 +74,20 @@
 	width:20%;
 	height:95%;
 }
-#room .setSize>.right .scene{
-	position:absolute;
+#room .setSize>.right table{
+	position:relative;
+	height:100%;
 	width:100%;
-	height:45%;
+	vertical-align:middle;
 }
-#room .setSize>.right .scene .left{
-	position:absolute;
-	width:10%;
-	left:0;
-	height:100%;
+#room .setSize>.right .width100{
+	width:100%	
 }
-#room .setSize>.right .scene .preview{
-	position:absolute;
-	width:80%;
-	left:10%;
-	height:100%;
+#room .setSize>.right .width15{
+	width:15%	
 }
-#room .setSize>.right .scene .preview img{
-	width:100%;
-}
-#room .setSize>.right .scene .right{
-	position:absolute;
-	width:10%;
-	left:90%;
-	height:100%;
-}
-#room .setSize>.right .character{
-	position:absolute;
-	top:45%;
-	width:100%;
-	height:45%;
-}
-#room .setSize>.right .character .left{
-	position:absolute;
-	width:10%;
-	left:0;
-	height:100%;
-}
-#room .setSize>.right .character .preview{
-	position:absolute;
-	width:80%;
-	left:10%;
-	height:100%;
-}
-#room .setSize>.right .character .preview img{
-	width:100%;
-}
-#room .setSize>.right .character .right{
-	position:absolute;
-	width:10%;
-	left:90%;
-	height:100%;
+#room .setSize>.right .width70{
+	width:70%	
 }
 #room .setSize>.right .ready{
 	position:absolute;

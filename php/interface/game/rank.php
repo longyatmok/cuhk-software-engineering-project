@@ -8,14 +8,6 @@
             	<div class="stat" id="history"></div>
             	<div class="stat" id="rank"></div>
             	<div class="stat" id="free"></div>
-            	<div class="stat">
-              	<div class="name"></div>
-                <div class="graph"></div>
-              </div>
-            	<div class="stat">
-              	<div class="name"></div>
-                <div class="graph"></div>
-              </div>
             </div>
           </td>
         </tr>

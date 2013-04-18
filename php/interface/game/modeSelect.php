@@ -11,10 +11,10 @@
           </td>
         </tr>
         <tr>
-          <td class="link scaleBg" onclick="showRDiv('speedRoom')" style="background-image:url(img/game/modeSelect/speed.png)"></td>
+          <td class="link scaleBg" onclick="newPracticeRoom()" style="background-image:url(img/game/practice.png)"></td>
         </tr>
         <tr>
-          <td class="link scaleBg" onclick="showRDiv('timeRoom')" style="background-image:url(img/game/modeSelect/free.png)"></td>
+          <td class="link scaleBg" onclick="showRDiv('timeRoom')" style="background-image:url(img/game/online.png)"></td>
         </tr>
       </tbody>
     </table>

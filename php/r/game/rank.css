@@ -32,7 +32,12 @@
 	margin:auto;
 	overflow:auto;
 }
-#rank #history{
+#rank .stat#history{
+	float:left;
+	height:100%;
+	width:50%;
+}
+#rank .stat{
 	float:left;
 	height:100%;
 	width:25%;

@@ -82,23 +82,23 @@
               </div>
             </div>
             <div class="right">
-              <div class="scene">
-              	<div class="left"><!-- hard code--></div>
-              	<div class="preview">
-                	<img><!-- hard code-->
-                  <span class="descr"></span><!-- hard code-->
-                </div>
-              	<div class="right"><!-- hard code--></div>
-              </div>
-              <div class="character">
-              	<div class="left"><!-- hard code--></div>
-              	<div class="preview">
-                	<img src="gameobjects/test2/preview.png"><!-- hard code-->
-                  <span class="descr"><!-- hard code--></span>
-                </div>
-              	<div class="right"><!-- hard code--></div>
-              </div>
-              <div class="ready link scaleBg" style="background-image:url(img/game/start.png)"><img class="link" src="img/t4x1.png" onclick="game.modules['Room-Module'].iAmReady()"></div>
+            	<table>
+              	<tr>
+                	<td class="width15"><img src="img/t1x1.png" class="scaleBg width100" style="background-image:url(img/game/left.png)"></td>
+                  <td class="width70"><img class="scaleBg width100" style="background-image:url(gameobjects/test2/preview.png)" src="img/t1x1.png"><!-- scene preview --></td>
+                  <td class="width15"><img src="img/t1x1.png" class="scaleBg width100" style="background-image:url(img/game/right.png)"></td>
+                </tr>
+              	<tr>
+                	<td><img src="img/t1x1.png" class="scaleBg width100" style="background-image:url(img/game/left.png)"></td>
+                  <td><img class="scaleBg width100" style="background-image:url(gameobjects/test2/preview.png)" src="img/t1x1.png"><!-- character preview --></td>
+                  <td><img src="img/t1x1.png" class="scaleBg width100" style="background-image:url(img/game/right.png)"></td>
+                </tr>
+              	<tr>
+                  <td colspan="3" class="ready link scaleBg" style="background-image:url(img/game/start.png)">
+                  	<img class="link width100" src="img/t4x1.png" onclick="game.modules['Room-Module'].iAmReady()">
+                  </td>
+                </tr>
+              </table>
             </div>
             <div class="chat"></div>
 						<div class="info">

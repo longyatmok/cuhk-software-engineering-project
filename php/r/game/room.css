@@ -63,6 +63,7 @@
 }
 #room .setSize .peoples .people .preview{
 	height:70%;
+	background-position: center;
 }
 #room .setSize .peoples img{
 	height:100%;

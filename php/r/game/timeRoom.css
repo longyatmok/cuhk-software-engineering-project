@@ -68,7 +68,7 @@
 	opacity:0.4;
 	color:#000;
 	z-index:1;
-	background:#FFF;
+	background:RGBA(0,0,0,0.5);
 	top:0;
 	height:100%;
 	width:100%;
@@ -91,36 +91,40 @@
   width:33%;
 	margin-left:0.333333%;
 	margin-bottom:0.333333%;
-  background:#000;
-	transition:left 1s ease-in-out, top 1s ease-in-out;
-	-webkit-transition:left 1s ease-in-out, top 1s ease-in-out;
+  background-color:RGBA(0,0,0,0.5);
 }
 #timeRoom .background .rLDIV .roomList .room .sceneImg{
   position:relative;
   float:left;
   height:100%;
   width:33%;
-  background:#F00;
+  background-color:RGBA(255,255,255,0.7);
+}
+#timeRoom .background .rLDIV .roomList .room .sceneImg img{
+  height:100%;
 }
 #timeRoom .background .rLDIV .roomList .room .roomInfo{
   position:relative;
   float:right;
   height:100%;
   width:66%;  
-  background:#FFF;
+  background-color:RGBA(255,255,255,0.7);
+}
+#timeRoom .background .rLDIV .roomList .room .roomInfo .id{
+	display:none;
 }
 #timeRoom .background .rLDIV .roomList .room .roomInfo .roomTitle{
   position:absolute;
   height:33%;
   width:100%;
   top:0px;
-  background:#0F0;
+	font-size:36px;
 }
 #timeRoom .background .rLDIV .roomList .room .roomInfo .roomStatus{
   position:absolute;
   height:66%;
   width:100%;
   bottom:0px;
-  background:#00F;
 	z-index:2;
+	font-size:36px;
 }

@@ -3,10 +3,6 @@
     <table>
     	<tbody>
         <tr>
-        	<td>Height: </td>
-        	<td></td>
-        </tr>
-        <tr>
         	<td>Time: </td>
         	<td></td>
         </tr>
@@ -15,7 +11,7 @@
         	<td></td>
         </tr>
         <tr>
-        	<td>Rank: </td>
+        	<td>Winner: </td>
         	<td></td>
         </tr>
       </tbody>

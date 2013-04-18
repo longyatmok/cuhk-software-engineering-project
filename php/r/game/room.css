@@ -56,6 +56,8 @@
 	height:30%;
 }
 #room .setSize .peoples .people .top .name{
+	padding-left:12px;
+	padding-top:18px;
 	float:left;
 }
 #room .setSize .peoples .people .top .ready{

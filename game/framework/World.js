@@ -112,7 +112,7 @@ var World = function(opts) {
 World.instance = null;
 World.opts = {};
 
-World.ready = function(func) {
+World.prototype.ready = World.ready = function(func) {
 	window.addEventListener("load", function load(event) {
 		window.removeEventListener("load", load, false);
 		func();
@@ -145,6 +145,8 @@ World.prototype.boilerplate = function() {
 };
 
 World.prototype.setRegion = function( region , c , opts){
+	delete this.activeRegion;
+	delete this.gameplay;
 	this.activeRegion = new this.regions [ region ]( opts );
 	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion , opts );
 	this.gameplay.initialize();

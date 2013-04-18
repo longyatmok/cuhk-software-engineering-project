@@ -14,7 +14,7 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
  * @param data 
  */
 var CM_Room_GameQuit = function (data) {
-    this.name = 'CM_Room_GameQuit';
+    this.NAME = 'CM_Room_GameQuit';
     this.data = data;
     this.connection = AbstractConnection.instance;
 };

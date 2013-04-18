@@ -58,9 +58,11 @@ if(isset($_GET['provider']) && !!$_GET['provider']){
 	try{
 		$SocialProvider = $SocialCore->exchangeAccessToken($_GET['code'], $SocialCore->getProvider($_GET['provider']));
 	}catch(Exception $e){
-//		exit( $e->getMessage() );
+		exit( $e->getMessage() );
 	}
 	$SocialCore->storage->set(SocialGateway_Core::STORAGE_Token, $SocialProvider); //A simple SESSION Storage
+	
+	die('<script>location="?";</script>');
 }
 
 // social networking service get access token end

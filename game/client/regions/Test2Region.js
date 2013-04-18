@@ -70,7 +70,8 @@ var DemoOneRegion = function(opts) {
 		//self.regionobjects.push(object.child);
 
 	});
-	loader.load('gameobjects/test2/demo02.obj', 'gameobjects/test2/demo02.mtl');
+	//loader.load('gameobjects/challedge-map/05.obj', 'gameobjects/challedge-map/05.mtl');
+		loader.load('gameobjects/test2/demo02.obj', 'gameobjects/test2/demo02.mtl');
 //	loader.load('gameobjects/test2/demo01.obj', 'gameobjects/test2/demo01.mtl');
 
 	/*

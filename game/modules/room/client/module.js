@@ -18,24 +18,26 @@ var CM_Room_Join = require('./CM_Room_Join');
 var CM_RoomList_Request = require('./CM_RoomList_Request');
 var SM_RoomList_Response = require('./SM_RoomList_Response');
 var CM_Room_GameStart = require('./CM_Room_GameStart');
+var CM_Room_GameQuit = require('./CM_Room_GameQuit');
 var SM_Room_Status = require('./SM_Room_Status');
 
 // room module
 /**
  * module for room
+ * 
  * @constructor
  * @this {RoomModule}
- * @param world 
+ * @param world
  */
 var RoomModule = function(world) {
 	this.roomList = new RoomList();
 	this.world = world;
 	this.room = null;
-
+	var self = this;
 	world.connection.register(SM_RoomList_Response);
 	world.connection.register(SM_Room_Status);
 
-    // GUI for mode selection
+	// GUI for mode selection
 	world.overlay
 			.add(
 					RoomModule.ModeSelection,
@@ -55,7 +57,7 @@ var RoomModule = function(world) {
 
 			);
 
-    // GUI for room
+	// GUI for room
 	world.overlay
 			.add(
 					RoomModule.Room,
@@ -126,7 +128,7 @@ var RoomModule = function(world) {
 
 			);
 
-    // GUI for room list
+	// GUI for room list
 	world.overlay
 			.add(
 					RoomModule.RoomList,
@@ -176,67 +178,84 @@ var RoomModule = function(world) {
 		World.instance.overlay.changeState(RoomModule.ModeSelection);
 
 	});
-	
-	$('#'+RoomModule.Room + '_start').click(function(){
-		var cm = new CM_Room_GameStart();
-		cm.emit();
+
+	$('#' + RoomModule.Room + '_start').click(function() {
+		self.iAmReady();
 	});
-	
+
 	console.log("room module loaded");
 };
 util.inherits(RoomModule, Module);
 
 /**
  * refresh room list
+ * 
  * @this {RoomModule}
- * @param list 
+ * @param list
  */
 RoomModule.prototype.updateRoomList = function(list) {
 	this.roomList = list;
 	// TODO redraw UI
 };
-
-//var CM_Room_Create = require('./CM_Room_Create');
-//var CM_Room_Join = require('./CM_Room_Join');
+RoomModule.prototype.iAmReady = function() {
+	var cm = new CM_Room_GameStart();
+	cm.emit();
+};
 
 RoomModule.prototype.newRoom = function(data) {
 	var cm = new CM_Room_Create(data);
 	cm.emit();
 };
+
 RoomModule.prototype.joinRoom = function(data) {
 	var cm = new CM_Room_Join(data);
 	cm.emit();
 };
+
+RoomModule.prototype.leaveRoom = function() {
+	var cm = new CM_Room_GameQuit();
+	cm.emit();
+};
+
 /**
  * refresh room
+ * 
  * @this {RoomModule}
- * @param data 
+ * @param data
  */
 RoomModule.prototype.updateRoom = function(data) {
 	this.room = data;
 
 	// swap gameplay
 	this.world.setRegion(this.room.region,
-			this.room.status == Room.STATUS_WAITING ? 'empty'
-					: this.room.gameplay, {
+			this.room.status == Room.STATUS_PLAYING ? this.room.gameplay
+					: 'empty', {
 				seed : this.room.seed,
 				room : this.room
 			});
-	if (this.room.status != Room.STATUS_WAITING) {
+	if (this.room.status == Room.STATUS_PLAYING) {
+		hideRDiv();
 		World.instance.overlay.changeState('instruction');
 		return;
 	}
 	// redraw UI
+	renderRoom(this.room.id, this.room);
+	return;
 	var variables = [];
 	var order = 1;
 	for ( var i in this.room.players) {
 		variables['user' + order + '-name'] = this.room.players[i].username;
-		$('#'+RoomModule.Room + '-user'+order +'-img').attr('src','ui_im/' + ( this.room.players[i].ready ? 'ppl_o.png' : 'people.png'));
+		$('#' + RoomModule.Room + '-user' + order + '-img').attr(
+				'src',
+				'ui_im/'
+						+ (this.room.players[i].ready ? 'ppl_o.png'
+								: 'people.png'));
 		order++;
 	}
 	for ( var j = order; j <= 8; j++) {
 		variables['user' + order + '-name'] = '';
-		$('#'+RoomModule.Room + '-user'+order +'-img').attr('src', 'ui_im/people.png');
+		$('#' + RoomModule.Room + '-user' + order + '-img').attr('src',
+				'ui_im/people.png');
 
 		order++;
 	}
@@ -244,18 +263,17 @@ RoomModule.prototype.updateRoom = function(data) {
 	World.instance.overlay.changeState(SM_Room_Status.RoomState, variables);
 };
 
-
 RoomModule.NAME = 'Room-Module';
 RoomModule.ModeSelection = RoomModule.NAME + '-ModeSelection';
 RoomModule.RoomList = RoomModule.NAME + '-RoomList';
 RoomModule.Room = RoomModule.NAME + '-Room';
 
-
 /**
-* return room list
-* @this {RoomModule}
-* @param mode 
-*/
+ * return room list
+ * 
+ * @this {RoomModule}
+ * @param mode
+ */
 RoomModule.prototype.requestRoomList = function(mode) {
 
 	var cm = new CM_RoomList_Request(mode);

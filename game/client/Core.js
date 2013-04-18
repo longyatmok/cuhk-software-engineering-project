@@ -35,6 +35,7 @@ var TitleScreen = require('./regions/TitleScreen');
 var TestRegion = require('./regions/TestRegion');
 var Test2Region =  require('./regions/Test2Region');
 var DemoOneRegion = require('./regions/DemoOneRegion');
+var PhysijsRegion = require('./regions/PhysijsRegion');
 var scene;
 /**
  * Game Core
@@ -52,8 +53,8 @@ var Core = function(opts) {
 	    antialias : true
 	},
 	VERSION : '0.1.0'
-    /*,
-	"physics" : true*/
+    ,
+	"physics" : false
     }, opts));
 
 };
@@ -73,7 +74,7 @@ Core.prototype.initialize = function(callback) {
  //   this.regions['test-region'] = new TestRegion();
     this.regions['demo-one'] = DemoOneRegion;
     this.regions['test2'] = Test2Region;
-    
+    this.regions['physijs'] = PhysijsRegion;
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
     this.gameplayClasses['practice'] = PracticeModeGameplay;

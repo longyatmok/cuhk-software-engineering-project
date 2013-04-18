@@ -14,7 +14,7 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
  * @param data 
  */
 var CM_Room_Create = function (data) {
-    this.name = 'CM_Room_Create';
+    this.NAME = 'CM_Room_Create';
     this.data = data;
     this.connection = AbstractConnection.instance;
 };

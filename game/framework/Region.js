@@ -6,6 +6,7 @@ var util = require('./Util');
 var GameObjectManager = require('./GameObjectManager');
 var World = require('./World');
 var DefaultCamera = require('./cameras/DefaultCamera');
+var Physijs = require('../vendor/Physi');
 var Region = function(opts) {
 	this.opts = opts = World.extend({
 		id : '__region' + Region.counter++
@@ -16,12 +17,13 @@ var Region = function(opts) {
 	// this.activated_ = true;
 	// scene
 	var scene;
-	if (World.opts.physics) {
+	if (World.opts.physics || this.opts.physics) {
 		scene = new Physijs.Scene();
 		scene.setGravity(World.opts["physics.gravity"]);
 		scene.addEventListener('update', function() {
 			scene.simulate(undefined, 1);
 		});
+		console.log("[PHYSIJS] SCENE STARTED");
 	} else {
 		scene = new THREE.Scene();
 	}
@@ -35,7 +37,7 @@ var Region = function(opts) {
 	 * World.opts.height, 0.1, 1000);
 	 */
 	this.camera = new DefaultCamera(75, World.opts.width / World.opts.height,
-			0.1, 1000);
+			0.2, 800);
 	if (World.opts.resize) {
 		window.addEventListener('resize', util.callback(this, function() {
 			this.camera.aspect = window.innerWidth / window.innerHeight;

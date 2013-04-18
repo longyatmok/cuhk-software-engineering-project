@@ -21,9 +21,21 @@ var SM_Game_State = function(data) {
 	switch (data.type) {
 	case 'start':
 		World.instance.modules[SM_Game_State.GameModuleName].room = World.instance.modules[RoomModule.NAME].room;
+		hideRDiv();
 		break;
 	case 'end':
-
+		console.log("GAME END");
+		World.instance.gameplay.dispose();
+		
+		World.instance.setRegion('title-screen','empty');
+		//World.instance.modules[SM_Game_State.GameModuleName].room = null;
+		//World.instance.overlay.changeState('blank');
+		World.instance.overlay.visible(false);
+		showRDiv('mark');
+		$('#game_result_time').text((data.room.endTime - data.room.startTime)/1000);
+		$('#game_result_scene').text(data.room.region);
+		$('#game_result_winner').text(data.username);
+		showRDiv('mark');
 		break;
 	case 'sync':
 	default:

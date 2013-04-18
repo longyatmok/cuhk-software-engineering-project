@@ -7,6 +7,7 @@ if($Account->login()){
 Game={
   'scene' : <?php echo json_encode(Scene::getInfo());?>,
   'character' : <?php echo json_encode(Character::getInfo());?>,
+  'roomlist' : {}
 };
 <?php
   }

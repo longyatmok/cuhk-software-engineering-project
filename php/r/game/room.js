@@ -50,7 +50,7 @@ function renderRoom(id , room){
 				people[j].querySelector('.name').textContent = roomInfo.players[i].username;
 				console.log('url(img/game/'+(roomInfo.players[i].ready?'':'n')+'ready.png)');
 				people[j].querySelector('.ready.scaleBg').style.backgroundImage = 'url(img/game/'+(roomInfo.players[i].ready?'':'n')+'ready.png)';
-				people[j].querySelector('.preview.scaleBg').style.backgroundImage = 'url(gameobjects/test2/preview.png)';
+				people[j].querySelector('.preview.scaleBg').style.backgroundImage = 'url(img/game/ch1.png)';
 				j++;
 			}
 		}
@@ -67,7 +67,7 @@ function clearRoom(){
 			people[i].querySelector('.name').textContent = '';
 			people[i].querySelector('.ready.scaleBg').style.backgroundImage = 'url(img/game/nready.png)';
 			
-			people[i].querySelector('.preview img').src = 'no one pic'; // change it please
+			people[i].querySelector('.preview.scaleBg').style.backgroundImage = 'url(img/game/null.png)'; // change it please
 			// hardcode link
 			
 		
@@ -91,7 +91,7 @@ function changeRoom(id, changeInfo){ // change Info = { 'title': 'str', 'people'
 				if(people[i] instanceof Object){
 					people[i].querySelector('.name').textContent = room.people[i].username;
 					people[i].querySelector('.ready.scaleBg').backgroundImage = 'url(img/game/'+(room.people[i].ready?'':'n')+'ready.png)';
-					people[i].querySelector('.preview img').src = 'gameobjects/test2/preview.png';
+					people[i].querySelector('.preview img').src = 'img/game/ch1.png';
 				}
 			}
 			e.querySelector('.info .id').textContent = id;

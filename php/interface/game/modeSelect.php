@@ -12,7 +12,7 @@
         </tr>
         <tr>
 
-          <td class="link scaleBg" onclick="hideRDiv();game.setRegion('test2','free');game.overlay.changeState('instruction');" style="background-image:url(img/game/modeSelect/practice.png)"></td>
+          <td class="link scaleBg" onclick="hideRDiv();game.setRegion('simple','free');game.overlay.changeState('instruction');" style="background-image:url(img/game/modeSelect/practice.png)"></td>
         </tr>
         <tr>
           <td class="link scaleBg" onclick="game.modules['Room-Module'].requestRoomList('free');" style="background-image:url(img/game/modeSelect/online.png)"></td>

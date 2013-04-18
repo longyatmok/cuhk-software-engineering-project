@@ -32,6 +32,7 @@ var PracticeModeGameplay = require('../modules/gameplay/client/PracticeModeGamep
 //regions
 var Region = require('../framework/Region');
 var TitleScreen = require('./regions/TitleScreen');
+var SimpleRegion = require('./regions/SimpleRegion');
 var TestRegion = require('./regions/TestRegion');
 var Test2Region =  require('./regions/Test2Region');
 var DemoOneRegion = require('./regions/DemoOneRegion');
@@ -75,6 +76,8 @@ Core.prototype.initialize = function(callback) {
     this.regions['demo-one'] = DemoOneRegion;
     this.regions['test2'] = Test2Region;
     this.regions['physijs'] = PhysijsRegion;
+    this.regions['simple'] = SimpleRegion;
+    
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
     this.gameplayClasses['practice'] = PracticeModeGameplay;

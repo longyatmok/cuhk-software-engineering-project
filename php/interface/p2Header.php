@@ -1,3 +1,4 @@
+
 <style type="text/css">
 html,body {
 	width: 100%;
@@ -239,6 +240,7 @@ body {
 
 /* End of Menu */
 </style>
+
 </head>
 <body>
 
@@ -249,6 +251,7 @@ body {
 	</div>
 	
 	<div id="canvas_container" style="position:absolute;"></div>
+
 	<div class="header nav">
 	<div class="">
 

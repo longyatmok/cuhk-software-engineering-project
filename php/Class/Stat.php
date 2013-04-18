@@ -2,10 +2,10 @@
 class Stat{
 	const TABLE = 'record';
 	public static function getHistory(){
-		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `uid`=? ORDER BY `record_time` DESC LIMIT 0,20';
+		$sql = 'SELECT `rank`, `height`, `time` FROM `'.self::TABLE.'` WHERE `uid`=? ORDER BY `record_time` DESC LIMIT 0,20';
 		$pS = $GLOBALS['PDO']->prepare($sql);
 		$pS->execute(array($GLOBALS['Account']->getUid()));
-		return $pS->fetchAll();
+		return $pS->fetchAll(PDO::FETCH_COLUMN);
 	}
 	public static function getSelfRankList(){
 		$result = array();

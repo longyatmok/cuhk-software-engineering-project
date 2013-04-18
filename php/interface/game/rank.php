@@ -3,24 +3,21 @@
     <table>
     	<tbody>
         <tr>
-        	<td></td>
-          <td></td>
-        </tr>
-        <tr>
-        	<td></td>
-          <td></td>
-        </tr>
-        <tr>
-        	<td></td>
-          <td></td>
-        </tr>
-        <tr>
-        	<td></td>
-          <td></td>
-        </tr>
-        <tr>
-        	<td></td>
-          <td></td>
+        	<td>
+          	<div class="setSize">
+            	<div class="stat" id="history"></div>
+            	<div class="stat" id="rank"></div>
+            	<div class="stat" id="free"></div>
+            	<div class="stat">
+              	<div class="name"></div>
+                <div class="graph"></div>
+              </div>
+            	<div class="stat">
+              	<div class="name"></div>
+                <div class="graph"></div>
+              </div>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

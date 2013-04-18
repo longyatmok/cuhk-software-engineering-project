@@ -1,0 +1,147 @@
+#room .background{
+  position:absolute;
+  top:5%;
+  height:90%;
+  width:100%;
+}
+#room .background .back{
+  position:absolute;
+  bottom:3%;
+  height:7%;
+  right:3%;
+}
+#room .background .back img{
+  position:relative;
+  height:100%;
+}
+#room .setMiddle{
+	position:relative;
+	height:100%;
+	width:100%;
+	vertical-align:middle;
+}
+#room .setSize{
+	position:relative;
+	margin:auto;
+	height:95%;
+	width:75%;
+	background: RGBA(0,0,0,0.3);
+}
+#room .setSize .title{
+	position:absolute;
+	width:100%;
+	height:5%;
+
+}
+#room .setSize .peoples{
+	position:absolute;
+	top:5%;
+	width:80%;
+	height:70%;
+	background: RGBA(0,0,0,0.3);
+}
+#room .setSize .peoples .people{
+	position:relative;
+	float:left;
+	width:24%;
+	height:49%;
+	margin:0.5%;
+	-webkit-border-radius: 10%;
+	-moz-border-radius: 10%;
+	border-radius: 10%;
+	background: RGBA(255,255,255,0.6);
+}
+
+#room .setSize .peoples .people .top{
+	height:30%;
+}
+#room .setSize .peoples .people .top .name{
+	float:left;
+}
+#room .setSize .peoples .people .top .ready{
+	float:right;
+}
+#room .setSize .peoples .people .preview{
+	height:70%;
+}
+#room .setSize .peoples img{
+	height:100%;
+}
+#room .setSize>.right{
+	position:absolute;
+	top:5%;
+	left:80%;
+	width:20%;
+	height:95%;
+}
+#room .setSize>.right .scene{
+	position:absolute;
+	width:100%;
+	height:45%;
+}
+#room .setSize>.right .scene .left{
+	position:absolute;
+	width:10%;
+	left:0;
+	height:100%;
+}
+#room .setSize>.right .scene .preview{
+	position:absolute;
+	width:80%;
+	left:10%;
+	height:100%;
+}
+#room .setSize>.right .scene .preview img{
+	width:100%;
+}
+#room .setSize>.right .scene .right{
+	position:absolute;
+	width:10%;
+	left:90%;
+	height:100%;
+}
+#room .setSize>.right .character{
+	position:absolute;
+	top:45%;
+	width:100%;
+	height:45%;
+}
+#room .setSize>.right .character .left{
+	position:absolute;
+	width:10%;
+	left:0;
+	height:100%;
+}
+#room .setSize>.right .character .preview{
+	position:absolute;
+	width:80%;
+	left:10%;
+	height:100%;
+}
+#room .setSize>.right .character .preview img{
+	width:100%;
+}
+#room .setSize>.right .character .right{
+	position:absolute;
+	width:10%;
+	left:90%;
+	height:100%;
+}
+#room .setSize>.right .ready{
+	position:absolute;
+	top:90%;
+	width:100%;
+	height:10%;
+}
+#room .setSize>.right .ready img{
+	height:100%;
+}
+#room .setSize .chat{
+	position:absolute;
+	top:75%;
+	width:80%;
+	height:25%;
+}
+#room .setSize .info{
+	display:none;
+}

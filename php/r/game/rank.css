@@ -22,7 +22,18 @@
 	right:5%;
 }
 #rank .background>table{
+	height:100%;
+	width:100%;
+	vertical-align:middle;
+}
+#rank .background>table .setSize{
 	height:90%;
 	width:85%;
 	margin:auto;
+	overflow:auto;
+}
+#rank #history{
+	float:left;
+	height:100%;
+	width:25%;
 }

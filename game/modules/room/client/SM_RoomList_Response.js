@@ -15,9 +15,13 @@ var RoomModule = require('./module');
  */
 var SM_RoomList_Response = function (data) {
     this.name = 'SM_RoomList_Response';
-    this.list = data.list;
+
+    Game.roomlist = data;
+    console.log(data);
+    showRDiv('timeRoom');
+    console.log("roomlist response");
  //   World.instance.overlay.changeState(RoomModule.RoomList);
-    World.instance.overlay.changeState(SM_RoomList_Response.RoomListState);
+    //World.instance.overlay.changeState(SM_RoomList_Response.RoomListState);
     
 };
 

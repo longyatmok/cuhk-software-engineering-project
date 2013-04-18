@@ -204,6 +204,8 @@ RoomModule.prototype.newRoom = function(data) {
 	var cm = new CM_Room_Create(data);
 	cm.emit();
 };
+
+
 RoomModule.prototype.joinRoom = function(data) {
 	var cm = new CM_Room_Join(data);
 	cm.emit();

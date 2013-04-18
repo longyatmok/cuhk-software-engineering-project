@@ -24,7 +24,8 @@ var SM_Game_State = function(data) {
 		hideRDiv();
 		break;
 	case 'end':
-		showRDiv('modeSelect');
+		
+		showRDiv('mark');
 		break;
 	case 'sync':
 	default:

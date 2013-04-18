@@ -71,6 +71,9 @@ password : 'sitepassword',
 			
 				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 					room.status = Room.STATUS_WAITING; 
+				
+					delete server.roomList[ room.id];
+					delete room;
 				}
 			
 			}
@@ -84,11 +87,25 @@ password : 'sitepassword',
 		socket.on('CM_Game_State',function(data){
 			if(!socket.player) return;
 			// console.log(socket.player);
+			if (data.position.y > 400) { //reach the goal!
+				socket.player.room.status = Room.STATUS_RESULT;
+				socket.player.room.endTime = Date.now();
+				socket.player.room.channel.emit('SM_Game_State',{
+					id:socket.player.id,
+					username:socket.player.username,
+					type : "end",
+					room:socket.player.room
+				});
+				socket.player.room.channel.emit('SM_Room_Status',socket.player.room); 
+				return;
+			}
+			if(socket.player.room.status = Room.STATUS_PLAYING){
 			socket.broadcast.to( socket.player.room.getChannelName() ).emit('SM_Game_State',{
 				id:socket.player.id,
 				position:data.position,
 				rotation:data.rotation
 			});
+			}
 		});
 		
 		
@@ -174,7 +191,7 @@ password : 'sitepassword',
 				}	
 				
 			
-				
+				socket.player.ready = false;
 			var result = server.roomList.free [ data.id ].addPlayer( socket.player );
 			if(result == true){
 				
@@ -198,6 +215,7 @@ password : 'sitepassword',
 			if(socket.player.room.isAllReady()){
 				// start the game IF all players are ready.
 				socket.player.room.status = Room.STATUS_PLAYING;
+				socket.player.room.startTime = Date.now();
 				io.sockets.in(socket.player.room.getChannelName()).emit('SM_Game_State',{type:'start',room:socket.player.room});
 			}
 			// aconsole.log(io.sockets.in(socket.player.room.getChannelName()));
@@ -206,8 +224,8 @@ password : 'sitepassword',
 		
 		socket.on('CM_RoomList_Request',function(data){
 			if(!socket.player) return;
-			// console.log(data);
-			socket.emit('SM_RoomList_Response',server.roomList.free);
+			 console.log(server.roomList);
+			socket.emit('SM_RoomList_Response',server.roomList);
 			return;
 			var result = server.roomList.free [ 0 ].addPlayer( socket.player );
 			if(result == true){

@@ -11,7 +11,7 @@ var Overlay = function() {
 	this
 			.add(
 					'instruction',
-					'<div id="instructions" class="overlay-center"><span style="font-size:40px">Game Start</span></div>');
+					'<div id="instructions" class="overlay-center"><span style="font-size:40px">Game Start</span> <p style="margin: 10px;position: absolute;right: 0px;bottom: 0px;color: #ffffff;z-index:999;"> <a href="?" style="text-decoration: none;color: #ffffff;"> EXIT GAME</a></p></div>');
 
 };
 

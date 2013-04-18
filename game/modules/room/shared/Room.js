@@ -23,6 +23,8 @@ var Room = function(data) {
 	this.gameplay = data.gameplay;
 	
 	this.channel = null;
+	this.startTime = null;
+	this.endTime = null;
 	this.status = data.status ? data.status: Room.STATUS_WAITING;
 };
 
@@ -39,7 +41,9 @@ Room.prototype.toJSON = function() {
 		region : this.region,
 		gameplay : this.gameplay,
 		seed : this.seed,
-		status: this.status
+		status: this.status,
+		startTime : this.startTime,
+		endTime : this.endTime
 	};
 };
 /**
@@ -99,6 +103,7 @@ Room.prototype.removePlayer = function(player) {
     // remove player success
 	if (typeof this.players[player.id] != "undefined") {
 		var p = this.players[player.id];
+		p.ready = false;
 		this.players[p.id].room = null;
 		delete 	this.players[p.id];
 		console.log("removed a player from room #"+this.id+" - "+p.username);

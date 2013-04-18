@@ -33,7 +33,7 @@ var AuthModule = require('../../modules/auth/client/module');
 var NetworkGameplay = function(region, opts) {
 	this.opts = World.extend({
 		name : 'network',
-		yLevel : 40,
+		yLevel : 10,
 		debugLine : false
 	}, opts);
 	this.ready = false;
@@ -54,7 +54,7 @@ var NetworkGameplay = function(region, opts) {
 };
 util.inherits(NetworkGameplay, FreeGameplay);
 
-NetworkGameplay.prototype.respawn = function() {
+NetworkGameplay.prototype.respawn = function(position) {
 	if (!this.ready)
 		return false;
 
@@ -74,7 +74,7 @@ NetworkGameplay.prototype.respawn = function() {
 
 		}
 	}
-	NetworkGameplay.super_.prototype.respawn.call(this);
+	NetworkGameplay.super_.prototype.respawn.call(this,position);
 
 };
 
@@ -113,6 +113,7 @@ NetworkGameplay.prototype.render = function(dt) {
 	// this.gameobjects.get('game.rotation').position.clone();
 	NetworkGameplay.super_.prototype.render.call(this, dt);
 	// if(this.rotationClone_.x )
+
 	var msg = new CM_Game_State(this.gameobjects.get('game.player'));
 	msg.emit();
 	return;

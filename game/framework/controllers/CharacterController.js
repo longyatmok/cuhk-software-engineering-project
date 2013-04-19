@@ -22,7 +22,7 @@ var CharacterController = function(gameobject, camera, opts) {
 		velocityIncreaseRate : 0.3,
 		velocityGravity : 0.3,
 
-		jumpVelocity : 1.8,
+		jumpVelocity : 1.9,
 		cameraPosition : [ 0, 18,15 ],
 		//cameraPosition : [ 0, 37, 42 ],
 		cameraRotation : [ -Math.PI / 4.5, 0, 0 ]

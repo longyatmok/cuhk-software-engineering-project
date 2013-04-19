@@ -95,6 +95,12 @@ password : 'sitepassword',
 					socket.player.room.status = Room.STATUS_RESULT;
 					socket.player.room.endTime = Date.now();
 					
+					
+					
+					server.conn.query("INSERT INTO `record` (`record_time`, `room_create_time`, `uid`, `roomid`, `scene_id`, `character_id`, `mode`, `player_num`, `height`, `time`, `score`, `rank`) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, '1', '1', '1', 'free',?, '0', ?, '0', '1')", [socket.player.id,room.noOfPlayer(),  socket.player.room.endTime - socket.player.room.startTime], function(err, results) {
+	
+					});
+					
 					io.sockets.in(room.getChannelName()).emit('SM_Game_State',{
 						id:socket.player.id,
 						username:socket.player.username,

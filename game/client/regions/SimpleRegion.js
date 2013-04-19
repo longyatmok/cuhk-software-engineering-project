@@ -21,7 +21,7 @@ var ray;
 
 var DemoOneRegion = function(opts) {
 	DemoOneRegion.super_.call(this, util.extend({
-		id : 'test2-region',
+		id : 'simple-region',
 		seed : 'Sun Mar 17 2013 20:01:35 GMT+0800 '
 	}, opts));
 
@@ -78,8 +78,8 @@ var DemoOneRegion = function(opts) {
 
 	});
 	//loader.load('gameobjects/challedge-map/05.obj', 'gameobjects/challedge-map/05.mtl');
-	loader.load('gameobjects/test2/demo02.obj', 'gameobjects/test2/demo02.mtl');
-	//loader.load('gameobjects/test2/demo01.obj', 'gameobjects/test2/demo01.mtl');
+//		loader.load('gameobjects/test2/demo02.obj', 'gameobjects/test2/demo02.mtl');
+	loader.load('gameobjects/test2/demo01.obj', 'gameobjects/test2/demo01.mtl');
 
 	/*
 	 * var jsonLoader = new THREE.JSONLoader();

@@ -54,16 +54,6 @@ FreeGameplay.prototype.respawn = function(position) {
 				.get('game.player'), this.region.camera);
 		this.gameobjects.add('controls', this.controls);
 		this.scene.add(this.controls.dummy);
-		/*
-		 * this.controls2 = new THREE.TrackballControls(this.region.camera);
-		 * this.controls2.rotateSpeed = 4.0; this.controls2.zoomSpeed = 3.6;
-		 * this.controls2.panSpeed = 2.0; this.controls2.noZoom = false;
-		 * this.controls2.noPan = true; this.controls2.staticMoving = true;
-		 * this.controls2.dynamicDampingFactor = 0.3;
-		 * 
-		 * this.gameobjects.add("__boilerplate_controls_trackball",
-		 * this.controls2);
-		 */
 
 	} else {
 		this.gameobjects.get('game.player').position.x = position.x;
@@ -83,6 +73,9 @@ document.removeEventListener('webkitpointerlockchange', EventListener,
 FreeGameplay.prototype.initialize = function() {
 	FreeGameplay.super_.prototype.initialize.call(this);
 
+	//the way to use pointer lock
+	//pointer lock example 
+	//@see https://developer.mozilla.org/en-US/docs/WebAPI/Pointer_Lock
 	var havePointerLock = 'pointerLockElement' in document
 			|| 'mozPointerLockElement' in document
 			|| 'webkitPointerLockElement' in document;
@@ -99,12 +92,8 @@ FreeGameplay.prototype.initialize = function() {
 
 				self.gameobjects.get('controls').enabled = true;
 				World.instance.overlay.visible(false);
-				// blocker.style.display = 'none';
-
 			} else {
-
 				self.gameobjects.get('controls').enabled = false;
-
 				World.instance.overlay.visible(true);
 				instructions.style.display = '';
 
@@ -113,12 +102,9 @@ FreeGameplay.prototype.initialize = function() {
 		}
 
 		var pointerlockerror = function(event) {
-
 			instructions.style.display = '';
-
 		}
 
-		// Hook pointer lock state change events
 		document
 				.addEventListener('pointerlockchange', pointerlockchange, false);
 		document.addEventListener('mozpointerlockchange', pointerlockchange,
@@ -133,24 +119,7 @@ FreeGameplay.prototype.initialize = function() {
 				false);
 
 		instructions.addEventListener('click', function(event) {
-
-			// instructions.style.display = 'none';
-			/*
-			 * if (!self.gameobjects.get('controls').enabled) {
-			 * 
-			 * self.gameobjects.get('controls').enabled = true;
-			 * World.instance.overlay.visible(false); // blocker.style.display =
-			 * 'none';
-			 *  } else {
-			 * 
-			 * self.gameobjects.get('controls').enabled = false;
-			 * 
-			 * World.instance.overlay.visible(true); instructions.style.display =
-			 * '';
-			 *  }
-			 */
-
-			// Ask the browser to lock the pointer
+			//request pointer lock
 			element.requestPointerLock = element.requestPointerLock
 					|| element.mozRequestPointerLock
 					|| element.webkitRequestPointerLock;
@@ -199,6 +168,8 @@ FreeGameplay.prototype.initialize = function() {
 
 	}
 
+	//defines directions
+	
 	this.directions = [];
 	this.directions.push(new THREE.Vector3(0, -1, 0));// 0 below
 	this.directions.push(new THREE.Vector3(0, 1, 0)); // 1 above
@@ -212,6 +183,7 @@ FreeGameplay.prototype.initialize = function() {
 	console.log("[loader]start");
 	var loader = new THREE.ColladaLoader();
 	
+	//load the player's character
 	loader.load('gameobjects/steve/steve.dae', function(result) {
 		var avatar = result.scene;
 		avatar.scale = new THREE.Vector3(0.02, 0.02, 0.04);

@@ -2,7 +2,7 @@
 var Player = require('../../shared/Player');
 
 /**
- * room class
+ * room class shared on both client and server
  * @constructor
  * @this {Room}
  * @param data 

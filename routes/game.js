@@ -1,8 +1,6 @@
-
-/*
- * GET home page.
+/**
+ * Early Development Server ruotes
  */
-
 exports.index = function(req, res){
     res.render('game/main', {
         message : "Hello World",

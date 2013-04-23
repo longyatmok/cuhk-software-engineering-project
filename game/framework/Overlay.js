@@ -1,9 +1,8 @@
-/**
- * Game Core
- */
 var util = require('./Util');
 var $ = require('../vendor/jQuery');
-
+/**
+ * the Class to control game Overlays
+ */
 var Overlay = function() {
 	this.states = [];
 	this.currentState = null;

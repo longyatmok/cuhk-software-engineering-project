@@ -1,4 +1,7 @@
 <?php
+/**
+ * index of web
+ */
 include_once '../library/SocialGateway/Autoloader.php';
 SocialGateway_AutoLoader::addDirectory( dirname(__FILE__) .'/../library');
 SocialGateway_AutoLoader::getInstance()->registerAutoloader();

@@ -36,7 +36,7 @@ var SimpleRegion = require('./regions/SimpleRegion');
 var TestRegion = require('./regions/TestRegion');
 var Test2Region =  require('./regions/Test2Region');
 var DemoOneRegion = require('./regions/DemoOneRegion');
-var PhysijsRegion = require('./regions/PhysijsRegion');
+
 var scene;
 /**
  * Game Core
@@ -71,30 +71,37 @@ Core.prototype.initialize = function(callback) {
     Core.super_.prototype.initialize.call(this);
     this.overlay = new Overlay();
 
+    //defines region classes
     this.regions['title-screen'] = TitleScreen;
  //   this.regions['test-region'] = new TestRegion();
     this.regions['demo-one'] = DemoOneRegion;
     this.regions['test2'] = Test2Region;
-    this.regions['physijs'] = PhysijsRegion;
+//    this.regions['physijs'] = PhysijsRegion;
     this.regions['simple'] = SimpleRegion;
     
+    //defines gameplay classes
     this.gameplayClasses['empty'] = Gameplay;
     this.gameplayClasses['free'] = FreeGameplay;
     this.gameplayClasses['practice'] = PracticeModeGameplay;
     this.gameplayClasses['network'] = NetworkGameplay;
+   
+    //set default region (and gameplay) to title-screen
     this.setRegion('title-screen','empty');
   //  this.activeRegion = this.regions['demo-one']; //we have the terrain now   
   //  this.gameplay = new FreeGameplay(this.activeRegion); 
     
-    //connection here
+    //initialize connection to game server (default:same domain as the client side) ,port 7777
     this.connection = new Connection({address : 'ws://'+document.domain+':7777'});
     //define all modules here
     
+    //define modules here
     this.modules [ 'hello-world' ] = new HelloWorldModule( this );
     this.modules [ AuthModule.NAME ] = new AuthModule( this );
     this.modules [ RoomModule.NAME ] = new RoomModule( this );
     this.modules [ GameModule.NAME ] = new GameModule( this );
     //end
+    
+    //start connection
     this.connection.connect();
     
     callback();
@@ -102,13 +109,10 @@ Core.prototype.initialize = function(callback) {
 };
 
 
-var now, lastbox = 0, boxes = [];
-
 /**
  * Game Core render
  * @this {Core}
  */
-
 Core.prototype.render = function() { 
     TWEEN.update();
     Core.super_.prototype.render.call(this);

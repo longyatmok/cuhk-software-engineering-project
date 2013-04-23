@@ -21,7 +21,6 @@ var CM_Room_GameStart = require('./CM_Room_GameStart');
 var CM_Room_GameQuit = require('./CM_Room_GameQuit');
 var SM_Room_Status = require('./SM_Room_Status');
 
-// room module
 /**
  * module for room
  * 
@@ -197,21 +196,31 @@ RoomModule.prototype.updateRoomList = function(list) {
 	this.roomList = list;
 	// TODO redraw UI
 };
+/**
+ * set my state to ready
+ */
 RoomModule.prototype.iAmReady = function() {
 	var cm = new CM_Room_GameStart();
 	cm.emit();
 };
-
+/**
+ * request a new room
+ */
 RoomModule.prototype.newRoom = function(data) {
 	var cm = new CM_Room_Create(data);
 	cm.emit();
 };
-
+/**
+ * join a room
+ */
 RoomModule.prototype.joinRoom = function(data) {
 	var cm = new CM_Room_Join(data);
 	cm.emit();
 };
 
+/**
+ * leave the room where I am in
+ */
 RoomModule.prototype.leaveRoom = function() {
 	var cm = new CM_Room_GameQuit();
 	cm.emit();
@@ -241,6 +250,7 @@ RoomModule.prototype.updateRoom = function(data) {
 	// redraw UI
 	renderRoom(this.room.id, this.room);
 	return;
+	//below are used on early development stage
 	var variables = [];
 	var order = 1;
 	for ( var i in this.room.players) {

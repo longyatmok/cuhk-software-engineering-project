@@ -1,8 +1,10 @@
-//abstract game class
 var jQuery = require('../vendor/jQuery');
 var THREE = require('../vendor/Three');
 var util = require('./Util');
 
+/*
+ * Abstract Class for Client Modules
+ */
 var Module = function ( data ){
 	
 	

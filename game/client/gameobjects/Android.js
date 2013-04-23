@@ -3,11 +3,11 @@ var util = require('../../framework/Util');
 var GameObject = require('../../framework/gameobjects/GameObject');
 
 /**
- * This is the 3D model of the character used to represent player.
+ * This is the 3D model of the character used to represent player
+ * @deprecated
  * @constructor
  * @this {Android}
  */
-
 var Android = function() {
     this.geometry = new THREE.CubeGeometry(2, 2, 2);
     this.material = new THREE.MeshBasicMaterial({

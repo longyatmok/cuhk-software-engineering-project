@@ -1,12 +1,14 @@
-/**
- * Region (Abstract Class)
- */
 var THREE = require('../vendor/Three');
 var util = require('./Util');
 var GameObjectManager = require('./GameObjectManager');
 var World = require('./World');
 var DefaultCamera = require('./cameras/DefaultCamera');
 var Physijs = require('../vendor/Physi');
+
+/**
+ * Region (Abstract Class)
+ * the class to define a particular scene
+ */
 var Region = function(opts) {
 	this.opts = opts = World.extend({
 		id : '__region' + Region.counter++
@@ -33,11 +35,12 @@ var Region = function(opts) {
 	this.spawnRotation = new THREE.Vector3(0, 0, 0);
 
 	/*
-	 * this.camera = new THREE.PerspectiveCamera(75, World.opts.width /
-	 * World.opts.height, 0.1, 1000);
+	 * set the camera as DefaultCamera
 	 */
 	this.camera = new DefaultCamera(75, World.opts.width / World.opts.height,
 			0.2, 800);
+	
+	//enable support of Browser Window Resize
 	if (World.opts.resize) {
 		window.addEventListener('resize', util.callback(this, function() {
 			this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -46,7 +49,6 @@ var Region = function(opts) {
 	}
 
 	// add lights
-	// Light
 	var light = new THREE.DirectionalLight(0xFFFFFF);
 	light.position.set(40, 40, 25);
 	light.target.position.copy(scene.position);
@@ -59,6 +61,8 @@ var Region = function(opts) {
 	scene.add(light);
 	this.camera.lookAt(scene.position);
 
+	
+	//region objects are immobile objects and collision detection should be applied , otherwise gameobjectss
 	this.regionobjects = new GameObjectManager();
 	this.gameobjects = new GameObjectManager();
 	this.gameobjects.add('camera', this.camera);

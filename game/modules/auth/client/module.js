@@ -57,6 +57,7 @@ var AuthModule = function(world) {
 	});
 
 	
+
 	world.connection.on(world.connection.ON_CONNECT, function(data) {
 		world.overlay.changeState('title', {
 			msg : "Connected. Initializing the game."
@@ -79,7 +80,11 @@ var AuthModule = function(world) {
 util.inherits(AuthModule, Module);
 AuthModule.NAME = "Auth-Module";
 
-
+/**
+ * Auth login
+ * @param user_id
+ * @param user_token
+ */
 AuthModule.prototype.login = function(user_id, user_token) {
 	var cm = new CM_Login({
 		id : user_id,

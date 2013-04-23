@@ -10,11 +10,11 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var RoomModule = require('../../room/client/module');
 
 /**
-* Server Message for login
-* @constructor
-* @this {SM_Login_Response}
-* @param data 
-*/
+ * Server Message response for login
+ * @constructor
+ * @this {SM_Login_Response}
+ * @param data 
+ */
 var SM_Login_Response = function(data) {
 
 	if (data.message == 'success') {

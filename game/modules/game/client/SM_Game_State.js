@@ -10,7 +10,7 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
 
 var RoomModule = require('../../room/client/module');
 /**
- * SM_Game_State for sync
+ * SM_Game_State response to client for sync
  * @constructor
  * @this {SM_Game_State}
  * @param data 

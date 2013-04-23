@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 var RoomModule = require('./module');
 /**
- * server side msg to return room list
+ * Server side response to return room list to client
  * @constructor
  * @this {SM_RoomList_Response}
  * @param data 

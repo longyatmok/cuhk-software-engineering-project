@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 /**
- * client side msg for connection
+ * Client side msg send to server for establishing connection
  * @constructor
  * @this {CM_Helloworld}
  * @param info 

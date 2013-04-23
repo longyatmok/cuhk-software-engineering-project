@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var CM_Helloworld = require('./CM_Helloworld');
 var CM_Login = require('../../auth/client/CM_Login');
 /**
- * server side msg for connection
+ * Server side response send to client for establishing connection
  * @constructor
  * @this {SM_Helloworld}
  * @param data 

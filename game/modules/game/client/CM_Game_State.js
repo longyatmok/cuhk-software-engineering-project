@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 /**
- * Client side game state msg for sync
+ * Client side game state request send to server for sync
  * @constructor
  * @this {CM_Game_State}
  * @param object 

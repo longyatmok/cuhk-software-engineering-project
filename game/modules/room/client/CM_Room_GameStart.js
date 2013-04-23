@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 /**
- * Client side msg for game start
+ * Client side request to server for game start
  * @constructor
  * @this {CM_Room_GameStart}
  * @param data 

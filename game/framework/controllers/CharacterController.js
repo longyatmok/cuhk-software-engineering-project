@@ -5,8 +5,13 @@ var THREE = require('../../vendor/Three');
 var util = require('../Util');
 /* var Game = require('../Game'); */
 var AbstractController = require('./PositionController');
-
+/**
+ * It is character controller that implement basic collision detect 
+ * according to the distance between objects and the character.
+ * 
+ */
 var CharacterController = function(gameobject, camera, opts) {
+	
 	CharacterController.super_.call(this, gameobject, util.extend({
 		'keys' : {
 			/* w s a d q e z space-bar p */
@@ -18,7 +23,7 @@ var CharacterController = function(gameobject, camera, opts) {
 			checkpt : 80
 
 		},
-		velocityDecreaseRate : 0.07,
+		velocityDecreaseRate : 0.07, //parameters
 		velocityIncreaseRate : 0.3,
 		velocityGravity : 0.3,
 
@@ -38,18 +43,16 @@ var CharacterController = function(gameobject, camera, opts) {
 	this.pitchObject.rotation.set.apply(this.pitchObject.rotation,
 			this.opts.cameraRotation);
 
-	// this.pitchObject.position.set(0, 37,40);
-	// this.pitchObject.rotation.set(-Math.PI/4.5,0,0);
-	// this.pitchObject.add(camera);
+
 	this.gameobject = gameobject;
 
 	this.dummy = new THREE.Object3D();
-	// this.dummy.position.y = 1;
+
 	this.dummy.add(this.pitchObject);
-	// this.dummy.position.x = 0;
-	// this.dummy.position.z = 420;
+
 	this.dummy.position = this.gameobject.position;
 
+	//a box for testing collision detection
 /*	var cubeGeometry = new THREE.CubeGeometry(7, 14, 7, 1, 1, 1);
 	var wireMaterial = new THREE.MeshBasicMaterial({
 		color : 0xff0000,
@@ -66,7 +69,6 @@ var CharacterController = function(gameobject, camera, opts) {
 	this.gameobject.parent.add(this.dummy);
 	// this.dummy.add(camera);
 
-	// this.dummy.useQuaternion = true;
 	this.isOnObject = false;
 	this.canJump = false;
 
@@ -89,30 +91,28 @@ var CharacterController = function(gameobject, camera, opts) {
 				|| event.webkitMovementX || 0;
 		var movementY = event.movementY || event.mozMovementY
 				|| event.webkitMovementY || 0;
-		// this.pitchObject.rotation.y -= movementX * 0.004;
+
 		this.dummy.rotation.y -= movementX * 0.004;
 		this.gameobject.rotation.y -= movementX * 0.004;
 
-		/*
-		 * this.pitchObject.rotation.x -= movementY * 0.002;
-		 * 
-		 * /this.pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2,
-		 * this.pitchObject.rotation.x));
-		 */
 	};
 
 	function bindx(scope, fn) {
 		return function() {
 			fn.apply(scope, arguments);
 		};
-	}
-	;
+	};
 
 	this.opts.domElement.addEventListener('mousemove',
 			bindx(this, onMouseMove), false);
 
 };
+
 util.inherits(CharacterController, AbstractController);
+
+/**
+ * reset the character
+ */
 CharacterController.prototype.reset = function() {
 	this.dummy.rotation.x = this.gameobject.rotation.x;
 	this.gameobject.rotation.y = -Math.PI / 2;
@@ -135,9 +135,15 @@ CharacterController.prototype.isOnObjectFN = function(boolean) {
 	this.canJump = boolean;
 
 };
+
 CharacterController.prototype.update = function() {
 
 };
+
+
+/**
+ * update function per frame
+ */
 CharacterController.prototype.updatex = function(delta, distances) {
 	// distances : 0 ground | 1 above |2 west |3 east |4 south |5 north
 	// the box is 7 * 14 * 7

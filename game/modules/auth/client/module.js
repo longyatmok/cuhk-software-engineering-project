@@ -22,7 +22,6 @@ var CM_Login = require('./CM_Login');
  * @this {CM_LAuthModuleogin}
  * @param world
  */
-
 var AuthModule = function(world) {
 	world.connection.register(SM_Login_Response);
 	this.user = null;
@@ -48,13 +47,16 @@ var AuthModule = function(world) {
 		console.log("demo session");
 		var username = window.prompt("Your Username", "DEMO_USER");
 
+		//a demo account on early development stage
 		var cm = new CM_Login({
-			id : '1214742925@Facebook',
+			id : 'UNDEFINED@Facebook',
 			token : 'ibj1f52cvcpem06dm065skjcq2',
 			type : 'account'
 		});
 		cm.emit();
 	});
+
+	
 
 	world.connection.on(world.connection.ON_CONNECT, function(data) {
 		world.overlay.changeState('title', {
@@ -78,7 +80,11 @@ var AuthModule = function(world) {
 util.inherits(AuthModule, Module);
 AuthModule.NAME = "Auth-Module";
 
-// data encap in auth msg
+/**
+ * Auth login
+ * @param user_id
+ * @param user_token
+ */
 AuthModule.prototype.login = function(user_id, user_token) {
 	var cm = new CM_Login({
 		id : user_id,

@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * index of web page
+ */
+ 
 require_once('Init.php');
 if(isset($_GET['logout'])){
 	$Account->logout();

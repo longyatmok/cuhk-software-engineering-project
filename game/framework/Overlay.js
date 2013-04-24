@@ -1,8 +1,11 @@
-/**
- * Game Core
- */
 var util = require('./Util');
 var $ = require('../vendor/jQuery');
+
+/**
+ * the Class to control game Overlays
+ * @contructor
+ * @this {Overlay}
+ */
 
 var Overlay = function() {
 	this.states = [];
@@ -15,11 +18,24 @@ var Overlay = function() {
 
 };
 
+/**
+ * Add Overlay
+ * @param state, html
+ * @this {Overlay}
+ */
+
+
 Overlay.prototype.add = function(state, html) {
 	this.states[state] = html;
 	$('<div id="' + state + '" class="overlay">' + html + '</div>').appendTo(
 			Overlay.OVERLAY_SELECTOR);
 };
+
+/**
+ * chageState of Overlay
+ * @param state, date
+ * @this {Overlay}
+ */
 
 Overlay.prototype.changeState = function(state, data) {
 	
@@ -40,7 +56,10 @@ Overlay.prototype.changeState = function(state, data) {
 
 	this.currentState = state;
 };
-
+/**
+ * Visibility of Overlay
+ * @param bool
+ */
 Overlay.prototype.visible = function(bool) {
 	if (bool == true) {
 		$(Overlay.OVERLAY_SELECTOR).show();

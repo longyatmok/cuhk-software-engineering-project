@@ -2,23 +2,21 @@ var THREE = require('../../vendor/Three');
 var util = require('../../framework/Util');
 var GameObjectManager = require('../../framework/GameObjectManager');
 var Region = require('../../framework/Region');
-// var Android = require('../gameobjects/Android');
 
 THREE.PointerLockControls = require('../../vendor/THREE/PointerLockControls');
 THREE.OBJMTLLoader = require('../../vendor/loaders/OBJMTLLoader');
 srand = require('../../vendor/seedrandom');
 var geometry, material, mesh;
 var controls, time = Date.now();
-
 var ray;
+
 /**
- * The Challenge mode Map
+ * The Practice Mode map
  * 
  * @constructor
  * @this {DemoOneRegion}
  * @param opts
  */
-
 var DemoOneRegion = function(opts) {
 	DemoOneRegion.super_.call(this, util.extend({
 		id : 'simple-region',

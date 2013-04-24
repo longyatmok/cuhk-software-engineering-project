@@ -10,7 +10,7 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
 
 var RoomModule = require('../../room/client/module');
 /**
- * SM_Game_State for sync
+ * SM_Game_State response to client for sync
  * @constructor
  * @this {SM_Game_State}
  * @param data 
@@ -24,12 +24,12 @@ var SM_Game_State = function(data) {
 		hideRDiv();
 		break;
 	case 'end':
-		console.log("GAME END");
+		//the game end and display the result
+		//console.log("GAME END");
 		World.instance.gameplay.dispose();
 		
 		World.instance.setRegion('title-screen','empty');
-		//World.instance.modules[SM_Game_State.GameModuleName].room = null;
-		//World.instance.overlay.changeState('blank');
+
 		World.instance.overlay.visible(false);
 		showRDiv('mark');
 		$('#game_result_time').text((data.room.endTime - data.room.startTime)/1000);

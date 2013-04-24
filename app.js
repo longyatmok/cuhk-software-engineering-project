@@ -1,8 +1,8 @@
-
 /**
- * Module dependencies.
+ * CSCI3100 Group 6 
+ * Local Devlopment Server and Build Script
+ * use with -dev can build game client script automatically
  */
-
 var express = require('express')
   , http = require('http')
   , path = require('path')

@@ -10,11 +10,11 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var RoomModule = require('../../room/client/module');
 
 /**
-* Server Message for login
-* @constructor
-* @this {SM_Login_Response}
-* @param data 
-*/
+ * Server Message response for login
+ * @constructor
+ * @this {SM_Login_Response}
+ * @param data 
+ */
 var SM_Login_Response = function(data) {
 
 	if (data.message == 'success') {
@@ -22,12 +22,7 @@ var SM_Login_Response = function(data) {
 		World.instance.modules[SM_Login_Response.AuthModuleNAME].user = data.user;
 		console.log("login success");
 		showRDiv('modeSelect');
-		/*
-		if(typeof showRDiv !="undefined"){
-			showRDiv('modeSelect');
-		}else{
-			World.instance.overlay.changeState(RoomModule.ModeSelection);
-		}*/
+
 		//overlay => Mode Selection
 		//add username to the overlay
 		}else if (data.message == 'request-nickname'){

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Config of web server
+ */
+
 error_reporting(E_ERROR);
 // System
 define('SYSTEM', 'totheskies'); // check valid get page

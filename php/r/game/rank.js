@@ -1,3 +1,6 @@
+/**
+ * Draw rank on GUI
+ */
 function drawGraph(){
 	
 	// History

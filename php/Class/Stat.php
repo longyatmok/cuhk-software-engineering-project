@@ -1,12 +1,32 @@
 <?php
+
+/**
+ * Statistic of game
+ */
 class Stat{
+
+	/**
+	 * Data of stat
+	 */
 	const TABLE = 'record';
+
+	/**
+	 * Get stat history
+	 * @return $pS->fetchAll(PDO::FETCH_COLUMN)
+	 * @static
+	 */
 	public static function getHistory(){
 		$sql = 'SELECT `rank`, `height`, `time` FROM `'.self::TABLE.'` WHERE `uid`=? ORDER BY `record_time` DESC LIMIT 0,20';
 		$pS = $GLOBALS['PDO']->prepare($sql);
 		$pS->execute(array($GLOBALS['Account']->getUid()));
 		return $pS->fetchAll(PDO::FETCH_COLUMN);
 	}
+
+	/**
+	 * Get rank list
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSelfRankList(){
 		$result = array();
 		$sql = 'SELECT `rank`, COUNT(`rank`) as `rankCount` FROM `'.self::TABLE.'` WHERE `uid`=? GROUP BY `rank` ORDER BY `rank` ASC LIMIT 0,8'; // only 8 rank
@@ -17,18 +37,36 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get height
+	 * @return $pS->fetchAll()
+	 * @static
+	 */
 	public static function getSelfHeightList(){
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `uid`=? AND `mode`=\'free\' ORDER BY `height` DESC LIMIT 0,10';
 		$pS = $GLOBALS['PDO']->prepare($sql);
 		$pS->execute(array($GLOBALS['Account']->getUid()));
 		return $pS->fetchAll();
 	}
+
+	/**
+	 * Get time list
+	 * @return $pS->fetchAll()
+	 * @static
+	 */
 	public static function getSelfTimeList(){
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `uid`=? AND `mode`=\'speed\' ORDER BY `time` DESC LIMIT 0,10';
 		$pS = $GLOBALS['PDO']->prepare($sql);
 		$pS->execute(array($GLOBALS['Account']->getUid()));
 		return $pS->fetchAll();
 	}
+
+	/**
+	 * Get highest
+	 * @return $pS->fetch()
+	 * @static
+	 */
 	public static function getSelfHighest($needTop10 = false){
 		$sql1 = (!!$needTop10) ? ', `'.self::TABLE.'` as `b`' : '';
 		$sql2 = (!!$needTop10) ? ' AND `b`.`height` < `a`.`height` HAVING COUNT(`b`.`height`)>10' : '';
@@ -37,6 +75,12 @@ class Stat{
 		$pS->execute(array($GLOBALS['Account']->getUid()));
 		return $pS->fetch();
 	}
+
+	/**
+	 * Get highest
+	 * @return $pS->fetch()
+	 * @static
+	 */
 	public static function getSelfFastest($needTop10 = false){
 		$sql1 = (!!$needTop10) ? ', `'.self::TABLE.'` as `b`' : '';
 		$sql2 = (!!$needTop10) ? ' AND `b`.`time` < `a`.`time` HAVING COUNT(`b`.`time`)>10' : '';
@@ -45,6 +89,12 @@ class Stat{
 		$pS->execute(array($GLOBALS['Account']->getUid()));
 		return $pS->fetch();
 	}
+
+	/**
+	 * Get global highest
+	 * @return $pS->fetch()
+	 * @static
+	 */
 	public static function getGlobalHeight(){ // show top ten in the world
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `mode`=\'free\' ORDER BY `time` DESC LIMIT 0,10';
 		$pS = $GLOBALS['PDO']->prepare($sql);
@@ -55,6 +105,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get global time
+	 * @return $pS->fetchAll() $result
+	 * @static
+	 */
 	public static function getGlobalTime(){ // show top ten in the world
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `mode`=\'speed\' ORDER BY `time` DESC LIMIT 0,10';
 		$pS = $GLOBALS['PDO']->prepare($sql);
@@ -67,7 +123,11 @@ class Stat{
 	}
 	
 	
-	
+	/**
+	 * Get scene rank list
+	 * @return array $result
+	 * @static
+	 */
 	
 	public static function getSceneSelfRankList(){
 		$result = array();
@@ -80,6 +140,13 @@ class Stat{
 		}
 		return $result;
 	}
+
+
+	/**
+	 * Get scene history
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneHistory(){
 		$result = array();
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `uid`=? ORDER BY `record_time` DESC LIMIT 0,20';
@@ -90,6 +157,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get scene height list
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneSelfHeightList(){
 		$result = array();
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `uid`=? AND `mode`=\'free\' AND `scene_id`=? ORDER BY `height` DESC LIMIT 0,10';
@@ -100,6 +173,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get scene time list
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneSelfTimeList(){
 		$result = array();
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `uid`=? AND `mode`=\'speed\' AND `scene_id`=? ORDER BY `time` DESC LIMIT 0,10';
@@ -110,6 +189,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get scene highest
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneSelfHighest($needTop10 = false){
 		$result = array();
 		$sql1 = (!!$needTop10) ? ', `'.self::TABLE.'` as `b`' : '';
@@ -122,6 +207,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get scene fastest
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneSelfFastest($needTop10 = false){
 		$result = array();
 		$sql1 = (!!$needTop10) ? ', `'.self::TABLE.'` as `b`' : '';
@@ -134,6 +225,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get scene global height
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneGlobalHeight(){ // show top ten in the world
 		$result = array();
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `mode`=\'free\' AND `scene_id`=? ORDER BY `time` DESC LIMIT 0,10';
@@ -148,6 +245,12 @@ class Stat{
 		}
 		return $result;
 	}
+
+	/**
+	 * Get scene global time
+	 * @return array $result
+	 * @static
+	 */
 	public static function getSceneGlobalTime(){ // show top ten in the world
 		$result = array();
 		$sql = 'SELECT * FROM `'.self::TABLE.'` WHERE `mode`=\'speed\' AND `scene_id`=? ORDER BY `time` DESC LIMIT 0,10';

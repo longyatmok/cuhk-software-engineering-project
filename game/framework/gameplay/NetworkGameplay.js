@@ -1,11 +1,4 @@
-/**
- * NetworkGameplay (Abstract Class) inherited from NetworkGameplay
- * 
- * @constructor
- * @this {NetworkGameplay}
- * @param {region,
- *            opts}
- */
+
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
 var GameObjectManager = require('../GameObjectManager');
@@ -21,14 +14,12 @@ var SM_Game_State = require('../../modules/game/client/SM_Game_State');
 var RoomModule = require('../../modules/room/client/module');
 var AuthModule = require('../../modules/auth/client/module');
 /**
- * 
+ * NetworkGameplay (Abstract Class) inherited from NetworkGameplay
  * 
  * @constructor
  * @this {NetworkGameplay}
- * @param region
- *            Region
- * @param opts
- *            Options Object
+ * @param {region,
+ *            opts}
  */
 var NetworkGameplay = function(region, opts) {
 	this.opts = World.extend({
@@ -53,7 +44,9 @@ var NetworkGameplay = function(region, opts) {
 
 };
 util.inherits(NetworkGameplay, FreeGameplay);
-
+/**
+ * Character respawn
+ */
 NetworkGameplay.prototype.respawn = function(position) {
 	if (!this.ready)
 		return false;
@@ -90,6 +83,9 @@ NetworkGameplay.prototype.initialize = function() {
 	this.miniCamera.rotation.set(-Math.PI / 2, 0, 0);
 	this.miniCamera.position.y = 400;
 };
+/**
+ * update networked Object position and rotation
+ */
 NetworkGameplay.prototype.updateNeworkedObject = function(data) {
 	if (typeof data.id != "undefined") {
 		try {
@@ -102,24 +98,22 @@ NetworkGameplay.prototype.updateNeworkedObject = function(data) {
 		}
 	}
 };
+
+
 NetworkGameplay.prototype.render = function(dt) {
 	if (!this.ready || !this.gameobjects.get('controls').enabled)
 		return;
-	// delete this.positionClone_;
-	// delete this.rotationClone_;
-	// this.positionClone_ =
-	// this.gameobjects.get('game.player').position.clone();
-	// this.rotationClone_ =
-	// this.gameobjects.get('game.rotation').position.clone();
+
 	NetworkGameplay.super_.prototype.render.call(this, dt);
 
-	// if(this.rotationClone_.x )
-
-	var msg = new CM_Game_State(this.gameobjects.get('game.player'));
+	var msg = new CM_Game_State(this.gameobjects.get('game.player')); //send my data to the server via CM_Game_State MSG
 	msg.emit();
 	return;
 };
 
+/**
+ * A hook which run after render
+ */
 NetworkGameplay.prototype.renderAfter = function(renderer, dt) {
 	/*if (this.ready && typeof this.gameobjects.get('controls') != "undefined") {
 

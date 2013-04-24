@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 /**
- * Client side msg for game quit
+ * Client side token to server for game quit
  * @constructor
  * @this {CM_Room_GameQuit}
  * @param data 

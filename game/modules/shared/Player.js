@@ -1,5 +1,6 @@
 /**
  * player info and data
+ * shared on both client and server
  * @constructor
  * @this {Player}
  * @param data 

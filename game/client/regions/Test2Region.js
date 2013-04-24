@@ -12,7 +12,7 @@ var controls, time = Date.now();
 
 var ray;
 /**
- * The Challenge mode Map
+ * early development map
  * 
  * @constructor
  * @this {DemoOneRegion}

@@ -9,7 +9,7 @@ var RoomList = require('../../../modules/room/shared/RoomList');
 var counter = 1;
 
 /**
- * Server
+ * the server behind this game framework
  * 
  * @constructor
  * @this {Server}
@@ -37,12 +37,13 @@ var Server = function(opts) {
 	this.conn = mysql.createConnection({
 		/*
 		 * host : 'allenp.tk', user : 'csci3100', password : '0102030405',
+		 * 
+		 * the database config should be save to another file
 		 */
 host : '127.0.0.1',
 user : 'site',
 password : 'sitepassword',
-
- database : 'totheskies'
+database : 'totheskies'
 		});
 	this.conn.connect(function(err) {
 		  if( err != null) console.error("can't connect to the dataase");
@@ -57,6 +58,9 @@ password : 'sitepassword',
 
 	io.sockets.on('connection', function(socket) {
 
+		/*
+		 * The MSG Where player disconnected from the server
+		 */
 		socket.on('disconnect',function(data){
 			if(!socket.player) return;
 			console.log("[DISCONNECTED] : " + '{' + socket.player.id+'} ' + socket.player.username);
@@ -64,9 +68,9 @@ password : 'sitepassword',
 			if(room != null){
 				socket.leave( room.getChannelName());
 				room.removePlayer( socket.player );			
-// notify other players in the room that this player is disconnected
-				socket.leave( room.getChannelName());
-				
+				// notify other players in the room that this player is
+				// disconnected
+				socket.leave( room.getChannelName());		
 				room.channel.emit('SM_Room_Status',room); 
 			
 			
@@ -83,8 +87,12 @@ password : 'sitepassword',
 			delete server.playerList[ socket.player.id ];
 			delete socket.player;			
 		});
+		
+		
 	
-		// Game State Sync
+		/**
+		 * The MSG Where player send synchorization message
+		 */
 		socket.on('CM_Game_State',function(data){
 			if(!socket.player) return;
 			if(!socket.player.room) return;
@@ -107,7 +115,7 @@ password : 'sitepassword',
 						type : "end",
 						room:socket.player.room
 					});
-				//	io.sockets.in(room.getChannelName()).emit('SM_Room_Status',socket.player.room); 
+				// io.sockets.in(room.getChannelName()).emit('SM_Room_Status',socket.player.room);
 					console.log("REMOVE ALL PLAYERS");
 					for ( var i in room.players) {
 						room.removePlayer(room.players[i]);
@@ -128,7 +136,9 @@ password : 'sitepassword',
 		
 		
 		
-		
+		/**
+		 * THE MSG Where player hit the "Return/Exit" Button
+		 */
 		socket.on('CM_Room_GameQuit',function(){
 			
 		
@@ -155,6 +165,9 @@ password : 'sitepassword',
 		
 			
 		});
+		/**
+		 * THE MSG Where player want to create a new room
+		 */
 		socket.on('CM_Room_Create',function(data){
 			if(!socket.player) return;
 			// socket.emit('SM_Room_Status',{error:"error on creating a new
@@ -214,7 +227,9 @@ password : 'sitepassword',
 		
 		
 		
-		
+		/**
+		 * THE MSG Where player choose a room
+		 */
 		socket.on('CM_Room_Join',function(data){
 			if(!socket.player) return;
 			try{		
@@ -225,7 +240,8 @@ password : 'sitepassword',
 				
 					room.removePlayer( socket.player );
 					
-	// notify other players in the room that this player is disconnected
+					// notify other players in the room that this player is
+					// disconnected
 					room.channel.emit('SM_Room_Status',room); 
 					socket.leave( room.getChannelName());
 				
@@ -243,30 +259,41 @@ password : 'sitepassword',
 				socket.join( server.roomList.free [ data.id ].getChannelName());
 				io.sockets.in(socket.player.room.getChannelName()).emit('SM_Room_Status',server.roomList.free [ data.id ]);
 			}else{
+				// IF Failed to join the room , the room should reach its upper
+				// limit of members or the room status is playing.
 				socket.emit('SM_Room_Status',{error:"The World you are attempting to join is full or playing."});
 			}
 			}catch(e){
+				// error handling
 				socket.emit('SM_Room_Status',{error:"error on joining a new room"});
 			}
 
 		});
 		
+		/**
+		 * THE MSG Where player hit "start"
+		 */
 		socket.on('CM_Room_GameStart',function(){
 			if(!socket.player) return;
 			if(!socket.player.room) return;
 			server.socketToplayerList[socket.id].ready = true;
 			
 		
+			// IF ALL hitted "start" , the game starts
 			if(socket.player.room.isAllReady()){
 				// start the game IF all players are ready.
 				socket.player.room.status = Room.STATUS_PLAYING;
 				socket.player.room.startTime = Date.now();
+				// THE MSG to start the game
 				io.sockets.in(socket.player.room.getChannelName()).emit('SM_Game_State',{type:'start',room:socket.player.room});
 			}
 			// aconsole.log(io.sockets.in(socket.player.room.getChannelName()));
 			io.sockets.in(socket.player.room.getChannelName()).emit('SM_Room_Status',socket.player.room);
 		});
 		
+		/**
+		 * THE MSG to request room list
+		 */
 		socket.on('CM_RoomList_Request',function(data){
 			if(!socket.player) return;
 			 console.log(server.roomList);
@@ -284,6 +311,7 @@ password : 'sitepassword',
 			// socket.emit('SM_Room_GameStart',{time:new Date()});
 		});
 		
+		
 		socket.emit('SM_helloworld', {
 			data : "ping"
 		});
@@ -291,6 +319,9 @@ password : 'sitepassword',
 
 		});
 		
+		/**
+		 * THE MSG to login to an player profile by user_id and login_token
+		 */
 		socket.on('CM_Login',
 				function(data) {
 					console.log(" >>> [CM_Login]");
@@ -309,7 +340,8 @@ password : 'sitepassword',
 						if(results.length > 0){
 							 var result = results[0];
 							 if(server.playerList[ result.uid ]){
-								
+								 	// kick the player offline IF it is already
+									// exists on the game server
 									 server.playerList[ result.uid ].socket_.disconnect();
 									 
 										socket.emit('SM_Login_Response', {
@@ -353,26 +385,7 @@ password : 'sitepassword',
 					
 					});
 					
-					
-/*
- * if (data.user_id == '0' && data.user_token == 'DEMO_SESSION') {
- * 
- * data.info.id = data.user_id = counter++; if(server.playerList.indexOf [
- * data.user_id ] != undefined){ server.playerList [ data.user_id
- * ].socket.disconnect(); delete server.playerList [ data.user_id ]; }
- * 
- * server.playerList [ data.user_id ] = new
- * Player({username:data.info.username,user_id: data.info.id,socket:socket});
- * socket.player = server.playerList [ data.user_id ];
- * 
- * socket.emit('SM_Login_Response', { message : "success", user : socket.player
- * }); } else {
- */
-					/*
-					 * socket.emit('SM_Login_Response', { message : "forbidden"
-					 * }); socket.disconnect();
-					 */
-				// }
+
 
 				});
 	});

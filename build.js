@@ -1,5 +1,6 @@
 /**
  * Client-side script builder
+ * build script
  */
 var fs = require('fs');
 
@@ -95,6 +96,10 @@ exports.build = function() {
     if (DEV)
 	bundle.on('bundle', write);
 };
+
+
+//script that use closure-compiler (not in use)
+
 
 // https://github.com/weaver/scribbles/blob/master/node/google-closure/lib/closure.js
 // / # Google Closure Compiler Service #

@@ -1,8 +1,23 @@
 <?php
+
+/**
+ * Character
+ */
+
 class Character{
+
+	/**
+	 * Data of Character
+	 */
 	const TABLE = 'character_setting';
 	private static $Info = false;
 	private static $InfoID = false;
+
+	/**
+	 * Get info
+	 * @return array() self::$Info
+	 * @static
+	 */
 	public static function getInfo(){ // use in javascript
 		$result = self::$Info ;
 		if(!$result){
@@ -16,6 +31,12 @@ class Character{
 		}
 		return self::$Info;
 	}
+
+	/**
+	 * Get all ID
+	 * @return array() $result
+	 * @static
+	 */
 	public static function getAllID(){ // use in php
 		$result = self::$InfoID;
 		if(!$result){

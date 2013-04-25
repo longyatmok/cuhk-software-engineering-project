@@ -10,7 +10,7 @@ var Room = require('../shared/Room');
 
 
 /**
- * server side msg to return room status
+ * Server side response to return room status to client
  * @constructor
  * @this {SM_Room_Status}
  * @param data 

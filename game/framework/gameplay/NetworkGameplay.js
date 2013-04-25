@@ -1,11 +1,4 @@
-/**
- * NetworkGameplay (Abstract Class) inherited from NetworkGameplay
- * 
- * @constructor
- * @this {NetworkGameplay}
- * @param {region,
- *            opts}
- */
+
 var THREE = require('../../vendor/Three');
 var util = require('../Util');
 var GameObjectManager = require('../GameObjectManager');
@@ -21,14 +14,12 @@ var SM_Game_State = require('../../modules/game/client/SM_Game_State');
 var RoomModule = require('../../modules/room/client/module');
 var AuthModule = require('../../modules/auth/client/module');
 /**
- * 
+ * NetworkGameplay (Abstract Class) inherited from NetworkGameplay
  * 
  * @constructor
  * @this {NetworkGameplay}
- * @param region
- *            Region
- * @param opts
- *            Options Object
+ * @param {region,
+ *            opts}
  */
 var NetworkGameplay = function(region, opts) {
 	this.opts = World.extend({

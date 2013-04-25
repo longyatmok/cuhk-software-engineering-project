@@ -1,4 +1,8 @@
 <?php
+/**
+ * script of web page
+ */
+
 //header("Content-Type: text/javascript");
 require_once('Init.php');
 if($Account->login()){

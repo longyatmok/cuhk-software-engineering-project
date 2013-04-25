@@ -1,3 +1,6 @@
+/**
+ * Reload room list
+ */
 function reloadRoomList(){
 document.querySelector('#timeRoom .roomList').innerHTML='';
   if(Game.roomlist instanceof Object && Game.roomlist.free instanceof Object){
@@ -8,6 +11,12 @@ document.querySelector('#timeRoom .roomList').innerHTML='';
 		}
 	}
 }
+
+/**
+ * Add new room
+ * @return {id} room.id
+ * @param world
+ */
 function addRoom(room){
   var newE = document.createElement('div');
   newE.classList.add('room');
@@ -27,12 +36,23 @@ function addRoom(room){
   Game.roomlist.free[room.id].e = newE;
   return room.id;
 }
+
+/**
+ * Enter room
+ * @param id
+ */
 function enterRoom(id){
 	// ask server enter room
 	console.log("enter room "+id);
 	game.modules['Room-Module'].joinRoom({'id':id});
 	
 }
+
+/**
+ * Render room on GUI
+ * @param id
+ * @param room
+ */
 function renderRoom(id , room){
 	
 		var roomInfo = room;
@@ -59,6 +79,10 @@ function renderRoom(id , room){
 		showRDiv('room');
 	
 }
+
+/**
+ * Clear room
+ */
 function clearRoom(){
   var e = document.getElementById('room');
   var people = e.querySelectorAll('.people');
@@ -73,6 +97,12 @@ function clearRoom(){
 		
   }
 }
+
+/**
+ * Change room
+ * @param id
+ * @param changeInfo
+ */
 function changeRoom(id, changeInfo){ // change Info = { 'title': 'str', 'people' : {user_id:{'user_id':int, 'username':String, 'ready':boolean}}}
   var room = Game.roomList.free[id];
 	!!changeInfo.title && (room.title = changeInfo.title) && (room.e.querySelector('.roomTitle').textContent = changeInfo.title);
@@ -99,15 +129,31 @@ function changeRoom(id, changeInfo){ // change Info = { 'title': 'str', 'people'
 		}
 	}
 }
+
+/**
+ * Delete all room
+ */
 function delAll(){
 	var e = document.querySelector('#timeRoom .roomList').innerHTML='';
 }
+
+/**
+ * Delete room
+ * @param isSpeed
+ * @param id
+ * throws
+ */
 function delRoom(isSpeed, id){
   try{
     document.querySelector('#timeRoom .roomList').removeChild(Game.roomList.free[id].e);
     delete Game.roomList.free[id];
   }catch(e){}
 }
+
+/**
+ * Create room
+ * @param mode
+ */
 function newRoom(mode){
 	game.modules['Room-Module'].newRoom({region_id:'test2'});
 //	if(room = askServerToCreateRoom()){

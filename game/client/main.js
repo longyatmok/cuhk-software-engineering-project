@@ -1,3 +1,8 @@
+/**
+ * main to initialize GameCore
+ * @constructor
+ */
+
 var $ = require('../vendor/jquery');
 THREE = require('../vendor/Three');
 

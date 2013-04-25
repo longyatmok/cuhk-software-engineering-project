@@ -157,7 +157,6 @@ class Account{
 
 	/**
 	 * Set account
-	 * this {
 	 */
 	private function setSession(){
 		$_SESSION['uid'] = $this->uid;
@@ -269,7 +268,7 @@ class Account{
 	/**
 	 * Get account
 	 * @param $uid
-	 * @return $result array
+	 * @return array $result
 	 */
 	private function getAccount($uid){
 		$isExist = false;

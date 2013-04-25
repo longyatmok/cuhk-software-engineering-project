@@ -99,12 +99,23 @@ GameObjectManager.prototype.dispose = function(dt) {
     return this;
 };
 
+/**
+ * Boilerplate GameObject
+ * @this {GameObjectManager}
+ */
+
 GameObjectManager.prototype.boilerplate = function() {
     // define Boilerplate Class
     this.add("__boilerplate_cube", new BoilerplateCube());
 };
 
 module.exports = GameObjectManager;
+
+/**
+ * BoilerplateCube
+ * @contructor
+ * @this {BoilerplateCube}
+ */
 
 BoilerplateCube = function() {
     this.geometry = new THREE.CubeGeometry(2, 2, 2);
@@ -116,6 +127,11 @@ BoilerplateCube = function() {
 };
 
 util.inherits(BoilerplateCube, GameObject);
+
+/**
+ * BoilerplateCube update
+ * @this {BoilerplateCube}
+ */
 
 BoilerplateCube.prototype.update = function() {
     this.rotation.x += 0.02;

@@ -11,7 +11,7 @@ var AbstractConnection = require('../../../framework/net/client/AbstractConnecti
 
 
 /**
- * Client Message on the client for login
+ * Client Message send to server for login
  * @constructor
  * @this {CM_Login}
  * @param info 

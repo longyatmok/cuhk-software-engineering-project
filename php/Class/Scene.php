@@ -1,8 +1,24 @@
 <?php
+
+/**
+ * Scene of game
+ */
+
 class Scene{
+
+	/**
+	 * Data of Scene
+	 */
 	const TABLE = 'scene_setting';
 	private static $Info = false;
 	private static $InfoID = false;
+
+
+	/**
+	 * Get info
+	 * @return array() self::$Info
+	 * @static
+	 */
 	public static function getInfo(){ // use in javascript
 		$result = self::$Info ;
 		if(!$result){
@@ -16,6 +32,12 @@ class Scene{
 		}
 		return self::$Info;
 	}
+
+	/**
+	 * @static
+	 * Get all ID
+	 * @return array() $result
+	 */
 	public static function getAllID(){ // use in php
 		$result = self::$InfoID ;
 		if(!$result){

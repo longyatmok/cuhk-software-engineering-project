@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 /**
- * Client side msg for room join by other player
+ * Client side request to server for room join by other player
  * @constructor
  * @this {CM_Room_Join}
  * @param data 

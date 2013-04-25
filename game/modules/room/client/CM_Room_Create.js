@@ -8,7 +8,7 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
 /**
- * Client side msg for room creation
+ * Client side request to server for room creation
  * @constructor
  * @this {CM_Room_Create}
  * @param data 

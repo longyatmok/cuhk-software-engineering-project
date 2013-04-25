@@ -9,6 +9,7 @@ var io = require('../../../vendor/socket.io-client');
  * @constructor
  * @this {ServerMessage}
  * @param data 
+ * @return {instance} Connection.instance
  */
 var ServerMessage = function(data) {
     this.__defineGetter__("connection", function(){

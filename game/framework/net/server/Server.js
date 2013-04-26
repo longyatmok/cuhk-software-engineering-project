@@ -41,8 +41,8 @@ var Server = function(opts) {
 		 * the database config should be save to another file
 		 */
 host : '127.0.0.1',
-user : 'site',
-password : 'sitepassword',
+user : 'csci3100',
+password : '0102030405',
 database : 'totheskies'
 		});
 	this.conn.connect(function(err) {

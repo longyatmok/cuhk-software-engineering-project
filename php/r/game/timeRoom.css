@@ -25,19 +25,9 @@
   position:relative;
   height:100%;
 }
-#timeRoom .background .speedRoom{
-  position:absolute;
-  bottom:13%;
-  height:7%;
-  right:3%;
-}
-#timeRoom .background .speedRoom img{
-  position:relative;
-  height:100%;
-}
 #timeRoom .background .createRoom{
   position:absolute;
-  bottom:23%;
+  bottom:13%;
   height:7%;
   right:3%;
 }
@@ -67,7 +57,7 @@
 	position:absolute;
 	opacity:0.4;
 	color:#000;
-	z-index:1;
+	z-index:0;
 	background:RGBA(0,0,0,0.5);
 	top:0;
 	height:100%;
@@ -92,6 +82,7 @@
 	margin-left:0.333333%;
 	margin-bottom:0.333333%;
   background-color:RGBA(0,0,0,0.5);
+	z-index:1;
 }
 #timeRoom .background .rLDIV .roomList .room .sceneImg{
   position:relative;
@@ -125,6 +116,5 @@
   height:66%;
   width:100%;
   bottom:0px;
-	z-index:2;
 	font-size:36px;
 }

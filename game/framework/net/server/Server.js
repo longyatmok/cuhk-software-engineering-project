@@ -22,8 +22,8 @@ var Server = function(opts) {
 			'free' : [],
 			'speed' : []
 	};
-	this.roomIdCounter = 10;
-	var demoRoom = new Room({
+	this.roomIdCounter = 0;
+/*	var demoRoom = new Room({
 				id: 0,
 				region : 'test2',// 'demo-one',
 				gameplay : 'network',// 'practice',//free' ,
@@ -32,6 +32,7 @@ var Server = function(opts) {
 	
 	this.roomList.free [ 0 ] = demoRoom;
 	this.roomList.free [ 0 ] .channel = io.sockets.in(demoRoom.getChannelName());
+*/	
 	this.playerList = [];
 	this.socketToplayerList = [];
 	this.conn = mysql.createConnection({
@@ -77,7 +78,7 @@ database : 'totheskies'
 				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 					room.status = Room.STATUS_WAITING; 
 				
-					delete server.roomList[ room.id];
+					delete server.roomList.free[ room.id];
 					delete room;
 				}
 			
@@ -121,7 +122,7 @@ database : 'totheskies'
 						room.removePlayer(room.players[i]);
 					}
 					
-					delete server.roomList[ room.id];
+					delete server.roomList.free[ room.id];
 					delete room;
 					return;
 				}
@@ -157,7 +158,9 @@ database : 'totheskies'
 				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 					room.status = Room.STATUS_WAITING; 
 				}
-				
+				if(room.noOfPlayer() < 1){
+					delete server.roomList.free[room.id];
+				}
 			// io.sockets.in(room.getChannelName()).emit('SM_Room_Status',room);
 			}			
 		
@@ -296,7 +299,7 @@ database : 'totheskies'
 		 */
 		socket.on('CM_RoomList_Request',function(data){
 			if(!socket.player) return;
-			 console.log(server.roomList);
+//			 console.log(server.roomList);
 			socket.emit('SM_RoomList_Response',server.roomList);
 			return;
 			var result = server.roomList.free [ 0 ].addPlayer( socket.player );

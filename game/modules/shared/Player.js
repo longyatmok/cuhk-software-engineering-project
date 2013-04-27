@@ -41,8 +41,9 @@ Player.prototype.leaveRoom = function(){
 	}
 };
 /**
- * remove player from room
+ * return player current height
  * @this {Player}
+ * @return player height
  */
 Player.prototype.getHeight = function(){
 	return this.height == null ? 0 : this.height;

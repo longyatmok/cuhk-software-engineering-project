@@ -3,7 +3,7 @@
  * script of web page
  */
 
-//header("Content-Type: text/javascript");
+header("Content-Type: text/javascript");
 require_once('Init.php');
 if($Account->login()){
   if(!isset($_GET['stat'])){
@@ -18,7 +18,7 @@ Game={
 ?>
 Game.stat = {
   'self' : {
-    'history' : <?php echo json_encode(Stat::getHistory());?>,
+    'history' : <?php echo json_encode(Stat::getHistory(), JSON_NUMERIC_CHECK);?>,
     'rank' : <?php echo json_encode(Stat::getSelfRankList());?>,
     'height':<?php echo json_encode(Stat::getSelfHeightList());?>,
     'time':<?php echo json_encode(Stat::getSelfTimeList());?>,

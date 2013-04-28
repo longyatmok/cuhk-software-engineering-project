@@ -12,7 +12,7 @@
 #rank .background{
 	position:absolute;
 	top:15%;
-	height:80%;
+	height:85%;
 	width:100%;
 }
 #rank .background .back{
@@ -27,18 +27,18 @@
 	vertical-align:middle;
 }
 #rank .background>table .setSize{
-	height:90%;
+	height:95%;
 	width:85%;
 	margin:auto;
 	overflow:auto;
 }
-#rank .stat#history{
-	float:left;
-	height:100%;
-	width:50%;
-}
 #rank .stat{
 	float:left;
-	height:100%;
-	width:25%;
+	height:99%;
+	width:33%;
+}
+#rank .stat .halfHeight{
+	float:left;
+	height:50%;
+	width:100%;
 }

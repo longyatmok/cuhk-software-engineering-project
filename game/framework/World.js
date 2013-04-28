@@ -7,6 +7,7 @@ THREE.TrackballControls = require('../vendor/THREE/TrackballControls');
 THREEx.WindowResize = require('../vendor/THREEx/WindowResize');
 var Physijs = require('../vendor/Physi');
 var SceneManager = require('./SceneManager');
+var AssetManager = require('./AssetManager');
 
 var GameObjectManager = require('./GameObjectManager');
 var util = require('util');

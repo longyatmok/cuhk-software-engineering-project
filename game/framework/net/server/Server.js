@@ -22,8 +22,8 @@ var Server = function(opts) {
 			'free' : [],
 			'speed' : []
 	};
-	this.roomIdCounter = 10;
-	var demoRoom = new Room({
+	this.roomIdCounter = 0;
+/*	var demoRoom = new Room({
 				id: 0,
 				region : 'test2',// 'demo-one',
 				gameplay : 'network',// 'practice',//free' ,
@@ -32,6 +32,7 @@ var Server = function(opts) {
 	
 	this.roomList.free [ 0 ] = demoRoom;
 	this.roomList.free [ 0 ] .channel = io.sockets.in(demoRoom.getChannelName());
+*/	
 	this.playerList = [];
 	this.socketToplayerList = [];
 	this.conn = mysql.createConnection({
@@ -41,8 +42,8 @@ var Server = function(opts) {
 		 * the database config should be save to another file
 		 */
 host : '127.0.0.1',
-user : 'site',
-password : 'sitepassword',
+user : 'csci3100',
+password : '0102030405',
 database : 'totheskies'
 		});
 	this.conn.connect(function(err) {
@@ -77,7 +78,7 @@ database : 'totheskies'
 				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 					room.status = Room.STATUS_WAITING; 
 				
-					delete server.roomList[ room.id];
+					delete server.roomList.free[ room.id];
 					delete room;
 				}
 			
@@ -97,17 +98,34 @@ database : 'totheskies'
 			if(!socket.player) return;
 			if(!socket.player.room) return;
 			if(socket.player.room.status == Room.STATUS_PLAYING){
+				socket.player.height = data.position[1];
 				if (data.position[1] >= 400.0) { // reach the goal!
 					var room = socket.player.room;
 					console.log("reach the goal!");
 					socket.player.room.status = Room.STATUS_RESULT;
 					socket.player.room.endTime = Date.now();
-					
-					
-					
-					server.conn.query("INSERT INTO `record` (`record_time`, `room_create_time`, `uid`, `roomid`, `scene_id`, `character_id`, `mode`, `player_num`, `height`, `time`, `score`, `rank`) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, '1', '1', '1', 'free',?, '0', ?, '0', '1')", [socket.player.id,room.noOfPlayer(),  socket.player.room.endTime - socket.player.room.startTime], function(err, results) {
-	
+					var resultList = [],j;
+					for ( var i in room.players) {
+						if (room.players[i] instanceof Player) {
+							for(j=0;j<8;j++){
+								if(resultList.length <= j){
+									resultList[j]=room.players[i];
+									break;
+								}
+								if(room.players[i].getHeight() > resultList[j].getHeight()){
+									resultList.splice(j,0,room.players[i]);
+									break;
+								}
+							}
+				
+						}
+					}
+					for(j=0;j<resultList.length;j++){
+						server.conn.query("INSERT INTO `record` (`record_time`, `room_create_time`, `uid`, `roomid`, `scene_id`, `character_id`, `mode`, `player_num`, `height`, `time`, `score`, `rank`) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, '1', '1', 'free',?, ?, ?, '0', ?)", [resultList[j].id,room.id,room.noOfPlayer(),resultList[j].getHeight() , socket.player.room.endTime - socket.player.room.startTime, j+1], function(err, results) {
+//						console.log(err);
+//						console.log(results);
 					});
+					}
 					
 					io.sockets.in(room.getChannelName()).emit('SM_Game_State',{
 						id:socket.player.id,
@@ -121,11 +139,10 @@ database : 'totheskies'
 						room.removePlayer(room.players[i]);
 					}
 					
-					delete server.roomList[ room.id];
+					delete server.roomList.free[ room.id];
 					delete room;
 					return;
 				}
-	
 			socket.broadcast.to( socket.player.room.getChannelName() ).emit('SM_Game_State',{
 				id:socket.player.id,
 				position:data.position,
@@ -157,7 +174,9 @@ database : 'totheskies'
 				if(typeof room != "undefined" && room.noOfPlayer() < 2 && room.status == Room.STATUS_PLAYING){
 					room.status = Room.STATUS_WAITING; 
 				}
-				
+				if(room.noOfPlayer() < 1){
+					delete server.roomList.free[room.id];
+				}
 			// io.sockets.in(room.getChannelName()).emit('SM_Room_Status',room);
 			}			
 		
@@ -296,7 +315,7 @@ database : 'totheskies'
 		 */
 		socket.on('CM_RoomList_Request',function(data){
 			if(!socket.player) return;
-			 console.log(server.roomList);
+//			 console.log(server.roomList);
 			socket.emit('SM_RoomList_Response',server.roomList);
 			return;
 			var result = server.roomList.free [ 0 ].addPlayer( socket.player );

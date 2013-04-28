@@ -11,6 +11,7 @@ var Player = function( data ){
 	this.socket_ = data.socket;
 	this.room = null;
 	this.ready = data.ready ? data.ready : false;
+	this.height = null;
 };
 
 
@@ -20,7 +21,7 @@ var Player = function( data ){
  * @return {info} player info
  */
 Player.prototype.toJSON = function(){
-	return { username:this.username , user_id: this.id , ready : this.ready};
+	return { username:this.username , user_id: this.id , ready : this.ready, height: this.height};
 };
 
 
@@ -38,6 +39,14 @@ Player.prototype.leaveRoom = function(){
 		room.dispose();
 		delete room;
 	}
+};
+/**
+ * return player current height
+ * @this {Player}
+ * @return player height
+ */
+Player.prototype.getHeight = function(){
+	return this.height == null ? 0 : this.height;
 };
 
 

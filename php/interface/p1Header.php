@@ -7,7 +7,7 @@
 <script type="text/javascript" src="script.php"></script>
 <script type="text/javascript">
 
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart', 'table', 'gauge']});
+      // Load the Visualization API and the piechart package.//'corechart', 
+      google.load('visualization', '1.0', {'packages':['corechart','table', 'gauge']});
 
     </script>

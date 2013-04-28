@@ -6,7 +6,7 @@
           <td class="scaleBg" style="background-image:url(img/game/modeSelect/modeSelect.png)"></td>
           <td class="right" rowspan="3">
             <div id="modeselect_rank"  class="scaleBg bgCenter"  style="background-image:url(img/game/modeSelect/rank.png)">
-              <img class="link" src="img/t1x1.png" onclick="showRDiv('rank')">
+              <img class="link" src="img/t1x1.png" onclick="/*loadStat();*/drawGraph();showRDiv('rank')">
             </div>
           </td>
         </tr>

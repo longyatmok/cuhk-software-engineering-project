@@ -1,5 +1,7 @@
 CSCI3100 (2012 Spring) Introduction to Software Engineering at The Chinese University of Hong Kong   
 A WebGL and WebSocket 3D Web Game   
+A proof-of-concept WebGL game using Three.js and node-browserify.
+Due to time limitation, server-side (written in node.js) is not well written.
 
 Requirements   
 * Apache   

@@ -15,28 +15,50 @@ var SceneManager = function(opts) {
 
 };
 
+/**
+ * Scene Manager add
+ * @param name, scene, cameras
+ * @this {SceneManager}
+ */
 SceneManager.prototype.add = function(name, scene, cameras) {
     this.scenes[name] = {
 	"scene" : scene,
 	"cameras" : cameras
     };
 };
-
+/**
+ * Scene Manager add
+ * @param name
+ * @this {SceneManager}
+ * @return {array} this.scenes[name]
+ */
 SceneManager.prototype.get = function(name) {
     return this.scenes[name];
 };
-
+/**
+ * Activate SceneManager
+ * @param name
+ * @this {SceneManager}
+ * @return {bool} this.active
+ */
 SceneManager.prototype.setActive = function(name) {
     this.activeScene = name;
     this.active = this.scenes[name];
     return this.active;
 
 };
-
+/**
+ * Scene Manager render
+ * @this {SceneManager}
+ * @return {SceneManager} this
+ */
 SceneManager.prototype.render = function() {
     return this;
 };
-
+/**
+ * Scene Manager boilerplate
+ * @this {SceneManager}
+ */
 SceneManager.prototype.boilerplate = function() {
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth

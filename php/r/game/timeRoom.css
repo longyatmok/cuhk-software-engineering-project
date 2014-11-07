@@ -1,0 +1,120 @@
+#timeRoom .title{
+  position:absolute;
+  margin-left:15%;
+  width:100%;
+  top:2%;
+  height:13%;
+  background-image:url(../../img/game/modeSelect/online.png);
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+#timeRoom .background{
+  position:absolute;
+  top:15%;
+  height:80%;
+  width:100%;
+}
+#timeRoom .background .back{
+  position:absolute;
+  bottom:3%;
+  height:7%;
+  right:3%;
+}
+#timeRoom .background .back img{
+  position:relative;
+  height:100%;
+}
+#timeRoom .background .createRoom{
+  position:absolute;
+  bottom:13%;
+  height:7%;
+  right:3%;
+}
+#timeRoom .background .createRoom img{
+  position:relative;
+  height:100%;
+}
+
+
+#timeRoom .background>table{
+  height:100%;
+  width:100%;
+  vertical-align:middle;
+}
+#timeRoom .background>table td{
+  height:100%;
+  width:100%;
+  vertical-align:middle;
+}
+#timeRoom .background .rLDIV{
+	position:relative;
+	width:70%;
+	height:90%;
+	margin:auto;
+}
+#timeRoom .background .rLDIV .rLDB{
+	position:absolute;
+	opacity:0.4;
+	color:#000;
+	z-index:0;
+	background:RGBA(0,0,0,0.5);
+	top:0;
+	height:100%;
+	width:100%;
+	text-align:center;
+	vertical-align:middle;
+	font-size:medium;
+}
+#timeRoom .background .rLDIV .roomList{
+  position:absolute;
+	height:100%;
+	width:100%;
+  margin:auto;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+#timeRoom .background .rLDIV .roomList .room{
+  position:relative;
+  float:left;
+  height:24.666666%;
+  width:33%;
+	margin-left:0.333333%;
+	margin-bottom:0.333333%;
+  background-color:RGBA(0,0,0,0.5);
+	z-index:1;
+}
+#timeRoom .background .rLDIV .roomList .room .sceneImg{
+  position:relative;
+  float:left;
+  height:100%;
+  width:33%;
+  background-color:RGBA(255,255,255,0.7);
+}
+#timeRoom .background .rLDIV .roomList .room .sceneImg img{
+  height:100%;
+}
+#timeRoom .background .rLDIV .roomList .room .roomInfo{
+  position:relative;
+  float:right;
+  height:100%;
+  width:66%;  
+  background-color:RGBA(255,255,255,0.7);
+}
+#timeRoom .background .rLDIV .roomList .room .roomInfo .id{
+	display:none;
+}
+#timeRoom .background .rLDIV .roomList .room .roomInfo .roomTitle{
+  position:absolute;
+  height:33%;
+  width:100%;
+  top:0px;
+	font-size:36px;
+}
+#timeRoom .background .rLDIV .roomList .room .roomInfo .roomStatus{
+  position:absolute;
+  height:66%;
+  width:100%;
+  bottom:0px;
+	font-size:36px;
+}

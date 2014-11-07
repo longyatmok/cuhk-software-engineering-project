@@ -7,9 +7,14 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
-
+/**
+ * Client side request to server for room join by other player
+ * @constructor
+ * @this {CM_Room_Join}
+ * @param data 
+ */
 var CM_Room_Join = function (data) {
-    this.name = 'CM_Room_Join';
+    this.NAME = 'CM_Room_Join';
     this.data = data;
     this.connection = AbstractConnection.instance;
 };

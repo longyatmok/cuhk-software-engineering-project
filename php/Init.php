@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * init state of web server
+ */
 // browser cache control
 header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' ); 
 header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . ' GMT' ); 
@@ -13,11 +16,19 @@ header( 'Pragma: no-cache' );
 require_once('CONFIG.php');
 // load config file end
 
-// load class
-require_once('Account.php');
-require_once('Session.php');
-// load class end
+// load function
+	$files = glob('functions/*');
+	foreach( $files as $file){
+		require_once($file);
+	}
+// load function end
 
+// load class
+	$files = glob('Class/*');
+	foreach( $files as $file){
+		require_once($file);
+	}
+// load class end
 
 // session control
 $Session = new Session();
@@ -50,17 +61,13 @@ if(isset($_GET['provider']) && !!$_GET['provider']){
 	try{
 		$SocialProvider = $SocialCore->exchangeAccessToken($_GET['code'], $SocialCore->getProvider($_GET['provider']));
 	}catch(Exception $e){
-//		exit( $e->getMessage() );
+		exit( $e->getMessage() );
 	}
 	$SocialCore->storage->set(SocialGateway_Core::STORAGE_Token, $SocialProvider); //A simple SESSION Storage
+	
+	die('<script>location="?";</script>');
 }
 
 // social networking service get access token end
 
-
-// load require function
-	$files = glob('functions/*');
-	foreach( $files as $file){
-		require_once($file);
-	}
-// load require function end
+$Account = new Account();

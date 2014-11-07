@@ -1,5 +1,8 @@
 var _util = require('util');
 var util = {};
+/**
+ * a helper class of useful functions
+ */
 util.ready = function(func) {
     window.addEventListener("load", function load(event) {
 	window.removeEventListener("load", load, false);

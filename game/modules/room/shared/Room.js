@@ -1,5 +1,12 @@
-﻿var Player = require('../../shared/Player');
+﻿// room class
+var Player = require('../../shared/Player');
 
+/**
+ * room class shared on both client and server
+ * @constructor
+ * @this {Room}
+ * @param data 
+ */
 var Room = function(data) {
 	this.id = data.id;
 	this.seed = data.seed ? data.seed : (new Date()).getTime();
@@ -16,8 +23,14 @@ var Room = function(data) {
 	this.gameplay = data.gameplay;
 	
 	this.channel = null;
+	this.startTime = null;
+	this.endTime = null;
 	this.status = data.status ? data.status: Room.STATUS_WAITING;
 };
+
+/**
+ * room status
+ */
 Room.STATUS_WAITING = 'waiting';
 Room.STATUS_PLAYING = 'playing';
 Room.STATUS_RESULT = 'result';
@@ -28,18 +41,31 @@ Room.prototype.toJSON = function() {
 		region : this.region,
 		gameplay : this.gameplay,
 		seed : this.seed,
-		status: this.status
+		status: this.status,
+		startTime : this.startTime,
+		endTime : this.endTime
 	};
 };
-
+/**
+ * return if room is ready for join
+ * @this {Room}
+ * @return {boolean} room available or not
+ */
 Room.prototype.isAllReady = function(){
 	if(this.noOfPlayer() == 1) return false;
 	for ( var i in this.players) {
-		if (this.players [ i].ready == false) return false;
+		if (this.players[ i ].ready == false) return false;
 	}
 
 	return true;
 }
+
+/**
+ * add player to room
+ * @this {Room}
+ * @param player
+ * @return {boolean} can player be added or not
+ */
 Room.prototype.addPlayer = function(player) {
 	if(this.noOfPlayer() >= 8 || this.status == Room.STATUS_PLAYING){
 		return false;
@@ -53,42 +79,79 @@ Room.prototype.addPlayer = function(player) {
 	return true;
 };
 
+/**
+ * return no. of player in room
+ * @this {Room}
+ * @return {number} length
+ */
 Room.prototype.noOfPlayer = function() {
 	return Object.keys(this.players).length;
 }
+
+/**
+ * remove selected player in room
+ * @this {Room}
+ * @param player
+ * @return {boolean} player removed or not
+ */
 Room.prototype.removePlayer = function(player) {
 	if (!player instanceof Player) {
 		player = new Player(player);
 	}
-	console.log(this.players);
-	if (this.players[player.id] != undefined) {
+	player.socket_.leave( this.getChannelName());
+	
+    //console.log(this.players);
 
-		this.players[player.id].room = null;
-		delete this.players[player.id];
-		console.log("remove player");
-		console.log(this.players);
+    // remove player success
+	if (typeof this.players[player.id] != "undefined") {
+		var p = this.players[player.id];
+		p.ready = false;
+		
+		this.players[p.id].room = null;
+		delete 	this.players[p.id];
+		console.log("removed a player from room #"+this.id+" - "+p.username);
+//		console.log(p);
 		return true;
 	}
 
+    // remove player fail
 	return false;
 };
 
-
+/**
+ * game start for the room
+ */
 Room.prototype.start = function() {
 
 };
 
+/**
+ * game quit for the room
+ */
 Room.prototype.quit = function() {
 };
 
+
+/**
+ * game refresh for room status
+ */
 Room.prototype.update = function() {
 
 };
 
+
+/**
+ * delete room
+ */
 Room.prototype.dispose = function() {
 	console.log("deleting room id :" + this.id);
 };
 
+
+/**
+ * return room id
+ * @return {number} room id
+ */
 Room.prototype.getChannelName = function(){
 	return "room."+this.id;
 }

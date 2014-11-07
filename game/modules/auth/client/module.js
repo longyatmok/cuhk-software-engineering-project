@@ -1,3 +1,4 @@
+// module of client and server message in authentication
 var THREE = require('../../../vendor/Three');
 var $ = require('../../../vendor/jQuery');
 var util = require('../../../framework/Util');
@@ -13,8 +14,18 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 // server messages
 var SM_Login_Response = require('./SM_Login_Response');
 var CM_Login = require('./CM_Login');
+
+/**
+ * Initialization module of auth process
+ * 
+ * @constructor
+ * @this {CM_LAuthModuleogin}
+ * @param world
+ */
 var AuthModule = function(world) {
 	world.connection.register(SM_Login_Response);
+	this.user = null;
+	// GUI of the process
 	world.overlay
 			.add(
 					AuthModule.NAME,
@@ -30,32 +41,50 @@ var AuthModule = function(world) {
 							+ '</div>'
 
 			);
+
+	// data exchange
 	$('#' + AuthModule.NAME + '_demo_button').click(function() {
 		console.log("demo session");
 		var username = window.prompt("Your Username", "DEMO_USER");
 
+		//a demo account on early development stage
 		var cm = new CM_Login({
-			id : "0",
-			username : username,
-			token : 'DEMO_SESSION',
-			type : 'DEMO_SESSION'
+			id : 'UNDEFINED@Facebook',
+			token : 'ibj1f52cvcpem06dm065skjcq2',
+			type : 'account'
 		});
 		cm.emit();
 	});
 
-	world.connection.on(world.connection.ON_CONNECT,function(data){
-		world.overlay.changeState('title',{msg:"Connected. Initializing the game."});
+	
+
+	world.connection.on(world.connection.ON_CONNECT, function(data) {
+		world.overlay.changeState('title', {
+			msg : "Connected. Initializing the game."
+		});
 		setTimeout(function() {
-			world.overlay.changeState(AuthModule.NAME);
+			if (typeof showRDiv != "undefined") {
+				world.overlay.visible(false);
+				showRDiv('login');
+				if(typeof  _loginCallback !="undefined"){
+					 _loginCallback();
+				}
+			} else {
+				world.overlay.changeState(AuthModule.NAME);
+			}
 		}, 1000);
 	});
 
-	
 	console.log("auth module loaded");
 };
 util.inherits(AuthModule, Module);
 AuthModule.NAME = "Auth-Module";
 
+/**
+ * Auth login
+ * @param user_id
+ * @param user_token
+ */
 AuthModule.prototype.login = function(user_id, user_token) {
 	var cm = new CM_Login({
 		id : user_id,

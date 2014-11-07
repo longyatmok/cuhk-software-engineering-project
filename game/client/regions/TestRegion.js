@@ -1,8 +1,15 @@
-
+// a testing region
 var THREE = require('../../vendor/Three');
 var util = require('../../framework/Util');
 var GameObjectManager = require('../../framework/GameObjectManager');
 var Region = require('../../framework/Region');
+
+
+/**
+ * the first region used to test Region Class
+ * @constructor
+ * @this {TestRegion}
+ */
 var TestRegion = function() {
     TestRegion.super_.call(this,{
 	id : 'test-region'

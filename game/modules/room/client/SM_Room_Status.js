@@ -8,6 +8,13 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 var Room = require('../shared/Room');
 
+
+/**
+ * Server side response to return room status to client
+ * @constructor
+ * @this {SM_Room_Status}
+ * @param data 
+ */
 var SM_Room_Status = function(data) {
 	this.name = 'SM_Room_Status';
 	if(data.error != undefined){
@@ -26,7 +33,8 @@ var SM_Room_Status = function(data) {
 
 	if(this.room.noOfPlayer() == 1 && this.room.status == Room.STATUS_PLAYING){
 		World.instance.setRegion('title-screen','empty');
-		World.instance.overlay.changeState(SM_Room_Status.ModeSelection);
+		showRDiv('modeSelect');
+		//World.instance.overlay.changeState(SM_Room_Status.ModeSelection);
 		delete module.room;
 		return;
 	}

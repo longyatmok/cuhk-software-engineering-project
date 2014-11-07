@@ -1,4 +1,4 @@
-//abstract game class
+
 var jQuery = require('../vendor/jQuery');
 var THREE = require('../vendor/Three');
 var THREEx = THREEx || {};
@@ -8,12 +8,13 @@ THREEx.WindowResize = require('../vendor/THREEx/WindowResize');
 var Physijs = require('../vendor/Physi');
 var SceneManager = require('./SceneManager');
 var AssetManager = require('./AssetManager');
+
 var GameObjectManager = require('./GameObjectManager');
 var util = require('util');
 
 /**
- * Three.js World 
- * @
+ * Three.js Virtual World 
+ * @author CSCI3100 2012-2013 Group 6
  * @see http://mrdoob.github.com/three.js/docs/56/
  */
 var World = function(opts) {
@@ -91,7 +92,7 @@ var World = function(opts) {
 World.instance = null;
 World.opts = {};
 
-World.ready = function(func) {
+World.prototype.ready = World.ready = function(func) {
 	window.addEventListener("load", function load(event) {
 		window.removeEventListener("load", load, false);
 		func();
@@ -99,7 +100,9 @@ World.ready = function(func) {
 };
 World.extend = jQuery.extend;
 
-// boilerplate
+/*
+ * boilerplate mode (to test the environment)
+ */ 
 World.prototype.boilerplate = function() {
 
 	this.scenes.boilerplate();
@@ -123,14 +126,22 @@ World.prototype.boilerplate = function() {
 	return this;
 };
 
+/**
+ * define the region used now and the gameplay
+ * @protected 
+ */
 World.prototype.setRegion = function( region , c , opts){
+	delete this.activeRegion;
+	delete this.gameplay;
 	this.activeRegion = new this.regions [ region ]( opts );
 	this.gameplay = new this.gameplayClasses [ c ]( this.activeRegion , opts );
-	//this.gameplay.respawn();
+	this.gameplay.initialize();
+	this.gameplay.respawn();
 }
 
 /**
  * Initialization code goes here
+ *
  */
 World.prototype.initialize = function() {
 	this.initialized = true;
@@ -163,7 +174,7 @@ World.prototype.pause = function() {
 World.prototype.stop = function() {
 	this.pause();
 	this.initialized = false;
-	// TODO free resource
+	
 	return this;
 };
 
@@ -172,28 +183,41 @@ World.prototype.render = function() {
 	if (this.gameplay != undefined)
 		this.gameplay.render(Date.now() - this.time);
 
-	this.time = Date.now();
+	
 	this.renderer.clear();
 	this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
 	this.renderer.render(this.gameplay.scene, this.gameplay.camera);
-	/*  this.gameobjects.render(1 / 60);
-	  this.scenes.render(1 / 60);
+	if (this.gameplay != undefined){
+		this.gameplay.renderAfter(this.renderer,Date.now() - this.time);
+	}
+	this.time = Date.now();
 
-	  this.renderer.clear();
-	  this.renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
-	  this.renderer.render(this.scenes.active.scene,this.scenes.active.cameras.main);
-	 */
 	// override this method to add other camera
 };
 
 World.prototype.onWindowResize = function() {
-	/*
-	 this.scenes.active.cameras.main.aspect = window.innerWidth
-	 / window.innerHeight;
-	 this.scenes.active.cameras.main.updateProjectionMatrix();*/
 	this.renderer.setSize(window.innerWidth, window.innerHeight);
-	// this.controls.handleResize();
 	this.render();
-}
+};
 
+//Shims for "startsWith", "endsWith", and "trim" for browsers where this is not yet implemented
+//not sure we should have this, or at least not have it here
+
+//http://stackoverflow.com/questions/646628/javascript-startswith
+//http://stackoverflow.com/questions/498970/how-do-i-trim-a-string-in-javascript
+//http://wiki.ecmascript.org/doku.php?id=harmony%3astring_extras
+
+String.prototype.startsWith = String.prototype.startsWith || function ( str ) {
+
+	return this.slice( 0, str.length ) === str;
+
+};
+
+String.prototype.endsWith = String.prototype.endsWith || function ( str ) {
+
+	var t = String( str );
+	var index = this.lastIndexOf( t );
+	return ( -1 < index && index ) === (this.length - t.length);
+
+};
 module.exports = World;

@@ -6,6 +6,14 @@ var util = require('../Util');
 /* var Game = require('../Game'); */
 var AbstractController = require('./PositionController');
 
+/**
+ * Advanced Vehicle Controller
+ * @constructor
+ * @this {AdvancedController}
+ * @param {object}   gameobject : gameobject
+ *                   camera : camera of player
+ *                   opts : opts of world
+ */
 var AdvancedController = function(gameobject, camera, opts) {
     AdvancedController.super_.call(this, gameobject, util.extend({
 	'keys' : {
@@ -60,6 +68,12 @@ down2 : 86,
 
 };
 util.inherits(AdvancedController, AbstractController);
+
+/**
+ * update controller
+ * @this {AdvancedController}
+ * @param {delta}    delta   
+ */
 AdvancedController.prototype.update = function(delta) {
 	if(!this.enable) return;
     this.movement.set(0, 0, 0);

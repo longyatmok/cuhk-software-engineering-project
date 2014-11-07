@@ -1,0 +1,16 @@
+#changeNickname .background{
+  position:absolute;
+  top:15%;
+  height:70%;
+  width:100%;
+}
+#changeNickname .setMiddle{
+	position:relative;
+	height:100%;
+	width:100%;
+	vertical-align:middle;
+	text-align:center;
+}
+#changeNickname form{
+	zoom:5;
+}

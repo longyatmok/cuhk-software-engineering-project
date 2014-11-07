@@ -7,12 +7,23 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 var RoomModule = require('./module');
-
+/**
+ * Server side response to return room list to client
+ * @constructor
+ * @this {SM_RoomList_Response}
+ * @param data 
+ */
 var SM_RoomList_Response = function (data) {
     this.name = 'SM_RoomList_Response';
-    this.list = data.list;
+
+    Game.roomlist = data;
+    
+    reloadRoomList();
+    console.log(data);
+    showRDiv('timeRoom');
+    console.log("roomlist response");
  //   World.instance.overlay.changeState(RoomModule.RoomList);
-    World.instance.overlay.changeState(SM_RoomList_Response.RoomListState);
+    //World.instance.overlay.changeState(SM_RoomList_Response.RoomListState);
     
 };
 

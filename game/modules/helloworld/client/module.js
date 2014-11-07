@@ -12,6 +12,14 @@ var ServerMessage = require('../../../framework/net/client/ServerMessage');
 // server messages
 var SM_Helloworld = require('./SM_Helloworld');
 
+// GUI to display msg
+
+/**
+ * module and GUI of establishing connection between client and server
+ * @constructor
+ * @this {HelloWorldModule}
+ * @param world 
+ */
 var HelloWorldModule = function(world) {
 	world.connection.register(SM_Helloworld);
 
@@ -20,7 +28,7 @@ var HelloWorldModule = function(world) {
 					'title',
 					'<div class="overlay-center"><img src="ui_im/title.png"><br/><span id="title-msg">Connecting to the game server.</span></p></div>');
 	world.overlay.changeState('title');
-
+    //connection error
 	world.connection
 			.on(
 					world.connection.ON_ERROR,
@@ -32,6 +40,7 @@ var HelloWorldModule = function(world) {
 											msg : "Network error , The game client is unable to gain access to the game server at this time."
 										});
 					});
+    //connection fail
 	world.connection
 			.on(
 					world.connection.ON_DISCONNECT,

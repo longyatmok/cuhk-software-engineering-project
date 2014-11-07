@@ -7,6 +7,12 @@ var io = require('../../vendor/socket.io-client');
 var ClientMessage = require('../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../framework/net/client/ServerMessage');
 
+/**
+ * server side module and GUI of establishing connection between client and server
+ * @constructor
+ * @this {HelloWorldModule}
+ * @param world 
+ */
 var HelloWorldModule = function( world ){
 	world.connection.register( SM_Helloworld );
 	console.log("SM_Helloworld (client)");

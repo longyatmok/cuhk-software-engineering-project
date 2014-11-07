@@ -7,7 +7,12 @@ var ClientMessage = require('../../../framework/net/client/ClientMessage');
 var ServerMessage = require('../../../framework/net/client/ServerMessage');
 var AbstractConnection = require('../../../framework/net/client/AbstractConnection');
 
-
+/**
+ * Client side request for room list info
+ * @constructor
+ * @this {CM_RoomList_Request}
+ * @param mode 
+ */
 var CM_RoomList_Request = function (mode) {
     this.NAME = 'CM_RoomList_Request';
     //TODO

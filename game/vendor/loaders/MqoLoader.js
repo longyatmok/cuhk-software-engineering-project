@@ -1,3 +1,8 @@
+/**
+* load extarnel vendor MqoLoader, MqoModel, etc
+* 
+*/
+
 var THREE = require('../Three');
 var Physijs = require('../Physi');
 var MqoLoader = {};
@@ -27,8 +32,9 @@ var MqoModel = function() {
 	this.material = null;
 };
 
-MqoModel.prototype.parse = function(text) {
-	// オブジェクトをパース
+MqoModel.prototype.parse = function (text) {
+    // オブジェクトをパース
+    // pass object
 	var objectTextList = text.match(/^Object [\s\S]*?^\}/gm);
 
 	for ( var i = 0, len = objectTextList.length; i < len; ++i) {
@@ -39,6 +45,7 @@ MqoModel.prototype.parse = function(text) {
 	}
 
 	// マテリアル
+    // material
 	var materialText = text.match(/^Material [\s\S]*?^\}/m);
 
 	this.material = new MqoMaterial();
@@ -48,7 +55,7 @@ MqoModel.prototype.parse = function(text) {
 }
 
 /**
- * メタセコメッシュ
+ * メタセコメッシュ Metasequoia
  */
 var MqoMesh = function() {
 	this.name = ''; // 名前

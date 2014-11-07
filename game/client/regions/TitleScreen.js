@@ -5,7 +5,13 @@ var GameObject = require('../../framework/gameobjects/GameObject');
 
 var Region = require('../../framework/Region');
 /* The title screen scene */
-var TitleScreen = function() {
+
+/**
+ * Title screen
+ * @constructor
+ * @this {TitleScreen}
+ */
+var TitleScreen = function() { 
 	TitleScreen.super_.call(this, {
 		id : 'title-screen'
 	});
@@ -22,6 +28,12 @@ var TitleScreen = function() {
 };
 util.inherits(TitleScreen, Region);
 
+
+/**
+ * testure and model of the Logo
+ * @constructor
+ * @this {LogoCube}
+ */
 LogoCube = function() {
 	LogoCube.super_.call(this);
 
@@ -37,13 +49,16 @@ LogoCube = function() {
 
 	this.add(new THREE.Mesh(this.geometry, this.material));
 	this.add(new THREE.Mesh(this.geometry, this.material2));
-	this.children[ 1 ].scale.multiplyScalar( 1.01 );
+	this.children[ 1 ].scale.multiplyScalar( 1.01 ); //made wire more visible
 	
 	//LogoCube.super_.call(this, this.geometry, this.material);
 };
 
 util.inherits(LogoCube, THREE.Object3D);
-
+/**
+ * motion of the logo
+ * @this {LogoCube}
+ */
 LogoCube.prototype.update = function() {
 	this.rotation.x += 0.01;
 	this.rotation.y += 0.005;

@@ -1,5 +1,6 @@
 /**
  * Client-side script builder
+ * build script
  */
 var fs = require('fs');
 
@@ -14,6 +15,7 @@ exports.build = function() {
     var DEV = false;
     var infile = "./game/client/main.js";
     var outfile = "./public/js/bundle.js";
+    var outfile2 = "./php/r/game/bundle.js";
     var useClosure = false;
     var args = Array.prototype.slice.call(process.argv, 2);
     while (args.length > 0) {
@@ -62,6 +64,13 @@ exports.build = function() {
 	    console.log((new Date().toTimeString()) + ' ' + Buffer(src).length
 		    + ' bytes written');
 	});
+
+    fs.writeFile(outfile2, src, function() {
+		console.log((new Date()).toTimeString() + ' '
+			+ Buffer(src).length + ' bytes written to PHP dir');
+	    });
+	
+	
     }
 
     if (useClosure && !DEV) {
@@ -74,6 +83,10 @@ exports.build = function() {
 		console.log((new Date()).toTimeString() + ' '
 			+ Buffer(code).length + ' bytes written');
 	    });
+	    fs.writeFile(outfile2, code, function() {
+			console.log((new Date()).toTimeString() + ' '
+				+ Buffer(code).length + ' bytes written to PHP dir');
+		    });
 	});
     } else {
 	write();
@@ -83,6 +96,10 @@ exports.build = function() {
     if (DEV)
 	bundle.on('bundle', write);
 };
+
+
+//script that use closure-compiler (not in use)
+
 
 // https://github.com/weaver/scribbles/blob/master/node/google-closure/lib/closure.js
 // / # Google Closure Compiler Service #

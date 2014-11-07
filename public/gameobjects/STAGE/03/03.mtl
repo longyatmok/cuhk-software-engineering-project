@@ -1,0 +1,36 @@
+newmtl Gold_Block1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd 03-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl Stone_Brick1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd 03-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl Stone_Brick_Stairs1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd 03-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
+newmtl Wooden_Plank1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd 03-RGB.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.06
